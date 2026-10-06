@@ -1,0 +1,12 @@
+﻿.physical-container-stage { background: transparent; }
+.container-viewport { position:absolute; inset:92px 0 124px; min-height:240px; overflow:hidden; border-radius:8px; }
+.container-canvas { display:block; width:100%; height:100%; touch-action:none; cursor:grab; outline-offset:-4px; }
+.container-canvas.dragging { cursor:grabbing; }
+.container-controls { position:absolute; bottom:22px; left:20px; right:20px; display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center; }
+.container-hint { font-size:14px; color:#f3efe2; }
+.container-controls > div:nth-child(2) { display:flex; align-items:center; gap:26px; }
+.container-controls .gesture-alternative { position:static; transform:none; margin:0; }
+.container-controls [data-orbit] { font-size:24px; padding:0 12px; }
+.container-controls small { font-size:11px; color:#bdc9c0; }
+.container-warning:empty { display:none; }.container-warning { color:#efd8a5!important; }
+@media(max-height:740px) { .container-viewport { inset:76px 0 106px; }.container-controls { bottom:14px; gap:6px; }.physical-container-stage .opening-header { top:14px; }.physical-container-stage .opening-header h1 { font-size:20px; } }

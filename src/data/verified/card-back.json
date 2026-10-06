@@ -1,0 +1,10 @@
+{
+  "path": "/artwork/pokemon-card-back.jpg",
+  "sourceUrl": "https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg",
+  "sourcePage": "https://tcg.pokemon.com/",
+  "sha256": "37a4df719ed9134a4652c639fea545f549c6cce40647ad5d82909be02a6afeb3",
+  "width": 660,
+  "height": 921,
+  "retrievedAt": "2026-10-05T07:36:30.217638+00:00",
+  "notice": "Official English Pokemon TCG card-back asset. Copyright belongs to the respective owners. Public source access does not grant a redistribution license."
+}

@@ -1,0 +1,91 @@
+/* The desk remains visible behind the tactile layer. No timed card progression. */
+.opening-root{padding:0;background:#171e1b50;backdrop-filter:none}
+.opening-root .game-panel{margin:26px}
+.opening-stage{position:relative;width:100%;height:100%;overflow:hidden;color:#f4eddc;isolation:isolate}
+.opening-header{position:absolute;inset:24px 28px auto;display:flex;align-items:center;gap:26px;z-index:5;padding:12px 18px;background:#263d35ee;border:1px solid #69807370;border-radius:5px;box-shadow:0 5px 15px #10191025}
+.opening-header .eyebrow{font-size:8px;color:#b3c3ad;letter-spacing:1.6px}
+.opening-header h1{font:650 18px 'Manrope Variable',sans-serif;letter-spacing:-.4px;margin-top:3px}
+.opening-header>.text-button{margin-left:auto;color:#dddcca;gap:12px}
+.opening-header kbd,.gesture-alternative kbd{background:#50605255;border-color:#adb9a060;color:#e2e5d4}
+.opening-progress{display:flex;align-items:center;gap:16px;margin-left:12px;color:#c1cbb9;font-size:11px;font-variant-numeric:tabular-nums}
+.reveal-dots{display:flex;gap:5px}
+.reveal-dots>i{width:5px;height:5px;background:#637366;border-radius:50%}
+.reveal-dots>i.seen{background:#d5bb7e}
+.desk-playmat{position:absolute;width:min(830px,80vw);height:min(650px,calc(100dvh - 145px));left:50%;top:calc(50% + 37px);transform:translate(-50%,-50%) rotate(-1deg);border:1px solid #83907e66;border-radius:16px;background-color:#294a40;background-image:repeating-linear-gradient(90deg,#99b49206 0 1px,transparent 1px 3px),repeating-linear-gradient(0deg,#091f190a 0 1px,transparent 1px 3px);box-shadow:0 10px 30px #13231970,inset 0 0 0 5px #203d34,inset 0 0 0 6px #7a967b55;z-index:-1}
+.desk-playmat:after{content:'RIPIFY';position:absolute;bottom:20px;right:24px;font:800 13px 'Manrope Variable',sans-serif;letter-spacing:2px;color:#8fa88e50}
+.tactile-space{position:absolute;left:calc(50% - 280px);top:calc(50% + 29px);transform:translateY(-50%);width:300px;display:flex;align-items:center;flex-direction:column;gap:18px;perspective:1100px}
+.is-sealed .tactile-space{left:calc(50% - 150px)}
+.wrapper-object{position:relative;width:278px;height:418px;transform-origin:center bottom;touch-action:none;filter:drop-shadow(4px 20px 15px #101e1755);transition:transform .25s ease;--foil-light:38%}
+.wrapper-body{position:absolute;inset:0;clip-path:polygon(0 8%,4% 8.8%,9% 7.8%,14% 8.9%,18% 7.7%,24% 8.9%,30% 7.9%,36% 8.7%,43% 7.8%,49% 8.9%,55% 7.9%,61% 8.8%,67% 7.8%,73% 8.9%,79% 7.7%,84% 8.9%,91% 7.8%,96% 8.7%,100% 8%,100% 100%,0 100%);transition:transform .25s ease;transform-origin:center bottom}
+.wrapper-object .foil-pack:after{background:linear-gradient(105deg,transparent 12%,#fffbe52a var(--foil-light),transparent calc(var(--foil-light) + 15%),#ffffff0a 85%,transparent);mix-blend-mode:screen}
+.tear-strip{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,100% 8.2%,96% 8.9%,91% 8%,84% 9.1%,79% 7.9%,73% 9.1%,67% 8%,61% 9%,55% 8.1%,49% 9.1%,43% 8%,36% 8.9%,30% 8.1%,24% 9.1%,18% 7.9%,14% 9.1%,9% 8%,4% 9%,0 8.2%);transform-origin:92% 8%;pointer-events:none;transition:transform .25s ease;z-index:2}
+.tear-handle{position:absolute;top:-4px;left:-3px;width:calc(100% + 6px);height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 13px;color:#f4e9cb;background:transparent;font-size:10px;letter-spacing:.5px;z-index:3;cursor:ew-resize;touch-action:none;--tear-progress:0%}
+.tear-handle:after{content:'';position:absolute;left:9px;right:9px;bottom:3px;border-bottom:1px dashed #f4e6bba8}
+.tear-handle:before{content:'';position:absolute;left:9px;bottom:3px;height:2px;width:min(var(--tear-progress),calc(100% - 18px));background:#f4e1a6}
+.wrapper-object.dragging,.wrapper-object.dragging .tear-strip,.wrapper-object.dragging .wrapper-body{transition:none}
+.wrapper-object .wrapper-inner{inset:22px 9px 10px;transform:rotate(-1deg);background:#334f5a;border-width:5px}
+.wrapper-object.ripped .wrapper-body{transition:transform .32s ease-in,opacity .32s;transform:translateY(150px) rotateZ(-9deg)!important;opacity:0}
+.wrapper-object.ripped .tear-strip{transition:transform .28s ease-in,opacity .28s;transform:translate(230px,-125px) rotateZ(55deg)!important;opacity:0}
+.wrapper-object.ripped .tear-handle{opacity:0;pointer-events:none}
+.gesture-caption{font-size:11px;letter-spacing:.2px;color:#c2cdb9;margin-top:4px;white-space:nowrap}
+.gesture-alternative{display:flex;gap:9px;align-items:center;background:transparent;color:#9eb39f;font-size:10px;padding:3px 4px;margin-top:-9px}
+.gesture-alternative:hover{color:#f3e6c4}
+.card-stack{position:relative;width:278px;height:391px}
+.card-back{position:absolute;inset:0;background:#3f6068;border:8px solid #e1d7b7;border-radius:11px;box-shadow:0 4px 9px #101e1840}
+.card-back:before{content:'✦';display:grid;place-items:center;position:absolute;inset:17px;border:1px solid #aebca9;border-radius:50%;font-size:58px;color:#d2dabc;background:repeating-linear-gradient(45deg,#9aa68f0a 0 2px,transparent 2px 8px)}
+.back-one{transform:rotate(2deg) translate(3px,4px)}
+.back-two{transform:rotate(-3deg) translate(-4px,3px)}
+.draggable-card{position:absolute;inset:0;cursor:grab;touch-action:none;transform-origin:center 75%;animation:card-enter .2s ease-out;outline:none;--foil-light:50%}
+.draggable-card.dragging{cursor:grabbing;animation:none}
+.draggable-card>.tcg-card{box-shadow:0 16px 20px #07181040,0 2px 3px #07181090}
+.draggable-card.dragging>.tcg-card{box-shadow:8px 26px 30px #07181060,0 2px 4px #07181070}
+.draggable-card .tcg-card:not([data-rarity="Common"]):not([data-rarity="Uncommon"]):after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 10%,#fff4bd20 var(--foil-light),transparent calc(var(--foil-light) + 13%));mix-blend-mode:screen}
+.pull-info{position:absolute;top:calc(50% + 8px);left:calc(50% + 69px);width:240px;transform:translateY(-50%)}
+.pull-info .rarity-label{color:#cdbb8c;font-size:10px;letter-spacing:1px}
+.pull-info h2{font:650 28px 'Manrope Variable',sans-serif;letter-spacing:-1px;margin-top:10px;line-height:1.15}
+.pull-set{display:block;font-size:11px;line-height:1.7;color:#adc1af;margin-top:12px}
+.pull-info .pull-value{border-color:#a6b49c35;margin-top:28px;padding-top:18px}
+.pull-info .pull-value small{color:#9eb49f;font-size:8px}
+.pull-info .pull-value b{font-size:23px;color:#f2e2b7}
+.pull-info .pull-value b span{color:#a9ba9f}
+.last-card-note{display:inline-block;border-bottom:1px solid #b09c6570;padding:7px 0;color:#c7b17a;font-size:10px;margin-top:20px}
+.final-pull .draggable-card{animation:rare-enter .4s ease-out}
+.final-pull .desk-playmat{border-color:#c8b27d8a;box-shadow:0 10px 30px #13231970,inset 0 0 0 5px #203d34,inset 0 0 0 6px #c8b27d55}
+@media(max-height:760px){
+  .opening-header{inset:15px 20px auto;padding:10px 15px}
+  .opening-header h1{font-size:16px}
+  .tactile-space{gap:15px;top:calc(50% + 27px)}
+  .wrapper-object{width:239px;height:356px}
+  .card-stack{width:239px;height:336px}
+  .desk-playmat{height:calc(100dvh - 112px);width:min(760px,90vw)}
+  .pull-info{left:calc(50% + 40px)}
+  .tactile-space:not(.is-sealed .tactile-space){left:calc(50% - 260px)}
+}
+@media(max-width:900px){
+  .opening-progress{gap:10px;margin-left:0}
+  .desk-playmat{width:90vw}
+  .pull-info{left:calc(50% + 58px);width:200px}
+  .tactile-space{left:calc(50% - 260px)}
+  .pull-info h2{font-size:24px}
+}
+
+/* Targeted polish: untouched foil stays attached; real cards retain their DOM identity. */
+.wrapper-body { clip-path: none; }
+.tear-strip.progressive-strip { transform: none; transition: none; }
+.loose-foil,.tear-foil { position:absolute; inset:0; pointer-events:none; transform-style:preserve-3d; }
+.loose-foil { z-index:2; }
+.tear-foil { transition:transform .22s ease-out; will-change:transform; }
+.tear-foil[hidden] { display:none; }
+.wrapper-object.dragging .tear-foil { transition:none; }
+.wrapper-object.ripped .tear-strip.progressive-strip { transform:none!important; opacity:0; }
+.tear-handle:before { left:var(--tear-frontier,0%); width:4px; height:4px; border-radius:50%; transform:translateX(-50%); }
+.gesture-alternative[hidden] { display:none; }
+.stack-card { position:absolute; inset:0; pointer-events:none; }
+.stack-card.under-1 { transform:translate(3px,4px) rotate(2deg); z-index:2; }
+.stack-card.under-2 { transform:rotate(-3deg) translate(-4px,3px); z-index:1; }
+.draggable-card { z-index:3; }
+.stack-card>.tcg-card { width:100%; height:100%; box-shadow:0 4px 9px #101e1840; }
+.tactile-space { z-index:2; }
+.pull-info { z-index:1; }
+.final-pull .draggable-card.stack-promoted { animation:none; }
+.gesture-alternative:disabled { cursor:default; opacity:.6; }

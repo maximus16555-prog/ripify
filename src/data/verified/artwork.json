@@ -1,0 +1,126 @@
+{
+  "retrievedAt": "2026-10-05T07:15:42Z",
+  "notice": "Original copyrighted Pokemon imagery; source access does not grant artwork ownership or a redistribution license.",
+  "assets": [
+    {
+      "id": "151-booster",
+      "kind": "product",
+      "path": "/artwork/151-booster.jpg",
+      "sourceUrl": "https://product-images.tcgplayer.com/fit-in/1000x1000/504467.jpg",
+      "sourcePage": "https://www.tcgplayer.com/product/504467/pokemon-sv-scarlet-and-violet-151-151-booster-pack",
+      "sha256": "bb797b042d5cc09394bac0d437abe75001b3177197240eafb2c3930282541494",
+      "width": 553,
+      "height": 1000
+    },
+    {
+      "id": "151-etb",
+      "kind": "product",
+      "path": "/artwork/151-etb.jpg",
+      "sourceUrl": "https://product-images.tcgplayer.com/fit-in/1000x1000/503313.jpg",
+      "sourcePage": "https://www.tcgplayer.com/product/503313/pokemon-sv-scarlet-and-violet-151-151-elite-trainer-box",
+      "sha256": "0abcf1e0a77f3f31f7a7463abc8f8b8f420f91a045cd503f10a4271eb831863b",
+      "width": 1000,
+      "height": 953
+    },
+    {
+      "id": "151-upc",
+      "kind": "product",
+      "path": "/artwork/151-upc.jpg",
+      "sourceUrl": "https://product-images.tcgplayer.com/fit-in/1000x1000/502005.jpg",
+      "sourcePage": "https://www.tcgplayer.com/product/502005/pokemon-sv-scarlet-and-violet-151-151-ultra-premium-collection",
+      "sha256": "816d073f88a9bb6834b016bb8e189f57733119ca1d1565d5f8dec4f514db042d",
+      "width": 1000,
+      "height": 708
+    },
+    {
+      "id": "sve-1",
+      "kind": "card",
+      "path": "/artwork/sve-1.jpg",
+      "sourceUrl": "https://pkmncards.com/wp-content/uploads/sve_en_001.jpg",
+      "sourcePage": "https://pkmncards.com/card/basic-g-energy-scarlet-violet-energy-sve-001/",
+      "sha256": "65058642346cc1fd86bcac247cb3fa9ee98fcf1eea592ccb57aaac4a7d8191d5",
+      "width": 734,
+      "height": 1024
+    },
+    {
+      "id": "sve-2",
+      "kind": "card",
+      "path": "/artwork/sve-2.jpg",
+      "sourceUrl": "https://pkmncards.com/wp-content/uploads/sve_en_002.jpg",
+      "sourcePage": "https://pkmncards.com/card/basic-r-energy-scarlet-violet-energy-sve-002/",
+      "sha256": "16129b1eddebdc1af23a4808c36849d42bce0db8719a09617840ff6b737c5125",
+      "width": 734,
+      "height": 1024
+    },
+    {
+      "id": "sve-3",
+      "kind": "card",
+      "path": "/artwork/sve-3.jpg",
+      "sourceUrl": "https://pkmncards.com/wp-content/uploads/sve_en_003.jpg",
+      "sourcePage": "https://pkmncards.com/card/basic-w-energy-scarlet-violet-energy-sve-003/",
+      "sha256": "2208c5c50c5f032020842cfea50ec217fb3e9d93b7a684df92e2e13380ff2969",
+      "width": 734,
+      "height": 1024
+    },
+    {
+      "id": "sve-4",
+      "kind": "card",
+      "path": "/artwork/sve-4.jpg",
+      "sourceUrl": "https://pkmncards.com/wp-content/uploads/sve_en_004.jpg",
+      "sourcePage": "https://pkmncards.com/card/basic-l-energy-scarlet-violet-energy-sve-004/",
+      "sha256": "8f37bb97912f25b8a789ae394e5e235ba62142f9fa66418f2df41597188042e4",
+      "width": 734,
+      "height": 1024
+    },
+    {
+      "id": "sve-5",
+      "kind": "card",
+      "path": "/artwork/sve-5.jpg",
+      "sourceUrl": "https://pkmncards.com/wp-content/uploads/sve_en_005.jpg",
+      "sourcePage": "https://pkmncards.com/card/basic-p-energy-scarlet-violet-energy-sve-005/",
+      "sha256": "2da4231596624738062c006514cbc28b3d60792d48c4f3a8e3355be07eba5d38",
+      "width": 734,
+      "height": 1024
+    },
+    {
+      "id": "sve-6",
+      "kind": "card",
+      "path": "/artwork/sve-6.jpg",
+      "sourceUrl": "https://pkmncards.com/wp-content/uploads/sve_en_006.jpg",
+      "sourcePage": "https://pkmncards.com/card/basic-f-energy-scarlet-violet-energy-sve-006/",
+      "sha256": "838c3b00ee6d0111412241750e4135cd4497679bc0f8ea5d108094bc801cb45b",
+      "width": 734,
+      "height": 1024
+    },
+    {
+      "id": "sve-7",
+      "kind": "card",
+      "path": "/artwork/sve-7.jpg",
+      "sourceUrl": "https://pkmncards.com/wp-content/uploads/sve_en_007.jpg",
+      "sourcePage": "https://pkmncards.com/card/basic-d-energy-scarlet-violet-energy-sve-007/",
+      "sha256": "27b103b802d8584dac1fd86644afff7afc162fb33ff71d5f6bd162be2027f89a",
+      "width": 734,
+      "height": 1024
+    },
+    {
+      "id": "sve-8",
+      "kind": "card",
+      "path": "/artwork/sve-8.jpg",
+      "sourceUrl": "https://pkmncards.com/wp-content/uploads/sve_en_008.jpg",
+      "sourcePage": "https://pkmncards.com/card/basic-m-energy-scarlet-violet-energy-sve-008/",
+      "sha256": "62de57bdd0af7fab939787e5d4b7436def8852fb5c264f8f8d153a1611a9944c",
+      "width": 734,
+      "height": 1024
+    },
+    {
+      "id": "ascended-heroes-booster",
+      "kind": "product",
+      "path": "/artwork/ascended-heroes-booster.jpg",
+      "sourceUrl": "https://product-images.tcgplayer.com/fit-in/1000x1000/672434.jpg",
+      "sourcePage": "https://www.tcgplayer.com/product/672434/pokemon-me-ascended-heroes-ascended-heroes-booster-pack",
+      "sha256": "dcd4cbacc63a1e041d709a454c5a90da5319c1633f7b4245cc34af15cafff510",
+      "width": 547,
+      "height": 1000
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+import { chromium } from '@playwright/test';
+import { mkdir } from 'node:fs/promises';
+const browser = await chromium.launch({ headless: true, args: ['--enable-webgl', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+const errors = []; page.on('pageerror', e => errors.push(e.message)); page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+await page.goto('http://127.0.0.1:5173'); await page.locator('.game-canvas').waitFor();
+await page.getByRole('button', { name: 'Settings', exact: true }).click(); await page.locator('[data-graphics="High"]').click(); await page.locator('[data-resume]').click();
+await page.waitForTimeout(1800);
+await mkdir('artifacts', { recursive: true }); await page.screenshot({ path: 'artifacts/room-polish.png' });
+console.log(JSON.stringify({ errors, metrics: await page.evaluate(() => window.__ripifyDebug) }));
+await browser.close();

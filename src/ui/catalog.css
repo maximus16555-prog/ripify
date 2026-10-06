@@ -1,0 +1,51 @@
+﻿.real-card { background: transparent; border: 0; padding: 0; position: relative; }
+.real-card .card-paper { padding: 0; border: 0; overflow: hidden; background: #e9e8df; width: 100%; height: 100%; border-radius: 8px; }
+.real-card .exact-card-image { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
+.real-card .exact-card-image[hidden], .missing-card-image[hidden] { display: none; }
+.real-card.slab { padding: 10px; background: #e2e6e2; }
+.real-card.slab .card-paper { height: calc(100% - 43px); }
+.missing-card-image { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 18px; text-align: center; background: #e9e8df; color: #414b43; }
+.missing-card-image span { font-size: 11px; }.missing-card-image strong { font-size: 12px; font-weight: 500; }
+.copy-finish { position: absolute; bottom: 7px; left: 8px; padding: 2px 5px; background: #26372bdc; color: #fff; border-radius: 3px; font-size: 10px; }
+.copy-finish:empty { display: none; }
+.real-product { background: #a3aaa4; color: #24382a; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 20px; }
+.real-product .pack-set { position: static; font-size: 17px; line-height: 1.3; }.real-product .pack-count { position: static; font-size: 10px; line-height: 1.4; }
+.product-asset-unavailable { font-size: 11px; text-align: center; }.boxed-product { aspect-ratio: 1.4; height: 140px; }
+.sealed-choice .boxed-product { width: 160px; }.sealed-choice span { line-height: 1.4; }
+.printed-data { margin-top: 16px; font-size: 12px; }.printed-data dl { display: grid; grid-template-columns: 90px 1fr; gap: 7px; }.printed-data dd { margin: 0; }.printed-data pre { white-space: pre-wrap; font: inherit; }
+
+.real-card.compact { padding: 0; }.real-card.compact .card-paper { padding: 0; }
+
+.real-card .card-paper { position: relative; display: block; flex: 1; }
+.exact-card-image.image-loading { opacity: 0; }.real-card .missing-card-image { position: absolute; inset: 0; }
+
+/* Exact local product photos follow the existing booster wrapper masks. */
+.product-artwork-fallback { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; text-align:center; }
+.product-artwork-fallback[hidden], .product-art-image[hidden] { display:none; }
+.real-product.has-artwork { padding:0; background:#fff; }
+.product-art-image { position:absolute; inset:0; width:100%; height:100%; object-fit:fill; pointer-events:none; }
+.product-art-image.image-loading { opacity:0; }
+.has-artwork .product-artwork-fallback { position:absolute; inset:0; padding:20px; background:#a3aaa4; }
+.boxed-product { clip-path:none; border-radius:3px; }
+.boxed-product .product-art-image { object-fit:contain; }
+
+/* A single physical model is used for inspection and room display stands. */
+.inspection-card.physical-inspection { display:flex; flex-direction:column; justify-content:center; padding:12px 8px; min-width:0; align-self:start; }
+.physical-card-canvas { display:block; width:100%; height:440px; max-height:56vh; min-height:260px; touch-action:none; cursor:grab; outline-offset:-3px; }
+.physical-card-canvas:active { cursor:grabbing; }
+.physical-card-controls { display:flex; align-items:center; justify-content:center; gap:16px; padding:8px 0 4px; font-size:11px; }
+.physical-card-controls .text-button { font-size:11px; }
+.physical-card-caption { font-size:9px; text-align:center; color:#586358; min-height:15px; padding:4px; overflow-wrap:anywhere; }
+.real-card.slab { background:var(--slab-insert,#d4dedc); border:2px solid #b4c4c3; border-radius:8px; box-shadow:inset 0 0 0 3px #e0ece9; padding:10px; }
+.real-card.slab .slab-label { height:54px; flex:0 0 54px; margin:0 0 8px; background:var(--slab-label); border-top:3px solid var(--slab-accent); color:var(--slab-ink); }
+.real-card.slab .slab-label b { color:var(--slab-accent); }
+.real-card.slab .slab-label small { display:block; font-size:6px; line-height:1.5; letter-spacing:0; margin-top:2px; }
+.real-card.slab .card-paper { height:calc(100% - 62px); }
+.real-card.slab.compact { padding:6px; }
+.real-card.slab.compact .slab-label { height:31px; flex-basis:31px; margin-bottom:4px; padding:2px; border-top-width:2px; }
+.real-card.slab.compact .slab-label small { font-size:4px; margin-top:1px; }
+.real-card.slab.compact .card-paper { height:calc(100% - 35px); }
+
+.real-card .print-ink-defect { position:absolute;left:0;right:0;background:#f4efe0;pointer-events:none; }
+
+.real-card .print-registration { position:absolute;inset:0;background-size:100% 100%;background-repeat:no-repeat;pointer-events:none; }
