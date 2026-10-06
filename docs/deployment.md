@@ -1,65 +1,56 @@
-# Production deployment check
+﻿# RIPIFY production deployment
 
-## Status
+**Public game: https://ripify.freebuff.app/**
 
-Production build and the production gameplay smoke pass. **Not published yet.**
-No public Freebuff URL has been assigned or tested. The Freebuff Cloud browser
-is at its account sign-in page. This desktop tool session does not expose a
-Freebuff publish operation, and this checkout has no Freebuff hosting binding
-or connected source repository. The desktop `.freebuff/project-id` identifies
-the local workspace; it is not a confirmed hosting project ID.
+Published through Freebuff managed hosting on October 6, 2026. This production static build is public and requires no local Vite server, tunnel, or sign-in. Freebuff currently assigns `*.freebuff.app`, not `*.freebuff.dev`.
 
-## Build and hosting input
+- Management: https://freebuff.com/cloud/project/beige-spoons-deny/settings?section=deploys
+- Private source: https://github.com/maximus16555-prog/ripify
+- Hosting deployment ID: `kn7e3a3m`
+- Runtime source commit: `97a345c`.
+- Install: `npm ci`; build: `npm run build`; static output: `dist` at domain root.
 
-- Install locked dependencies with `npm ci`.
-- Build with `npm run build`.
-- Static output directory: `dist`.
-- Serve `dist/index.html` at the domain root with its `assets` and `artwork` directories.
-- The ready-to-upload build archive is `artifacts/ripify-production.zip`.
-- No running Vite server, localhost tunnel, database, secrets or Node runtime are needed by the built game.
+## Compatibility changes
 
-No provider-specific deployment configuration has been invented. The actual
-Freebuff project/domain and its supported import/publishing mechanism must be
-confirmed through the authenticated hosting interface before publication.
+Freebuff beta hosting rejected plain Vite/TypeScript because it currently recognizes React projects only. `src/hosting-entry.ts` mounts the same static game container/loading view, then imports the unchanged Three.js startup. React has no gameplay state or per-frame updates. No Strict Mode/remounting was added.
 
-## Checks completed on the production build
+Changed: `index.html`, `package.json`, `package-lock.json`, and the new startup entry. No engine, room, pack opener, card data, audio, controls, economy, generation, grading or save implementation changed. Existing local artwork/fonts remain bundled; exact card scans still load on demand over HTTPS. Production asset hashes match the locally verified build.
 
-The smoke test runs against built files on port 4173, not development port 5173.
-It uses a fresh isolated browser save and the regular keyboard/mouse controls:
+The shared checkout was not a Git repository. An isolated deployment snapshot under ignored `.freebuff/deployment-source` was pushed to a private repository. Freebuff cloned it, but its sandbox could not authenticate a later Git pull. Only the four compatibility files were transferred into its clean workspace, built, and published using the hosting UI.
 
-- Direct entry into the 3D room; no landing screen.
-- Walk to the shop and browse real products.
-- Both supported booster products are purchasable.
+## Verification on the real public URL
+
+Opened the game in an unsigned-in/incognito browser and visually checked the room. Then ran the production Chromium gameplay test against `https://ripify.freebuff.app` with ports 4173/5173 stopped:
+
+- Enter 3D room, move, enter shop; both booster products are available.
 - Buy a 151 pack; currency decreases and unopened inventory increases.
-- Walk home and choose the purchased pack at the desk.
-- Drag the wrapper seam, then manually swipe the first card.
-- Underlying cards and exact artwork load before reveal.
-- Web Audio context runs and sound sources play.
-- Remaining cards advance only by player action and enter collection.
-- Refresh preserves the generated card instances, reveal position and final inventory.
-- No uncaught browser exceptions.
-- Production has no development debug object.
+- Return home; select that same pack; manually rip its wrapper.
+- Exact artwork and underlying card stack load before swiping.
+- Idle without advancing; swipe once for one card.
+- Web Audio context runs and playback sources start.
+- Refresh preserves generated instances and reveal position.
+- Manually reveal remaining cards, collect, and refresh again.
+- Collection and inventory persist; development debug object is absent.
+- No uncaught browser errors, failed requests, or localhost requests.
 
-Source/runtime audit found no localhost API or asset dependencies. Development
-URLs exist only in scripts and test configuration. Vite emits hashed JS/CSS and
-font assets; product/Energy/card-back artwork is included in the output.
-Other exact card scans still load on demand over HTTPS from the existing source.
-No graphics, gameplay, audio, generation, pricing or save logic was changed.
+All 101 logic tests pass. Audio verification confirms playback operation, not a subjective evaluation of sound quality.
 
-## Repeat against the real deployment
+The initial hosted test sent movement too early after reload, before asynchronous game startup registered input. The test now waits for the canvas/loading view; gameplay code needed no fix.
 
-In PowerShell, after an actual URL is assigned:
+Evidence: [gameplay report](../artifacts/hosted-gameplay.json), [Playwright report](../artifacts/hosted-playwright-report.json), [room](../artifacts/production-room.png), [pack reveal](../artifacts/hosted-pack-reveal.png).
+
+## Repeat hosted verification
 
 ```powershell
-$env:RIPIFY_URL = 'https://THE-ASSIGNED-DOMAIN.freebuff.dev'
-npm.cmd run test:production
+$env:RIPIFY_URL = 'https://ripify.freebuff.app'
+$env:PLAYWRIGHT_JSON_OUTPUT_FILE = 'artifacts/hosted-playwright-report.json'
+npm.cmd run test:production -- --reporter=list,json
 ```
 
-For a remote URL the test does not start any local server. It additionally
-checks that no request targets localhost or 127.0.0.1. The Playwright report
-attaches the tested URL, requested assets, failed requests, audio status and
-purchased-pack identifier.
+A remote URL starts no local server. The default checks built files on preview port 4173, not development port 5173.
 
-Browser saves are scoped to their origin. Existing local progress can be moved
-using the game's Settings export/import controls; hosting does not automatically
-gain access to localhost storage. This preserves the existing save architecture.
+## Saves and updates
+
+Browser saves remain origin-scoped. Export existing localhost progress in local Settings and import it in hosted Settings. Hosting cannot automatically read local-origin storage.
+
+For future releases, sync only intended source changes into the existing private deployment repository/cloud workspace, build/test, and use Redeploy. Keep this domain so existing hosted saves remain accessible. Do not recreate the project or scaffold a replacement game.

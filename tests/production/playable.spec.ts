@@ -47,6 +47,7 @@ test('production gameplay: room, shop, purchase, manual rip/swipes, collection a
   const images = page.locator('.card-stack .exact-card-image');
   await expect.poll(() => images.evaluateAll(imgs => imgs.every(img => (img as HTMLImageElement).naturalWidth > 0))).toBe(true);
   await page.waitForTimeout(400); expect((await saved(page)).opening.index).toBe(0);
+  await page.screenshot({ path: 'artifacts/hosted-pack-reveal.png' });
   const card = (await page.locator('[data-card]').boundingBox())!;
   await page.mouse.move(card.x + card.width / 2, card.y + card.height / 2); await page.mouse.down();
   await page.mouse.move(card.x + card.width / 2 + 180, card.y + card.height / 2, { steps: 10 }); await page.mouse.up();
@@ -54,6 +55,10 @@ test('production gameplay: room, shop, purchase, manual rip/swipes, collection a
   const audio = await page.evaluate(() => { const a = (window as unknown as { productionAudio: { starts: number; contexts: AudioContext[] } }).productionAudio; return { starts: a.starts, state: a.contexts[0]?.state }; });
   expect(audio.state).toBe('running'); expect(audio.starts).toBeGreaterThan(2);
   await page.keyboard.press('Escape'); await page.reload();
+  // Remote chunks can finish after the HTML load event. Wait for the engine's
+  // input listener to exist before sending movement to the reloaded game.
+  await expect(page.locator('.game-canvas')).toBeVisible();
+  await expect(page.locator('.loading')).toHaveCount(0);
   expect((await saved(page)).opening.cards).toEqual(generated); expect((await saved(page)).opening.index).toBe(1);
   await walk(page, 'w', 'Open Pack'); await page.keyboard.press('e');
   for (let i = 2; i < generated.length; i++) { await page.locator('[data-next]').click(); await expect(page.locator('[data-card]')).toHaveAttribute('data-index', String(i)); await expect(page.locator('[data-next]')).toBeEnabled(); }

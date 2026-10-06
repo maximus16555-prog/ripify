@@ -2,7 +2,9 @@
 
 A browser-based, single-player 3D card collecting game built with Three.js, TypeScript and Vite. Launching the game spawns the player directly in their room.
 
-## Run
+Play the public production build at **[ripify.freebuff.app](https://ripify.freebuff.app/)**. It runs independently of local development servers. See [deployment and hosted verification](docs/deployment.md).
+
+## Run locally
 
 ```sh
 npm install
