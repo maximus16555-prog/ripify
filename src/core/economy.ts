@@ -1,6 +1,7 @@
 import { CARD_BY_ID } from '../data/cards';
 import type { CardDefinition, Grader, OwnedCard } from './types';
 import { MISPRINT_MODIFIER } from './rare-events';
+import { FIXED_RAW_CARD_VALUES } from '../data/balance';
 export const GRADERS: Record<Grader, { cost: number; seconds: number; premium: number; bias: number; half: boolean; color: string }> = {
   PSA: { cost: 12, seconds: 150, premium: 1.3, bias: .1, half: false, color: '#ab584d' },
   BGS: { cost: 16, seconds: 180, premium: 1.4, bias: -.12, half: true, color: '#9a895c' },
@@ -10,10 +11,15 @@ export const GRADERS: Record<Grader, { cost: number; seconds: number; premium: n
 };
 export const money = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 export function marketFactor(card: CardDefinition, seed: number, now = Date.now()) {
+  if (FIXED_RAW_CARD_VALUES[card.id] !== undefined) return 1;
   const day = Math.floor(now / 86400000);
   return 1 + Math.sin(day * .47 + seed + card.value) * .09;
 }
-export function rawValue(card: CardDefinition, seed: number, now?: number) { return Math.round(card.value * marketFactor(card, seed, now) * 100) / 100; }
+export function rawValue(card: CardDefinition, seed: number, now?: number) {
+  // Resolve by printing ID even when an older owned misprint stores a previous
+  // raw base. Its saved defect/condition stays intact; pricing stays authoritative.
+  return FIXED_RAW_CARD_VALUES[card.id] ?? Math.round(card.value * marketFactor(card, seed, now) * 100) / 100;
+}
 export function gradeMultiplier(grade: number) { return grade >= 10 ? 4.8 : grade >= 9.5 ? 3.1 : grade >= 9 ? 2 : grade >= 8 ? 1.3 : grade >= 7 ? .95 : .6; }
 /** Only the raw base enters the misprint modifier; no stored graded price is used. */
 export function ownedRawMarketValue(owned: OwnedCard, seed: number, now?: number) {

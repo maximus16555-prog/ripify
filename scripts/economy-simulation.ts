@@ -4,7 +4,7 @@ import { generatePack } from '../src/core/packs';
 import { rawValue, ownedValue } from '../src/core/economy';
 import { seeded, createCard } from '../src/core/inventory';
 import type { Pack } from '../src/core/types';
-import { PACK_BALANCE, CARD_VALUES, DEFAULT_CARD_VALUE } from '../src/data/balance';
+import { PACK_BALANCE, CARD_VALUES, baseCardValue } from '../src/data/balance';
 
 const TIME = Date.UTC(2026, 9, 5, 12);
 const percentile = (sorted: number[], quantile: number) => sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * quantile))];
@@ -153,7 +153,7 @@ export function exploreProfiles(count: number, seed: number) {
   try {
     return profiles.map(profile => {
       Object.assign(CARD_VALUES, { Common: profile.common, Uncommon: profile.uncommon, Rare: profile.rare, 'Double rare': profile.doubleValue, 'Ultra Rare': profile.ultraValue, 'Illustration rare': profile.irValue });
-      for (const card of CARDS) card.value = CARD_VALUES[card.rarity] ?? DEFAULT_CARD_VALUE;
+      for (const card of CARDS) card.value = baseCardValue(card.id, card.rarity);
       const rules = PACK_BALANCE['sv03.5'];
       rules.finalSlot = { rare: 1 - profile.doubleRate - profile.ultraRate - .004, double: profile.doubleRate, ultra: profile.ultraRate, hyper: .004 };
       rules.reverseUpgrade.illustration = profile.irRate;
@@ -163,7 +163,7 @@ export function exploreProfiles(count: number, seed: number) {
     });
   } finally {
     Object.assign(CARD_VALUES, originalValues); Object.assign(PACK_BALANCE, originalRules);
-    for (const card of CARDS) card.value = CARD_VALUES[card.rarity] ?? DEFAULT_CARD_VALUE;
+    for (const card of CARDS) card.value = baseCardValue(card.id, card.rarity);
     PRODUCTS.forEach((p, i) => { p.price = originalPrices[i]; });
   }
 }

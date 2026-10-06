@@ -5,6 +5,20 @@ export const CARD_VALUES: Record<string, number> = {
   'Mega attack rare': 25, 'Mega Hyper Rare': 100
 };
 export const DEFAULT_CARD_VALUE = .15;
+// Authoritative RIPIFY prices for these exact printings, not live market quotes.
+// They override rarity defaults and simulated market fluctuations.
+export const FIXED_RAW_CARD_VALUES: Readonly<Record<string, number>> = Object.freeze({
+  'me02.5-276': 4582,
+  'me02.5-284': 4317,
+  'me02.5-290': 1684,
+  'me02.5-294': 768,
+  'me02.5-277': 711,
+  'me02.5-281': 657,
+  'me02.5-295': 586
+});
+export function baseCardValue(id: string, rarity: string) {
+  return FIXED_RAW_CARD_VALUES[id] ?? CARD_VALUES[rarity] ?? DEFAULT_CARD_VALUE;
+}
 export const PACK_BALANCE: Record<string, {
   finalSlot: { rare: number; double: number; ultra: number; hyper: number; megaAttack?: number };
   reverseUpgrade: { illustration: number; specialIllustration: number };

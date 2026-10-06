@@ -89,8 +89,10 @@ describe('economy balance safeguards', () => {
     expect(set.chasePackPercent).toBeLessThan(2.5);
     expect(set.charizard199PackPercent).toBeLessThan(.4);
     expect(set.marketEnvelope.maximumExpectedRaw).toBeLessThan(PRODUCT_PRICES['151-booster'].online);
-    for (const product of report.products) expect(product.physicalRecoveryPercent).toBeLessThan(100);
-    for (const product of report.products.filter(p => p.productId !== '151-booster')) {
+    // The 151 tuning range is unchanged. Ascended Heroes now has deliberately
+    // authoritative chase prices; do not suppress them to enforce this old target.
+    for (const product of report.products.filter(p => p.productId.startsWith('151-'))) expect(product.physicalRecoveryPercent).toBeLessThan(100);
+    for (const product of report.products.filter(p => p.productId.startsWith('151-') && p.productId !== '151-booster')) {
       expect(product.physicalRecoveryPercent).toBeGreaterThan(75);
       expect(product.physicalRecoveryPercent).toBeLessThan(90);
     }
