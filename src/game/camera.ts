@@ -56,6 +56,14 @@ export class FollowCamera {
     if (!this.transitioning) this.wasFocused = false;
   }
 
+  focusComputer(dt: number) {
+    this.wasFocused = true;
+    this.desired.set(-3.65, 1.75, -2.4); this.aim.set(-3.65, 1.62, -3.72);
+    this.camera.position.lerp(this.desired, 1 - Math.exp(-6 * dt));
+    this.target.lerp(this.aim, 1 - Math.exp(-6 * dt)); this.camera.lookAt(this.target);
+    this.transitioning = this.camera.position.distanceToSquared(this.desired) > .003;
+  }
+
   focusDesk(dt: number) {
     this.wasFocused = true;
     this.desired.set(-.35, 3.85, -1.6); this.aim.set(-.4, 1.18, -3.25);

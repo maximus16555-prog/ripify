@@ -1,0 +1,54 @@
+{
+  "src/ui/pack-opening.ts": {
+    "unchanged": true,
+    "sha256": "2a0d80074266fafe3d503371d7e78d4903b2ae064fa3a3081d71720e56e84add"
+  },
+  "src/ui/container-opening.ts": {
+    "unchanged": true,
+    "sha256": "06c589c870b2cdddcbe314f767f2648795c344b9cb13df82f02b7cb9b3667829"
+  },
+  "src/ui/container-view.ts": {
+    "unchanged": true,
+    "sha256": "140e37cc1b745b9b73695d55b56e9ffed54445285df74e4311ef2dab5dbd54a5"
+  },
+  "src/core/packs.ts": {
+    "unchanged": true,
+    "sha256": "0050a18db32116dd84c0a756ab1d0780be3fc35f0bb2ed50f73bc951c3e09e58"
+  },
+  "src/core/rare-events.ts": {
+    "unchanged": true,
+    "sha256": "3ffb34416d04e38ca75cb632eb613156faa49812f17ad49f01d6b962ab83f945"
+  },
+  "src/core/economy.ts": {
+    "unchanged": true,
+    "sha256": "f0a107265d3092dcd01c06e7d1bfbb59ea8c1f399f060d3a28ea0923d92d7be7"
+  },
+  "src/game/physical-card.ts": {
+    "unchanged": true,
+    "sha256": "a9c20509da9608291e13cd8c7520a8e7cb1d460b89c4e6efc0978b80dbcf2c53"
+  },
+  "src/data/verified/151.json": {
+    "unchanged": true,
+    "sha256": "55f70de6cd8e34836ab23e82a2fb8b634f4b687ed6b7e6472ffc2d99454a4155"
+  },
+  "src/data/verified/ascended-heroes.json": {
+    "unchanged": true,
+    "sha256": "4b19481ba94d74f023d1b906acd8ca944710d18c9c88d5bf3a3c3310bfc83750"
+  },
+  "src/game/world.ts": {
+    "unchanged": true,
+    "sha256": "c1c58696564d60cb86482e72f484c2d98c5f4921438f447df394e30dc1f1f000"
+  },
+  "src/game/player.ts": {
+    "unchanged": true,
+    "sha256": "0fb71d7982c11cd7d297cc2e451973ce75f9228498cf2c0dee8458204b17c925"
+  },
+  "src/game/input.ts": {
+    "unchanged": true,
+    "sha256": "d4cf23a38318f8e2579bee71a830bf81b834f9fd373e34e1a6ced35658c29e82"
+  },
+  "src/game/audio.ts": {
+    "unchanged": true,
+    "sha256": "cf699b1783b036c9db43caf1682009a1251bde95af31d1a266d1b260b2a04cf6"
+  }
+}

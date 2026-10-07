@@ -1,3 +1,4 @@
+import { validateComputer } from './computer-state';
 import { CARD_BY_ID, PRODUCTS } from '../data/cards';
 import { createPack } from './inventory';
 import { PRODUCT_BY_ID } from '../data/products';
@@ -81,9 +82,10 @@ export function parseSave(raw: string): Save {
     result.settings.fps = s.fps === true;
     result.settings.controlsLearned = s.controlsLearned === true;
   }
-  if (record(v.stats)) for (const k of ['opened', 'sold', 'spent'] as const) if (finite(v.stats[k]) && v.stats[k] >= 0) result.stats[k] = v.stats[k];
+  if (record(v.stats)) for (const k of ['opened', 'sold', 'spent', 'totalSales'] as const) if (finite(v.stats[k]) && v.stats[k] >= 0) result.stats[k] = v.stats[k];
   if (finite(v.marketSeed)) result.marketSeed = v.marketSeed;
   if (Array.isArray(v.history)) result.history = v.history.filter(h => record(h) && typeof h.uid === 'string' && ['purchase', 'sale', 'grading'].includes(String(h.type)) && finite(h.amount) && typeof h.label === 'string' && finite(h.at)).slice(-100) as Save['history'];
+  if (v.computer !== undefined) result.computer = validateComputer(v.computer, result, validPack, validSealed);
   return result;
 }
 export interface SaveStorage { read(): string | null; write(data: string): void; backup(data: string): void; clearRecovery?(): void }

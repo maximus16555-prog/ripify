@@ -74,6 +74,7 @@ async function start() {
   const tick = (time: number) => {
     if (document.hidden) return;
     frameId = requestAnimationFrame(tick); const elapsed = Math.max(0, time - last); const dt = Math.min(.15, elapsed / 1000); last = time;
+    ui.tickComputer(elapsed / 1000);
     frames++; // Include responsive UI frames while the unchanged world is frozen.
     if (switching) return;
     if (ui.isOpen !== wasOpen || ui.openingActive !== wasOpening) { renderer.invalidate(); wasOpen = ui.isOpen; wasOpening = ui.openingActive; }
@@ -92,13 +93,14 @@ async function start() {
       if (nearest) { const anchor = interactions.screenAnchor(nearest, camera.camera); ui.pointAt(anchor.x, anchor.y, anchor.z); } else ui.pointAt();
     }
     if (ui.openingActive) camera.focusDesk(dt);
-    player.group.visible = contactShadow.visible = !ui.openingActive;
+    if (ui.computerActive) camera.focusComputer(dt);
+    player.group.visible = contactShadow.visible = !(ui.openingActive || ui.computerActive);
     contactShadow.position.set(player.group.position.x, player.groundHeight + .009, player.group.position.z);
     const lift = Math.max(0, player.group.position.y - player.groundHeight);
     contactShadow.scale.setScalar(1 + lift * .3); contactShadow.material.opacity = .8 / (1 + lift * 2);
     const cameraChanged = !renderedPosition.equals(camera.camera.position) || !renderedRotation.equals(camera.camera.quaternion);
-    const redraw = !ui.isOpen || renderer.needsRender || (ui.openingActive && cameraChanged);
-    const throttled = ui.isOpen && !renderer.needsRender && (!ui.openingActive || !camera.transitioning) && time - lastRender < 65;
+    const redraw = !ui.isOpen || renderer.needsRender || ((ui.openingActive || ui.computerActive) && cameraChanged);
+    const throttled = ui.isOpen && !renderer.needsRender && (!(ui.openingActive || ui.computerActive) || !camera.transitioning) && time - lastRender < 65;
     if (redraw && !throttled) {
       lastRender = time; renderer.renderer.render(scene, camera.camera); renderer.needsRender = false;
       renderedPosition.copy(camera.camera.position); renderedRotation.copy(camera.camera.quaternion);

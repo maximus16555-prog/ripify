@@ -1,3 +1,5 @@
+import { ComputerDesktop } from './computer-desktop';
+import { ComputerServices } from '../core/computer';
 import './catalog.css';
 import { CardInspector, disposeCardInspectionResources } from './card-inspector';
 import { ContainerOpening } from './container-opening';
@@ -17,6 +19,10 @@ export class GameUI {
   modal: HTMLElement;
   isOpen = false;
   get openingActive() { return this.isOpen && !!(this.opener || this.containerOpener); }
+  get computerActive() { return this.isOpen && !!this.desktop; }
+  private desktop?: ComputerDesktop;
+  private computerServices: ComputerServices;
+  tickComputer(dt: number) { this.computerServices.tick(dt); }
   private opener?: PackOpening;
   private containerOpener?: ContainerOpening;
   private inspector?: CardInspector;
@@ -37,6 +43,7 @@ export class GameUI {
   private movementTime = 0;
 
   constructor(private root: HTMLElement, private store: GameStore, private audio: GameAudio, private pause: () => void, private resume: () => void, private getPreset: () => string) {
+    this.computerServices = new ComputerServices(store);
     root.innerHTML = `<div class="hud">
       <header class="hud-top"><div class="game-identity"><div class="brand-symbol">✳</div><div><b class="wordmark">RIPIFY</b><div class="location-label"><i></i><span data-location>Your room</span></div></div></div>
       <div class="hud-resources"><div class="resource coins" title="In-game coins">${icon('coin')}<b data-currency></b></div><div class="resource" title="Unopened packs and sealed products">${icon('pack')}<b data-packs></b></div><div class="resource" title="Collected cards">${icon('binder')}<b data-cards></b></div><span class="hud-divider"></span><button class="icon-button" data-help aria-label="Controls">${icon('help')}</button><button class="icon-button" data-settings aria-label="Settings">${icon('settings')}</button></div></header>
@@ -73,7 +80,7 @@ export class GameUI {
   fps(value: number) { this.hud.querySelector('.fps-counter')!.textContent = `${value} FPS · ${this.getPreset()}`; }
   toast(text: string) { clearTimeout(this.toastTimer); this.toastEl.innerHTML = `<span>✓</span>${escapeHtml(text)}`; this.toastEl.hidden = false; this.toastTimer = window.setTimeout(() => { this.toastEl.hidden = true; }, 3800); }
   private open(html: string, wide = false, title = 'Game menu') {
-    this.finishCrack();
+    this.finishCrack(); this.desktop?.dispose(); this.desktop = undefined;
     this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = true; this.pause(); this.hud.classList.add('menu-open');
     this.modal.hidden = false; this.modal.className = `modal-root ${wide ? 'wide' : ''}`;
     this.modal.innerHTML = `<section class="game-panel" role="dialog" aria-modal="true" aria-label="${title}">${html}</section>`;
@@ -85,7 +92,7 @@ export class GameUI {
     const trap = (e: KeyboardEvent) => { if (e.key !== 'Tab' || !this.isOpen) return; const focusable = Array.from(this.modal.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([hidden]), select, [tabindex="0"]')); if (!focusable.length) return; const a = focusable[0]; const b = focusable[focusable.length - 1]; if (e.shiftKey && (document.activeElement === a || !this.modal.contains(document.activeElement))) { e.preventDefault(); b.focus(); } else if (!e.shiftKey && document.activeElement === b) { e.preventDefault(); a.focus(); } };
     document.addEventListener('keydown', trap); this.focusCleanup = () => document.removeEventListener('keydown', trap);
   }
-  close() { if (!this.isOpen) return; this.finishCrack(); this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = false; this.modal.hidden = true; this.modal.replaceChildren(); this.hud.classList.remove('menu-open'); this.resume(); }
+  close() { if (!this.isOpen) return; this.desktop?.dispose(); this.desktop = undefined; this.finishCrack(); this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = false; this.modal.hidden = true; this.modal.replaceChildren(); this.hud.classList.remove('menu-open'); this.resume(); }
   private header(eyebrow: string, title: string, suffix = '') { return `<header class="panel-header"><div><span class="eyebrow">${eyebrow}</span><h1>${title}${suffix}</h1></div><button class="close-button" data-close aria-label="Close">✕</button></header>`; }
   packs() {
     const s = this.store.state;
@@ -166,13 +173,10 @@ export class GameUI {
     this.modal.querySelector<HTMLButtonElement>('[data-back]')!.onclick = () => this.inspect(uid);
     this.modal.querySelector<HTMLButtonElement>('[data-submit]')!.onclick = () => { if (this.store.submit(uid, this.chosenGrader, this.chosenService)) { this.audio.play('buy'); this.toast(`${d.name} shipped to ${this.chosenGrader}`); this.computer('grading'); } };
   }
-  computer(tab = this.computerTab) {
-    this.computerTab = tab; const s = this.store.state;
-    this.open(`${this.header('RIPIFY OS / HOME COMPUTER', 'Desktop')}<nav class="computer-tabs" aria-label="Computer applications">${[['market', 'Market'], ['grading', 'Grading'], ['ledger', 'Ledger']].map(([v, label]) => `<button data-tab="${v}" class="${tab === v ? 'selected' : ''}">${label}${v === 'grading' && s.orders.length ? `<span>${s.orders.length}</span>` : ''}</button>`).join('')}<button data-collection>Collection ↗</button></nav><div class="computer-content">${tab === 'market' ? `<div class="content-heading"><h2>Your cards for sale</h2><span>Today’s simulated values</span></div>${s.cards.filter(c => c.status !== 'grading').length ? `<div class="market-list">${s.cards.filter(c => c.status !== 'grading').sort((a, b) => ownedValue(b, s.marketSeed) - ownedValue(a, s.marketSeed)).map(c => `<button class="market-row" data-inspect="${c.uid}"><span class="market-thumb" style="background:${CARD_BY_ID.get(c.cardId)!.color}">${c.status === 'graded' ? c.grade : '✦'}</span><span><b>${CARD_BY_ID.get(c.cardId)!.name}</b><small>${CARD_BY_ID.get(c.cardId)!.set} · ${c.status === 'graded' ? `${c.grader} ${c.grade}` : 'Raw'}</small></span><strong>${money(ownedValue(c, s.marketSeed))}<small> coins</small></strong><span>↗</span></button>`).join('')}</div>` : '<div class="empty-state"><span>↗</span><h2>No cards to sell yet</h2><p>Your first pull is waiting at the desk.</p></div>'}` : tab === 'grading' ? '<div class="content-heading"><h2>Grading orders</h2><span>Collect returns here</span></div><div data-orders></div>' : `<div class="ledger-totals"><div><span>Wallet</span><b>${money(s.currency)}</b></div><div><span>Packs opened</span><b>${s.stats.opened}</b></div><div><span>Cards sold</span><b>${s.stats.sold}</b></div></div><div class="ledger-list">${s.history.length ? [...s.history].reverse().map(h => `<div><span><b>${escapeHtml(h.label)}</b><small>${h.type} · ${new Date(h.at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</small></span><strong class="${h.amount > 0 ? 'positive' : ''}">${h.amount > 0 ? '+' : '−'}${money(Math.abs(h.amount))}</strong></div>`).join('') : '<div class="empty-state"><h2>A fresh start</h2></div>'}</div>`}</div><footer class="panel-footer"><span>${icon('coin')} ${money(s.currency)} coins</span><span>In-game currency only</span></footer>`, true, 'Computer');
-    this.modal.querySelectorAll<HTMLButtonElement>('[data-tab]').forEach(b => { b.onclick = () => this.computer(b.dataset.tab!); });
-    this.modal.querySelector<HTMLButtonElement>('[data-collection]')!.onclick = () => this.binder();
-    this.modal.querySelectorAll<HTMLButtonElement>('[data-inspect]').forEach(b => { b.onclick = () => this.inspect(b.dataset.inspect!, 'market'); });
-    if (tab === 'grading') { this.renderOrders(); this.orderTimer = window.setInterval(() => { this.renderOrders(); this.updateHUD(); }, 1000); }
+  computer(tab = 'desktop') {
+    this.close(); this.isOpen = true; this.pause(); this.hud.classList.add('menu-open'); this.modal.hidden = false;
+    this.desktop = new ComputerDesktop(this.modal, this.store, this.computerServices, () => this.close(), tab === 'grading' ? 'grading' : tab === 'market' ? 'ebay' : undefined);
+    this.trapFocus();
   }
   private renderOrders() {
     const target = this.modal.querySelector<HTMLElement>('[data-orders]'); if (!target) return;
@@ -236,5 +240,5 @@ export class GameUI {
     this.open(`${this.header('KEYBOARD & MOUSE', 'Controls')}<div class="help-controls">${[['W A S D', 'Move'], ['Mouse', 'Look around · click room to capture cursor'], ['Shift', 'Sprint'], ['Space', 'Jump'], ['E', 'Use the nearest object'], ['Esc', 'Release cursor · close menus'], ['Drag', 'Rip the seam · swipe each card'], ['Hold R', 'Rip with keyboard'], ['← / →', 'Reveal one card']].map(([key, label]) => `<div><kbd>${key}</kbd><span>${label}</span></div>`).join('')}</div><footer class="panel-footer"><span>A starter pack is waiting at your desk.</span><button class="primary-button" data-play>Let’s play →</button></footer>`, false, 'Controls');
     this.modal.querySelector<HTMLButtonElement>('[data-play]')!.onclick = () => this.close();
   }
-  dispose() { this.close(); disposeCardInspectionResources(); disposeContainerResources(); this.unsubscribe(); clearTimeout(this.toastTimer); }
+  dispose() { this.close(); this.computerServices.dispose(); disposeCardInspectionResources(); disposeContainerResources(); this.unsubscribe(); clearTimeout(this.toastTimer); }
 }

@@ -46,7 +46,10 @@ test('settings reset requires confirmation, handles failure, clears progress and
   expect(await page.evaluate(key => localStorage.getItem(`${key}.recovery`), SAVE_KEY)).toBeNull();
   expect(await page.evaluate(() => localStorage.getItem('unrelated-setting'))).toBe('keep');
   await expect(page.locator('[data-location]')).toHaveText('Your room');
-  await page.reload(); await ready(); expect(await saved()).toEqual(reset);
+  await page.reload(); await ready(); const refreshed = await saved();
+  // Authoritative game time advances while playing; inventory and reset state must remain identical.
+  if (refreshed.computer && reset.computer) { expect(refreshed.computer.minute).toBeGreaterThanOrEqual(reset.computer.minute); refreshed.computer.minute = reset.computer.minute; }
+  expect(refreshed).toEqual(reset);
   await expect(page.locator('[data-cards]')).toHaveText('0'); await expect(page.locator('[data-packs]')).toHaveText('1');
   expect(errors).toEqual([]);
   await info.attach('reset-report', { body: JSON.stringify({ url: page.url(), cancelPreservesSave: true, failurePreservesSave: true, resetPersists: true, preferencesKept: true, recoveryCleared: true, errors }), contentType: 'application/json' });

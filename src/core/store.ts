@@ -1,3 +1,4 @@
+import { activeListing } from './computer-state';
 import { CARD_BY_ID, PRODUCTS } from '../data/cards';
 import { calculateGrade, GRADERS, ownedValue } from './economy';
 import { generatePack, uuid } from './packs';
@@ -17,9 +18,14 @@ export class GameStore {
   subscribe(fn: () => void) { this.listeners.add(fn); return () => { this.listeners.delete(fn); }; }
   persist() { try { this.storage.write(JSON.stringify(this.state)); this.warning = undefined; } catch { this.warning = 'Save failed. Export your save from Settings.'; } }
   private changed() { this.persist(); this.listeners.forEach(fn => fn()); }
+  /** Persist first: commerce never exposes unpaid items or half-completed transfers. */
+  commit(next: Save) {
+    try { this.storage.write(JSON.stringify(next)); } catch { this.warning = 'Could not save. Transaction cancelled.'; return false; }
+    this.state = next; this.warning = undefined; this.listeners.forEach(fn => fn()); return true;
+  }
   isCardLocked(uid: string) {
     const c = this.state.cards.find(c => c.uid === uid);
-    return !c || c.owner !== 'local-player' || c.status === 'grading' || !!c.ownershipLock || this.cracking.has(uid) || this.state.orders.some(o => o.cardUid === uid);
+    return !c || c.owner !== 'local-player' || c.status === 'grading' || !!c.ownershipLock || !!activeListing(this.state, uid) || this.cracking.has(uid) || this.state.orders.some(o => o.cardUid === uid);
   }
   canCrack(uid: string) { const c = this.state.cards.find(c => c.uid === uid); return !!c && c.status === 'graded' && !this.isCardLocked(uid); }
   crackSlab(uid: string, seed?: number, now = Date.now()) {
@@ -52,7 +58,7 @@ export class GameStore {
     if (!p || p.type !== 'booster' || !canOpenProduct(p) || p.setCode !== pack.setCode || pack.state !== 'unopened' || this.state.packs.some(item => item.uid === pack.uid) || this.state.opening?.pack.uid === pack.uid || this.state.packReceipts?.some(r => r.pack.uid === pack.uid)) return false;
     this.state.packs.push(pack); this.changed(); return true;
   }
-  private log(type: Save['history'][number]['type'], amount: number, label: string) { this.state.history.push({ uid: uuid(), type, amount, label, at: Date.now() }); this.state.history = this.state.history.slice(-100); }
+  private log(type: Save['history'][number]['type'], amount: number, label: string) { if (type === 'sale') this.state.stats.totalSales = Math.round(((this.state.stats.totalSales ?? this.state.history.filter(h => h.type === 'sale').reduce((n, h) => n + h.amount, 0)) + amount) * 100) / 100; this.state.history.push({ uid: uuid(), type, amount, label, at: Date.now() }); this.state.history = this.state.history.slice(-100); }
   buy(code: string) {
     const p = PRODUCTS.find(p => p.code === code);
     if (!p || !canOpenProduct(p) || this.state.currency < p.price) return false;
@@ -62,7 +68,7 @@ export class GameStore {
     this.state.stats.spent += p.price; this.log('purchase', -p.price, p.name); this.changed(); return true;
   }
   startOpening(uid: string) {
-    if (this.state.opening || this.state.containerOpening) return false;
+    if (this.state.opening || this.state.containerOpening || activeListing(this.state, uid)) return false;
     const pack = this.state.packs.find(p => p.uid === uid); if (!pack) return false;
     // Unopened old packs have no generated results. Never upgrade/re-generate
     // the persisted cards in an existing opening.
@@ -74,7 +80,7 @@ export class GameStore {
     this.state.opening = { pack, cards, stage: 'sealed', index: 0 }; this.changed(); return true;
   }
   startContainer(uid: string) {
-    if (this.state.opening || this.state.containerOpening) return false;
+    if (this.state.opening || this.state.containerOpening || activeListing(this.state, uid)) return false;
     const owned = this.state.sealedProducts.find(p => p.uid === uid);
     const p = owned && PRODUCT_BY_ID.get(owned.productId);
     if (!p || !canOpenProduct(p) || owned?.manifestRevision !== p.manifest.revision) return false;

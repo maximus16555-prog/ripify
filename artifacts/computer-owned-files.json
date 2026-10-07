@@ -1,0 +1,17 @@
+[
+  "src/core/types.ts",
+  "src/core/save.ts",
+  "src/core/store.ts",
+  "src/core/computer.ts",
+  "src/core/computer-state.ts",
+  "src/ui/game-ui.ts",
+  "src/ui/computer-apps.ts",
+  "src/ui/computer-desktop.ts",
+  "src/ui/computer.css",
+  "src/game/camera.ts",
+  "src/main.ts",
+  "public/computer/collectr.png",
+  "tests/computer.test.ts",
+  "tests/production/computer.spec.ts",
+  "tests/production/reset-progress.spec.ts"
+]
