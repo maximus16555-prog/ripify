@@ -61,11 +61,13 @@ for (const [name, seed] of [['safe', 0], ['damaged', 1000]] as const) test(`phys
   await info.attach('slab-crack-report', { body: JSON.stringify({ url: page.url(), outcome: name, persistedBeforeAnimation: true, uid: before.uid, conditionBefore: before.condition, conditionAfter: after.condition, regrading: true, errors }), contentType: 'application/json' });
 });
 
-test('reload during slab animation cannot undo or reroll a failed crack', async ({ page }) => {
+for (const interruption of ['reload', 'close'] as const) test(`${interruption} during slab animation cannot undo or reroll a failed crack`, async ({ page }) => {
   const state = initial(); await page.addInitScript(({ state, key }) => { if (!localStorage.getItem(key)) localStorage.setItem(key, JSON.stringify(state)); }, { state, key: SAVE_KEY });
   await page.goto('/'); await ready(page); await binder(page); await page.locator('[data-inspect]').click();
   await page.locator('[data-crack-slab]').click(); await fixSeed(page, 1000); await page.locator('[data-confirm-crack]').click();
-  const committed = (await saved(page)).cards[0]; await page.reload(); await ready(page);
+  const committed = (await saved(page)).cards[0];
+  if (interruption === 'close') { await page.keyboard.press('Escape'); expect((await saved(page)).cards[0]).toEqual(committed); }
+  await page.reload(); await ready(page);
   expect((await saved(page)).cards[0]).toEqual(committed); expect(committed.crackHistory![0].outcome).toBe('damaged');
   await binder(page); await page.locator('[data-inspect]').click(); await expect(page.locator('[data-crack-slab]')).toHaveCount(0);
 });

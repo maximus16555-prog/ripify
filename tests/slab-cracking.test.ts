@@ -48,6 +48,12 @@ describe('transactional slab cracking', () => {
     expect(f.store.state.cards).toHaveLength(1); expect(f.card.uid).toBe(before.uid);
     for (let i = 0; i < 5; i++) expect(ownedRawMarketValue(new GameStore(f.storage).state.cards[0], 0)).toBe(2291);
   });
+  it('archives BGS subgrades with the former slab certificate', () => {
+    const f = fixture(); f.card.grader = 'BGS'; f.card.subgrades = [9, 8.5, 9.5, 9];
+    const subgrades = [...f.card.subgrades], event = f.store.crackSlab(f.card.uid, 0)!;
+    expect(event.subgrades).toEqual(subgrades); expect(event.cert).toMatch(/^RFY-/);
+    expect(f.card.subgrades).toBeUndefined(); expect(new GameStore(f.storage).state.cards[0].crackHistory![0].subgrades).toEqual(subgrades);
+  });
   it('saves before notifications, blocks repeat commits and resolves an interrupted animation on reload', () => {
     const f = fixture(); let notified = false;
     f.store.subscribe(() => { notified = true; expect(JSON.parse(f.saved()).cards[0].status).toBe('raw'); });

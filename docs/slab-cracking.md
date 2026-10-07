@@ -4,7 +4,7 @@ Inspect an owned graded card, choose **Crack slab**, then confirm. Cancel is foc
 
 ## Transaction and identity
 
-[GameStore](../src/core/store.ts) checks ownership and grading/listing/trade/transfer/animation locks, rolls once using a crypto-generated seed, creates the result, and writes the entire next save **before** mutating live state or showing animation. Failed writes preserve the original slab and inventory. Successful writes retain the owned UID and object, printing, source, acquisition history, favorite, finish and manufacturing misprint. They change current status to raw and archive the prior grader, grade, certification, result, seed and condition snapshots in `crackHistory`.
+[GameStore](../src/core/store.ts) checks ownership and grading/listing/trade/transfer/animation locks, rolls once using a crypto-generated seed, creates the result, and writes the entire next save **before** mutating live state or showing animation. Failed writes preserve the original slab and inventory. Successful writes retain the owned UID and object, printing, source, acquisition history, favorite, finish and manufacturing misprint. They change current status to raw and archive the prior grader, grade, certification, BGS subgrades where present, result, seed and condition snapshots in `crackHistory`.
 
 There is no pending RNG at animation completion. Close, Escape or reload can skip the visual sequence; the saved raw card and outcome already exist. A second click cannot crack a raw card. A short session lock prevents selling, grading or displaying during animation and is released on close/completion. After reload the operation is already resolved. No replacement inventory copy is generated.
 
@@ -28,8 +28,16 @@ This checkout has no functioning eBay/trade/transfer subsystem. The shared guard
 
 ## Validation
 
-- 16 new unit cases cover safe/failure, identity, exact condition, value basis, fixed chase odds, misprints/regrading, population/sale persistence, lock types, write failure, duplicate commits, reload safety, corruption rejection, persistent geometry and shell separation.
+- 17 new unit cases cover safe/failure, identity, exact condition, value basis, fixed chase odds, misprints/regrading, population/sale persistence, lock types, write failure, duplicate commits, reload safety, corruption rejection, persistent geometry and shell separation.
 - Production browser tests exercise real walking to the binder, confirmation/cancel, both physical results, front/back view, regrading, display removal, and refresh during animation using isolated saves.
 - `npm run simulate:slab-cracks` performs 200,000 attempts without touching player inventory: **99,866 safe (49.933%)**, **100,134 damaged (50.067%)**, **zero invariant violations**. The result is 0.60 standard deviations from the expected 50/50 split.
 
 See [simulation report](../artifacts/slab-crack-simulation.json) and [automated tests](../tests/slab-cracking.test.ts).
+
+## Changed files
+
+- Core: [types](../src/core/types.ts), [store](../src/core/store.ts), [economy](../src/core/economy.ts), [save](../src/core/save.ts), [slab cracking](../src/core/slab-cracking.ts), [history validation](../src/core/slab-validation.ts), [population](../src/core/population.ts).
+- Physical/thumbnail rendering: [cards](../src/assets/cards.ts), [damage presentation](../src/assets/crack-damage-presentation.ts), [physical card](../src/game/physical-card.ts), [display cards](../src/game/display-cards.ts), [slab separation](../src/game/slab-crack-presentation.ts).
+- Interaction: [card inspector](../src/ui/card-inspector.ts), [game UI](../src/ui/game-ui.ts), [catalog styles](../src/ui/catalog.css), [audio](../src/game/audio.ts) (new isolated plastic snap only).
+- Validation: [unit tests](../tests/slab-cracking.test.ts), [production browser tests](../tests/production/slab-cracking.spec.ts), [simulation](../scripts/slab-crack-simulation.ts), [simulation runner](../scripts/simulate-slab-cracks.mjs), [simulation result](../artifacts/slab-crack-simulation.json).
+- Commands/documentation: [package](../package.json), [README](../README.md), this report, [deployment notes](deployment.md).

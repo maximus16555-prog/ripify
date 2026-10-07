@@ -19,7 +19,7 @@ export function createSlabCrack(card: OwnedCard, seed = newSeed(), now = Date.no
     after.edges = Math.max(0, before.edges - Math.round(14 + severity * 13));
     after.surface = Math.max(0, before.surface - Math.round(17 + severity * 15));
   }
-  return { uid: uuid(), at: now, seed, grader: slab.grader, grade: slab.grade, cert: slab.cert, outcome: safe ? 'safe' : 'damaged', rawModifier: safe ? 1 : FAILED_CRACK_RAW_MODIFIER, conditionBefore: before, conditionAfter: after, damage };
+  return { uid: uuid(), at: now, seed, grader: slab.grader, grade: slab.grade, cert: slab.cert, ...(slab.subgrades ? { subgrades: [...slab.subgrades] } : {}), outcome: safe ? 'safe' : 'damaged', rawModifier: safe ? 1 : FAILED_CRACK_RAW_MODIFIER, conditionBefore: before, conditionAfter: after, damage };
 }
 export function crackDamageFactor(card: Pick<OwnedCard, 'crackHistory'>) {
   return (card.crackHistory ?? []).reduce((factor, event) => factor * (event.outcome === 'damaged' ? FAILED_CRACK_RAW_MODIFIER : 1), 1);
