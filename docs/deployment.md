@@ -6,8 +6,8 @@ Published through Freebuff managed hosting on October 6, 2026. This production s
 
 - Management: https://freebuff.com/cloud/project/beige-spoons-deny/settings?section=deploys
 - Private source: https://github.com/maximus16555-prog/ripify
-- Hosting deployment ID: `kn79qg8f`
-- Runtime source commit: `0e1e6de`.
+- Hosting deployment ID: `kn75aa5m`
+- Runtime source commit: `4a00296`.
 - Install: `npm ci`; build: `npm run build`; static output: `dist` at domain root.
 
 ## Compatibility changes
@@ -58,3 +58,9 @@ For future releases, sync only intended source changes into the existing private
 ## Ascended Heroes pricing release
 
 The October 6 pricing update pins seven exact Ascended Heroes printings to the requested authoritative base raw values. Existing saved misprints resolve to these values with the single 30x raw modifier. Market variation is disabled only for these seven IDs. Generation, special-pack composition, all rare-event odds, grading rules, and the physical opener are unchanged. The hosted main bundle matches the verified local build by SHA256.
+
+## Hidden shortcut release
+
+The hosted production game now retains the user-requested Ctrl+Shift+1/2 pack callbacks. The Vite development-only gate caused both shortcuts to be absent after deployment. Only input-to-pack-factory wiring changed; the generator, per-instance forced decisions, natural odds, and opener are retained. General development debug introspection remains disabled in production. Both production browser tests pass against the public domain: ordinary shop/opening/save flow, and special shortcut inventory, held-key suppression, repeated presses, save/reload, exact compositions/artwork, physical ripping, all manual reveals, and collecting 22 cards. No uncaught browser errors were recorded. Hosted runtime SHA256 matches the local tested build.
+
+Evidence: [hosted shortcut report](../artifacts/hosted-shortcuts.json), [shortcut smoke audit](../artifacts/production-shortcuts-check.json).
