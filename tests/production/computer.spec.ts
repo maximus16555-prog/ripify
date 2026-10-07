@@ -56,6 +56,7 @@ test('physical computer: five connected apps, purchases, locks, grading, search,
   await page.getByRole('button', { name: 'Minimize Collectr', exact: true }).click();
   await page.locator('[data-app="profile"]').click(); await expect(page.locator('.pc-profile-header')).toContainText('Collector'); await page.locator('[name="name"]').fill('Max'); await page.locator('[data-action="profile"]').click(); await expect(page.locator('.pc-profile-header')).toContainText('Max');
   await page.screenshot({ path: 'artifacts/computer-profile.png' });
+  await page.locator('.pc-profile-highlights [data-action="item"]').click(); await expect(page.locator('.physical-card-canvas')).toBeVisible(); await page.getByRole('button', { name: 'Back to profile', exact: true }).click(); await expect(page.locator('.pc-profile-header')).toContainText('Max');
   // Real timers progress in the shared game even while a different application is foregrounded.
   await expect.poll(async () => (await saved(page)).computer!.orders[0].status, { timeout: 45000 }).toBe('DELIVERED');
   await expect.poll(async () => (await saved(page)).computer!.listings[0].status, { timeout: 80000 }).toBe('SOLD');
