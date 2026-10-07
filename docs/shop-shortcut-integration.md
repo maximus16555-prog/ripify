@@ -6,7 +6,7 @@ Completed October 6, 2026. Scope: the existing physical shop, pack inventory, an
 
 - **151:** This checkout already contained the 151 catalog entry and purchase action. I could not substantiate a missing 151 definition. Its actual shelf purchase → inventory → home desk → reveal path is now explicitly covered by a browser test.
 - **Ascended Heroes:** There was no product, card pool, supported generation branch, or special-pack rule in this checkout. Adding only a shop button would have led to “Unsupported booster.” The missing supporting set and generation/save support were added.
-- **Shortcuts:** The single global input listener handled Ctrl+Shift+X, movement, E and Escape, but had no Digit1/Digit2 handlers. There was no hidden debug flag to enable. The new callbacks are supplied only under Vite's development-build flag, before the exploration/menu input guards, with text-editing guards and repeat suppression. No second keyboard listener was introduced.
+- **Shortcuts:** The single global input listener handled Ctrl+Shift+X, movement, E and Escape, but had no Digit1/Digit2 handlers. There was no hidden debug flag to enable. The callbacks originally used Vite's development-build flag, which stripped them from hosted gameplay. The follow-up fix removes that gate while preserving text-editing guards and repeat suppression. No second keyboard listener was introduced.
 - The shop placed each catalog entry at `-3.8 + index × 3.6`. A fourth entry would have put a rack at x=7, outside the room. Both booster sets now share the existing left rack, each with its own pack artwork, sign, price and purchase prompt. ETB/UPC rack positions are retained. The counter also lists both products reliably; there is no rotating-stock system in this checkout.
 
 ## Playable results
@@ -17,7 +17,7 @@ Completed October 6, 2026. Scope: the existing physical shop, pack inventory, an
 | Shop: Ascended Heroes | 9.5 coins deducted once; one `ascended-heroes-booster` unopened instance, set `me02.5`; real Ascended Heroes cards plus Basic Energy |
 | Ctrl+Shift+1, development | Exactly one ordinary-looking sealed 151 pack, with persisted `english-151-demigod` decision; the last three cards are one verified starter IR/IR/SIR evolution line |
 | Ctrl+Shift+2, development | Exactly one ordinary-looking sealed Ascended Heroes pack, with persisted `ascended-heroes-god` decision; three Mega Attack Rares and seven Special Illustration Rares, plus Basic Energy |
-| Production shortcuts | No inventory changes, no dev confirmation text in the bundle, no development debug surface |
+| Production shortcuts | Same hidden per-instance special pack grants as development; general development debug surface remains absent |
 
 The per-instance override selects the special decision directly. It does not search for a lucky seed, grant cards, auto-open, or change global odds. The ordinary generator subsequently resolves the saved instance. Full-pack misprints retain their independent seed-based decision; individual misprints use the existing per-card streams. Forced development packs are excluded from natural rare-event population statistics. No special labels appear on the sealed wrapper or pack picker.
 
@@ -46,4 +46,8 @@ The initial route tests exposed test-path collisions with the existing crate and
 - Tests: [shop-integration.test.ts](../tests/shop-integration.test.ts), [shop-shortcuts.spec.ts](../tests/browser/shop-shortcuts.spec.ts), [rare-events.test.ts](../tests/rare-events.test.ts) (type narrowing for the extended event union).
 - Documentation: [artwork-sources.md](artwork-sources.md), this report.
 
-The development game is available at http://127.0.0.1:5173 while the dev server is running. Ctrl+Shift+1/2 intentionally do nothing in `npm run preview` or a deployed production build.
+The development game is available at http://127.0.0.1:5173 while the dev server is running. Ctrl+Shift+1/2 now also work in production preview and the public hosted game. This supersedes the original development-only requirement at the user's request.
+
+## Hosted shortcut fix
+
+The Vite DEV gate was the cause of both shortcuts doing nothing after publication. The existing single input listener and generator are retained; the pack factory is now included and connected in production. The production browser test presses both shortcuts, checks held repeats and subsequent intentional presses, verifies normal-looking unopened inventory, survives reload before and during opening, physically rips both packs, manually reveals all cards, verifies exact special compositions and artwork, and collects the same instances. Forced outcomes remain excluded from natural population statistics. All 109 unit tests and the production-build shortcut test pass.
