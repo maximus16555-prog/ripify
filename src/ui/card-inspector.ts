@@ -4,6 +4,7 @@ import { CARD_BY_ID } from '../data/cards';
 import { createPhysicalCard } from '../game/physical-card';
 import { slabPresentation } from '../assets/card-presentation';
 import { physicalCardSignature } from '../game/display-cards';
+import { SlabCrackPresentation } from '../game/slab-crack-presentation';
 
 // One context retains at most one raw copy and one slab to keep both shader
 // variants warm. Dormant previews never render or keep interaction listeners.
@@ -32,6 +33,8 @@ export class CardInspector {
   private retained: Map<string, CachedCard>;
   private kind: string;
   private rendered = false;
+  private cracking?: SlabCrackPresentation;
+  private crackFrame = 0;
 
   constructor(private root: HTMLElement, owned: OwnedCard) {
     if (cachedPreview?.renderer.getContext().isContextLost()) disposeCardInspectionResources();
@@ -65,7 +68,7 @@ export class CardInspector {
     info.textContent = slab ? `${slab.grader} ${slab.grade} · ${slab.cert} · Simulated` : 'Front'; root.append(info);
     const options = { signal: this.abort.signal };
     canvas.addEventListener('pointerdown', e => {
-      if (e.button !== 0 || this.drag) return;
+      if (e.button !== 0 || this.drag || this.cracking) return;
       e.preventDefault(); canvas.focus({ preventScroll: true }); canvas.setPointerCapture(e.pointerId);
       this.drag = { id: e.pointerId, x: e.clientX, y: e.clientY };
     }, options);
@@ -78,7 +81,7 @@ export class CardInspector {
     const release = (e: PointerEvent) => { if (this.drag?.id === e.pointerId) { this.drag = undefined; if (canvas.hasPointerCapture(e.pointerId)) canvas.releasePointerCapture(e.pointerId); } };
     canvas.addEventListener('pointerup', release, options); canvas.addEventListener('pointercancel', release, options); canvas.addEventListener('lostpointercapture', release, options);
     canvas.addEventListener('keydown', e => {
-      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return;
+      if (this.cracking || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return;
       e.preventDefault(); e.stopPropagation();
       if (e.key === 'ArrowLeft') this.yaw -= Math.PI / 12;
       if (e.key === 'ArrowRight') this.yaw += Math.PI / 12;
@@ -109,7 +112,7 @@ export class CardInspector {
     this.camera.updateProjectionMatrix(); this.invalidate();
   }
   private invalidate() {
-    if (this.disposed || this.frame || document.hidden) return;
+    if (this.disposed || this.frame || this.cracking || document.hidden) return;
     this.frame = requestAnimationFrame(() => {
       this.frame = 0; if (this.disposed) return;
       this.item.group.rotation.set(this.pitch, this.yaw, 0, 'YXZ');
@@ -126,8 +129,32 @@ export class CardInspector {
       this.retained.set(this.kind, { item: this.item, signature: this.signature });
     });
   }
+  animateCrack(owned: OwnedCard, onFinish: () => void, onSnap: () => void) {
+    cancelAnimationFrame(this.frame); this.frame = 0; this.drag = undefined;
+    this.yaw = this.pitch = 0; this.item.group.rotation.set(0, 0, 0);
+    this.cracking = new SlabCrackPresentation(this.item, owned);
+    this.scene.add(this.cracking.raw.group);
+    this.root.querySelector('.physical-card-controls')!.setAttribute('hidden', '');
+    this.root.querySelector('.physical-card-caption')!.textContent = 'Opening slab…';
+    this.root.querySelector('.physical-card-caption')!.setAttribute('role', 'status');
+    this.renderer.domElement.dataset.cracking = 'true';
+    let started = 0, snapped = false;
+    const tick = (now: number) => {
+      if (this.disposed || !this.cracking) return;
+      if (!started) started = now;
+      const t = Math.min(1, (now - started) / 1900);
+      this.cracking.update(t);
+      if (t >= .34 && !snapped) { snapped = true; onSnap(); }
+      this.renderer.render(this.scene, this.camera);
+      if (t < 1) this.crackFrame = requestAnimationFrame(tick); else onFinish();
+    };
+    // The committed raw copy's artwork must be ready before it leaves the shell.
+    void this.cracking.raw.ready.then(() => { if (!this.disposed) this.crackFrame = requestAnimationFrame(tick); });
+  }
   dispose() {
     if (this.disposed) return; this.disposed = true; this.abort.abort(); this.observer.disconnect(); cancelAnimationFrame(this.frame);
+    cancelAnimationFrame(this.crackFrame); this.cracking?.dispose();
+    if (this.cracking) { if (this.retained.get(this.kind)?.item === this.item) this.retained.delete(this.kind); this.item.dispose(); }
     this.renderer.domElement.remove(); this.scene.clear(); this.renderer.renderLists.dispose();
     disposeCardInspectionResources();
     if (!this.rendered && this.retained.get(this.kind)?.item !== this.item) this.item.dispose();

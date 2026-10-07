@@ -2,6 +2,7 @@ import { CARD_BY_ID } from '../data/cards';
 import type { CardDefinition, Grader, OwnedCard } from './types';
 import { MISPRINT_MODIFIER } from './rare-events';
 import { FIXED_RAW_CARD_VALUES } from '../data/balance';
+import { crackDamageFactor } from './slab-cracking';
 export const GRADERS: Record<Grader, { cost: number; seconds: number; premium: number; bias: number; half: boolean; color: string }> = {
   PSA: { cost: 12, seconds: 150, premium: 1.3, bias: .1, half: false, color: '#ab584d' },
   BGS: { cost: 16, seconds: 180, premium: 1.4, bias: -.12, half: true, color: '#9a895c' },
@@ -26,7 +27,8 @@ export function ownedRawMarketValue(owned: OwnedCard, seed: number, now?: number
   const definition = CARD_BY_ID.get(owned.cardId)!;
   const card = owned.misprint ? { ...definition, value: owned.baseRawValue! } : definition;
   const base = rawValue(card, seed, now);
-  return owned.misprint ? Math.round(base * MISPRINT_MODIFIER * 100) / 100 : base;
+  // Each distinct failed crack halves the raw basis once; never a graded price.
+  return Math.round(base * (owned.misprint ? MISPRINT_MODIFIER : 1) * crackDamageFactor(owned) * 100) / 100;
 }
 export function ownedValue(owned: OwnedCard, seed: number, now?: number) {
   const base = ownedRawMarketValue(owned, seed, now);

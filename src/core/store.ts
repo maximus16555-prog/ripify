@@ -5,15 +5,44 @@ import { createPack, createSealed, createCard, seeded, canOpenProduct } from './
 import { PRODUCT_BY_ID } from '../data/products';
 import { browserStorage, loadSave, newSave, parseSave, type SaveStorage } from './save';
 import type { Grader, OwnedCard, Pack, Save, Settings } from './types';
+import { createSlabCrack } from './slab-cracking';
+import { hydratePopulation, recordGradedCopy } from './population';
 import { emptyRareEventStats, recordRareEvents } from './rare-events';
 export class GameStore {
   state: Save;
   warning?: string;
   private listeners = new Set<() => void>();
+  private cracking = new Set<string>();
   constructor(private storage: SaveStorage = browserStorage) { const loaded = loadSave(storage); this.state = loaded.save; this.warning = loaded.warning; }
   subscribe(fn: () => void) { this.listeners.add(fn); return () => { this.listeners.delete(fn); }; }
   persist() { try { this.storage.write(JSON.stringify(this.state)); this.warning = undefined; } catch { this.warning = 'Save failed. Export your save from Settings.'; } }
   private changed() { this.persist(); this.listeners.forEach(fn => fn()); }
+  isCardLocked(uid: string) {
+    const c = this.state.cards.find(c => c.uid === uid);
+    return !c || c.owner !== 'local-player' || c.status === 'grading' || !!c.ownershipLock || this.cracking.has(uid) || this.state.orders.some(o => o.cardUid === uid);
+  }
+  canCrack(uid: string) { const c = this.state.cards.find(c => c.uid === uid); return !!c && c.status === 'graded' && !this.isCardLocked(uid); }
+  crackSlab(uid: string, seed?: number, now = Date.now()) {
+    if (!this.canCrack(uid)) return null;
+    const card = this.state.cards.find(c => c.uid === uid)!;
+    const event = createSlabCrack(card, seed, now);
+    const history = [...(card.gradingHistory ?? [])];
+    if (history.at(-1)?.grader !== event.grader || history.at(-1)?.grade !== event.grade) history.push({ grader: event.grader, grade: event.grade, at: now, orderUid: event.uid });
+    const replacement: OwnedCard = { ...card, status: 'raw', condition: { ...event.conditionAfter }, gradingHistory: history, crackHistory: [...(card.crackHistory ?? []), event] };
+    delete replacement.grader; delete replacement.grade; delete replacement.subgrades;
+    const population = hydratePopulation({ cards: this.state.cards, gradingPopulation: structuredClone(this.state.gradingPopulation ?? []) });
+    const displays = this.state.displays.map(d => d === uid ? null : d);
+    const committed = { ...this.state, gradingPopulation: population, displays, cards: this.state.cards.map(c => c.uid === uid ? replacement : c) };
+    // No result/animation is exposed until this one durable transaction succeeds.
+    try { this.storage.write(JSON.stringify(committed)); }
+    catch { this.warning = 'Could not save. The slab was not cracked.'; return null; }
+    Object.assign(card.condition, replacement.condition); card.status = 'raw'; card.gradingHistory = history; card.crackHistory = replacement.crackHistory;
+    delete card.grader; delete card.grade; delete card.subgrades;
+    this.state.gradingPopulation = population; this.state.displays = displays;
+    this.cracking.add(uid); this.warning = undefined; this.listeners.forEach(fn => fn());
+    return event;
+  }
+  finishCrack(uid: string) { this.cracking.delete(uid); }
   grantCurrencyBonus() {
     this.state.currency = Math.round((this.state.currency + 10) * 100) / 100;
     this.changed();
@@ -84,7 +113,7 @@ export class GameStore {
   }
   favorite(uid: string) { const c = this.state.cards.find(c => c.uid === uid); if (c) { c.favorite = !c.favorite; this.changed(); } }
   sell(uid: string) {
-    const c = this.state.cards.find(c => c.uid === uid); if (!c || c.status === 'grading') return false;
+    const c = this.state.cards.find(c => c.uid === uid); if (!c || this.isCardLocked(uid)) return false;
     const value = ownedValue(c, this.state.marketSeed);
     this.state.currency = Math.round((this.state.currency + value) * 100) / 100;
     this.state.cards = this.state.cards.filter(c => c.uid !== uid);
@@ -92,12 +121,12 @@ export class GameStore {
     this.state.stats.sold++; this.log('sale', value, CARD_BY_ID.get(c.cardId)!.name); this.changed(); return true;
   }
   display(uid: string, slot: number) {
-    const c = this.state.cards.find(c => c.uid === uid); if (!c || c.status === 'grading' || !Number.isInteger(slot) || slot < 0 || slot > 2) return false;
+    const c = this.state.cards.find(c => c.uid === uid); if (!c || this.isCardLocked(uid) || !Number.isInteger(slot) || slot < 0 || slot > 2) return false;
     this.state.displays = this.state.displays.map(d => d === uid ? null : d); this.state.displays[slot] = uid; this.changed(); return true;
   }
   clearDisplay(slot: number) { if (slot >= 0 && slot < 3) { this.state.displays[slot] = null; this.changed(); } }
   submit(uid: string, grader: Grader, service: 'Standard' | 'Express') {
-    const c = this.state.cards.find(c => c.uid === uid); if (!c || c.finish === 'metal' || c.status !== 'raw' || !Object.hasOwn(GRADERS, grader) || !['Standard', 'Express'].includes(service)) return false;
+    const c = this.state.cards.find(c => c.uid === uid); if (!c || this.isCardLocked(uid) || c.finish === 'metal' || c.status !== 'raw' || !Object.hasOwn(GRADERS, grader) || !['Standard', 'Express'].includes(service)) return false;
     const g = GRADERS[grader]; const cost = g.cost * (service === 'Express' ? 1.8 : 1);
     if (this.state.currency < cost) return false;
     const result = calculateGrade(c, grader); const now = Date.now();
@@ -111,6 +140,7 @@ export class GameStore {
     const c = this.state.cards.find(c => c.uid === o.cardUid); if (!c) return null;
     (c.gradingHistory ??= []).push({ grader: o.grader, grade: o.result, at: now, orderUid: o.uid });
     c.status = 'graded'; c.grader = o.grader; c.grade = o.result; if (o.grader === 'BGS') c.subgrades = o.subgrades;
+    recordGradedCopy(this.state.gradingPopulation ??= [], { cardUid: c.uid, cardId: c.cardId, grader: o.grader, grade: o.result });
     this.state.orders = this.state.orders.filter(o => o.uid !== uid); this.changed(); return c;
   }
   settings(patch: Partial<Settings>) { Object.assign(this.state.settings, patch); this.changed(); }
@@ -122,10 +152,10 @@ export class GameStore {
     try { this.storage.write(JSON.stringify(replacement)); }
     catch { this.warning = 'Reset failed. Your progress is unchanged.'; return false; }
     try { this.storage.clearRecovery?.(); } catch { /* Recovery copies are never loaded as active saves. */ }
-    this.state = replacement; this.warning = undefined;
+    this.state = replacement; this.cracking.clear(); this.warning = undefined;
     this.listeners.forEach(fn => fn()); return true;
   }
-  import(raw: string) { const replacement = parseSave(raw); this.state = replacement; this.changed(); }
+  import(raw: string) { const replacement = parseSave(raw); this.state = replacement; this.cracking.clear(); this.changed(); }
 }
 export function orderStatus(sentAt: number, dueAt: number, now = Date.now()) {
   const progress = (now - sentAt) / (dueAt - sentAt);

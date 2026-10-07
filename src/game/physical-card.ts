@@ -5,6 +5,8 @@ import { cardArtwork } from '../assets/cards';
 import { conditionAppearance, slabPresentation, stableHash } from '../assets/card-presentation';
 import cardBack from '../data/verified/card-back.json';
 import { drawPrintedFace, printAppearance } from '../assets/misprint-presentation';
+import { drawCrackDamage } from '../assets/crack-damage-presentation';
+import { crackDamage } from '../core/slab-cracking';
 
 export const CARD_SIZE = { width: .34, height: .474, depth: .0015 };
 export const SLAB_SIZE = { width: .412, height: .642, depth: .026 };
@@ -73,6 +75,7 @@ function drawWear(ctx: CanvasRenderingContext2D, owned: OwnedCard, side: 'front'
   ctx.fillStyle = '#e8e2cc'; ctx.globalAlpha = Math.min(.65, wear.corners);
   for (const [x, y] of [[0, 0], [width, 0], [0, height], [width, height]]) { ctx.beginPath(); ctx.arc(x, y, wear.corners * 9, 0, Math.PI * 2); ctx.fill(); }
   ctx.restore();
+  drawCrackDamage(ctx, owned, side, width, height);
 }
 
 function canvasTexture(width: number, height: number) {
@@ -100,7 +103,7 @@ function makeLabel(owned: OwnedCard, rear: boolean) {
 /** One representation of the existing UID; never creates inventory or alters condition. */
 export function createPhysicalCard(owned: OwnedCard, factories?: TextureFactory): PhysicalCard {
   const group = new THREE.Group(), slab = slabPresentation(owned), size = slab ? SLAB_SIZE : CARD_SIZE;
-  group.name = slab ? 'graded-card' : 'raw-card'; group.userData = { uid: owned.uid, cardId: owned.cardId, graded: !!slab, cert: slab?.cert, grader: slab?.grader, grade: slab?.grade, misprint: owned.misprint };
+  group.name = slab ? 'graded-card' : 'raw-card'; group.userData = { uid: owned.uid, cardId: owned.cardId, graded: !!slab, cert: slab?.cert, grader: slab?.grader, grade: slab?.grade, misprint: owned.misprint, crackDamage: crackDamage(owned) };
   let disposed = false;
   const tasks: Promise<unknown>[] = [], textures = new Set<THREE.Texture>();
   const face = (side: 'front' | 'back') => {
@@ -120,14 +123,19 @@ export function createPhysicalCard(owned: OwnedCard, factories?: TextureFactory)
   const cardY = slab ? -.05 : 0;
   const cutGeometry = (geo: THREE.BufferGeometry, rear = false) => {
     const a = printAppearance(owned, rear);
-    if (a.type !== 'miscut') return geo;
     const pos = geo.getAttribute('position');
     // A slanted cut on the same physical edge, mirrored in the rear face's space.
     for (let i = 0; i < pos.count; i++) {
       const x = pos.getX(i), y = pos.getY(i), frontX = rear ? -x : x;
       const inward = Math.abs(a.tilt) * CARD_SIZE.width * (a.tilt * (rear ? -1 : 1) > 0 ? y / CARD_SIZE.height + .5 : .5 - y / CARD_SIZE.height);
       const factor = .5 - frontX / CARD_SIZE.width;
-      pos.setX(i, x + (rear ? -1 : 1) * inward * factor);
+      if (a.type === 'miscut') pos.setX(i, x + (rear ? -1 : 1) * inward * factor);
+      for (const damage of crackDamage(owned)) {
+        if (damage.type !== 'bent-corner') continue;
+        const distance = Math.abs(frontX / CARD_SIZE.width + .5 - damage.x) + Math.abs(.5 - y / CARD_SIZE.height - damage.y);
+        const bend = Math.max(0, .12 - distance) / .12;
+        pos.setZ(i, pos.getZ(i) + (rear ? -1 : 1) * bend * damage.severity * .006);
+      }
     }
     geo.computeVertexNormals(); return geo;
   };

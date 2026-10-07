@@ -12,6 +12,7 @@ import type { GameAudio } from '../game/audio';
 import type { Interactable } from '../game/world';
 import { icon } from './icons';
 import { PackOpening } from './pack-opening';
+import { gradedPopulation } from '../core/population';
 export class GameUI {
   modal: HTMLElement;
   isOpen = false;
@@ -19,6 +20,7 @@ export class GameUI {
   private opener?: PackOpening;
   private containerOpener?: ContainerOpening;
   private inspector?: CardInspector;
+  private crackingUid?: string;
   private hud: HTMLElement;
   private prompt: HTMLElement;
   private marker: HTMLElement;
@@ -71,6 +73,7 @@ export class GameUI {
   fps(value: number) { this.hud.querySelector('.fps-counter')!.textContent = `${value} FPS · ${this.getPreset()}`; }
   toast(text: string) { clearTimeout(this.toastTimer); this.toastEl.innerHTML = `<span>✓</span>${escapeHtml(text)}`; this.toastEl.hidden = false; this.toastTimer = window.setTimeout(() => { this.toastEl.hidden = true; }, 3800); }
   private open(html: string, wide = false, title = 'Game menu') {
+    this.finishCrack();
     this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = true; this.pause(); this.hud.classList.add('menu-open');
     this.modal.hidden = false; this.modal.className = `modal-root ${wide ? 'wide' : ''}`;
     this.modal.innerHTML = `<section class="game-panel" role="dialog" aria-modal="true" aria-label="${title}">${html}</section>`;
@@ -82,7 +85,7 @@ export class GameUI {
     const trap = (e: KeyboardEvent) => { if (e.key !== 'Tab' || !this.isOpen) return; const focusable = Array.from(this.modal.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([hidden]), select, [tabindex="0"]')); if (!focusable.length) return; const a = focusable[0]; const b = focusable[focusable.length - 1]; if (e.shiftKey && (document.activeElement === a || !this.modal.contains(document.activeElement))) { e.preventDefault(); b.focus(); } else if (!e.shiftKey && document.activeElement === b) { e.preventDefault(); a.focus(); } };
     document.addEventListener('keydown', trap); this.focusCleanup = () => document.removeEventListener('keydown', trap);
   }
-  close() { if (!this.isOpen) return; this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = false; this.modal.hidden = true; this.modal.replaceChildren(); this.hud.classList.remove('menu-open'); this.resume(); }
+  close() { if (!this.isOpen) return; this.finishCrack(); this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = false; this.modal.hidden = true; this.modal.replaceChildren(); this.hud.classList.remove('menu-open'); this.resume(); }
   private header(eyebrow: string, title: string, suffix = '') { return `<header class="panel-header"><div><span class="eyebrow">${eyebrow}</span><h1>${title}${suffix}</h1></div><button class="close-button" data-close aria-label="Close">✕</button></header>`; }
   packs() {
     const s = this.store.state;
@@ -131,6 +134,20 @@ export class GameUI {
     this.open(`${this.header(`${d.set.toUpperCase()} / ${d.number}`, d.name)}<div class="inspect-layout"><div class="inspection-card">${ownedMarkup(c)}</div><div class="inspection-info"><div class="inspection-top"><span class="rarity-label">${d.rarity}</span><button class="text-button favorite-button" data-favorite>${c.favorite ? '★ Favorite' : '☆ Favorite'}</button></div><div class="inspection-value"><span class="eyebrow">${c.status === 'graded' ? 'GRADED VALUE' : 'RAW VALUE'}</span><b>${money(value)}<small> coins</small></b></div>${c.status === 'graded' ? `<div class="grade-summary"><span>${c.grader}</span><b>${c.grade}</b><span>${c.subgrades ? 'Subgrades ' + c.subgrades.join(' / ') : 'Graded'}</span></div>` : `<div class="condition-report"><span class="eyebrow">CONDITION · VISUAL ESTIMATE</span>${Object.entries(c.condition).map(([k, v]) => `<div><span>${k === 'print' ? 'Print quality' : k[0].toUpperCase() + k.slice(1)}</span><b>${v >= 94 ? 'Excellent' : v >= 83 ? 'Good' : v >= 70 ? 'Fair' : 'Worn'}</b><i style="--condition:${v >= 94 ? 95 : v >= 83 ? 80 : v >= 70 ? 60 : 40}%"></i></div>`).join('')}</div>`}<details class="printed-data"><summary>Printed card data</summary><dl><dt>ID</dt><dd>${escapeHtml(d.id)}</dd><dt>Category</dt><dd>${escapeHtml(d.category)}</dd>${d.hp ? `<dt>HP</dt><dd>${d.hp}</dd>` : ''}${d.artist ? `<dt>Artist</dt><dd>${escapeHtml(d.artist)}</dd>` : ''}${d.retreat !== undefined ? `<dt>Retreat</dt><dd>${d.retreat}</dd>` : ''}</dl>${[d.attacks, d.abilities, d.weaknesses, d.resistances].filter(Boolean).map(data => `<pre>${escapeHtml(JSON.stringify(data, null, 2))}</pre>`).join('')}<a href="${escapeHtml(d.sourceUrl)}" target="_blank" rel="noopener">Data source</a></details><div class="card-provenance">${c.misprint ? `<span>Misprint &middot; ${escapeHtml(c.misprint.defect.type)} &middot; ${misprintProvenance(c)}</span>` : ''}<span>${d.year} · ${d.type}</span><span>${new Date(c.acquiredAt).toLocaleDateString()} · ${c.origin === 'promo' ? 'Fixed product card' : 'Pulled from a pack'} · ${c.finish}</span><span>${this.store.state.cards.filter(o => o.cardId === c.cardId).length} ${this.store.state.cards.filter(o => o.cardId === c.cardId).length === 1 ? 'copy' : 'copies'} owned</span></div>${c.status === 'grading' ? '<div class="short-status">In Progress</div>' : `<div class="card-actions">${c.status === 'raw' && c.finish !== 'metal' ? '<button class="primary-button" data-grade>Send for grading →</button>' : ''}<button class="secondary-button" data-display>Put on display</button><button class="secondary-button" data-sell>Sell for ${money(value)} coins</button></div><div class="display-slot-picker" hidden></div>`}</div></div><footer class="panel-footer"><button class="text-button" data-back>← ${back === 'market' ? 'Market' : back === 'display' ? 'Display' : 'Binder'}</button><span>${c.status === 'graded' ? 'Graded' : c.status === 'grading' ? 'Grading' : 'Raw'} / ${d.setCode.toUpperCase()}</span></footer>`, false, 'Inspect card');
     try { this.inspector = new CardInspector(this.modal.querySelector<HTMLElement>('.inspection-card')!, c); }
     catch { this.modal.querySelector<HTMLElement>('.inspection-card')!.innerHTML = `${ownedMarkup(c)}<small>3D preview unavailable</small>`; installImageFallback(this.modal); }
+    const actions = this.modal.querySelector<HTMLElement>('.card-actions');
+    if (this.store.isCardLocked(uid)) actions?.remove();
+    else if (this.store.canCrack(uid)) {
+      const crack = document.createElement('button'); crack.className = 'secondary-button'; crack.dataset.crackSlab = ''; crack.textContent = 'Crack slab';
+      crack.onclick = () => this.confirmSlabCrack(uid, back); actions?.append(crack);
+    }
+    const events = [...(c.gradingHistory ?? []).map(g => ({ at: g.at, text: `${g.grader} grade ${g.grade}` })), ...(c.crackHistory ?? []).map(e => ({ at: e.at, text: `${e.grader} ${e.grade} slab ${e.outcome === 'safe' ? 'removed safely' : 'cracked · card permanently damaged'}${e.damage.length ? ' · ' + e.damage.map(d => d.type).join(', ') : ''}` }))].sort((a, b) => a.at - b.at);
+    if (events.length) {
+      const history = document.createElement('details'); history.className = 'printed-data card-history';
+      history.innerHTML = `<summary>Grading & card history</summary><ol>${events.map(e => `<li>${escapeHtml(e.text)}</li>`).join('')}</ol>`;
+      this.modal.querySelector('.inspection-info')!.append(history);
+    }
+    const grade = c.status === 'graded' ? { grader: c.grader!, grade: c.grade! } : c.gradingHistory?.at(-1);
+    if (grade) { const pop = gradedPopulation(this.store.state, c.cardId, grade.grader, grade.grade); const note = document.createElement('small'); note.className = 'simulation-note population-note'; note.textContent = `RIPIFY ${grade.grader} ${grade.grade} population · ${pop.current} current / ${pop.allTime} all-time copies`; this.modal.querySelector('.inspection-info')!.append(note); }
     this.modal.querySelector<HTMLButtonElement>('[data-back]')!.onclick = () => back === 'market' ? this.computer('market') : back === 'display' ? this.displays() : this.binder();
     this.modal.querySelector<HTMLButtonElement>('[data-favorite]')!.onclick = () => { this.store.favorite(uid); this.inspect(uid, back); };
     this.modal.querySelector<HTMLButtonElement>('[data-grade]')?.addEventListener('click', () => this.grade(uid));
@@ -185,6 +202,23 @@ export class GameUI {
     this.modal.querySelector<HTMLButtonElement>('[data-export]')!.onclick = () => { const blob = new Blob([JSON.stringify(this.store.state, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'ripify-save.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); this.toast('Save exported'); };
     this.modal.querySelector<HTMLButtonElement>('[data-import]')!.onclick = () => this.root.querySelector<HTMLInputElement>('#import-save')!.click();
     this.modal.querySelector<HTMLButtonElement>('[data-reset-progress]')!.onclick = () => this.confirmResetProgress();
+  }
+  private finishCrack() { if (this.crackingUid) this.store.finishCrack(this.crackingUid); this.crackingUid = undefined; }
+  private confirmSlabCrack(uid: string, back: 'binder' | 'market' | 'display') {
+    const card = this.store.state.cards.find(c => c.uid === uid); if (!card || !this.store.canCrack(uid)) return;
+    this.open(`${this.header('SLAB REMOVAL', 'Crack this slab?')}<div class="crack-confirmation"><p>50% chance of permanently damaging the card and halving its base raw value.</p><p>You keep the same card. Its previous grade remains in history.${this.store.state.displays.includes(uid) ? ' It will be removed from its display stand.' : ''}</p><div class="card-actions"><button class="secondary-button" data-cancel-crack>Cancel</button><button class="primary-button" data-confirm-crack>Crack slab</button></div></div>`, false, 'Confirm slab crack');
+    this.modal.querySelector<HTMLButtonElement>('[data-cancel-crack]')!.onclick = () => this.inspect(uid, back);
+    this.modal.querySelector<HTMLElement>('[data-cancel-crack]')!.focus();
+    this.modal.querySelector<HTMLButtonElement>('[data-confirm-crack]')!.onclick = () => {
+      if (!this.store.canCrack(uid)) return;
+      const slab = structuredClone(card), event = this.store.crackSlab(uid);
+      if (!event) { this.toast(this.store.warning ?? 'This card is locked.'); return; }
+      this.open(`${this.header('SLAB REMOVAL', CARD_BY_ID.get(card.cardId)!.name)}<div class="crack-stage"><div class="inspection-card"></div></div>`, false, 'Opening slab');
+      this.crackingUid = uid;
+      const finish = () => { this.inspect(uid, back); this.toast(event.outcome === 'safe' ? 'Slab removed safely' : 'Card damaged'); };
+      try { this.inspector = new CardInspector(this.modal.querySelector<HTMLElement>('.inspection-card')!, slab); this.inspector.animateCrack(card, finish, () => this.audio.play('plastic')); }
+      catch { finish(); }
+    };
   }
   private confirmResetProgress() {
     this.open(`${this.header('NEW GAME', 'Reset all progress?')}<div class="reset-progress-body"><p>This deletes your cards, sealed products, currency, grading orders, displays, and history. This cannot be undone.</p><p>Start again with 120 coins and one starter pack. Graphics, audio, and control preferences are kept.</p></div><footer class="panel-footer"><button class="secondary-button" data-cancel-reset>Cancel</button><button class="primary-button danger-button" data-confirm-reset>Reset all progress</button></footer>`, false, 'Reset progress');

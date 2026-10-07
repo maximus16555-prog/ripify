@@ -5,6 +5,8 @@ import { GRADERS } from './economy';
 import type { Save, Settings, OwnedCard, Pack, SealedProduct, PackReceipt } from './types';
 import { emptyRareEventStats } from './rare-events';
 import { validCardMisprint, validPackEvents, validOpeningEvents } from './rare-event-validation';
+import { validSlabHistory } from './slab-validation';
+import { hydratePopulation } from './population';
 export const SAVE_KEY = 'ripify.save.v1';
 export const DEFAULT_SETTINGS: Settings = { graphics: 'Auto', renderScale: 1, sensitivity: 1, master: .65, music: .25, sfx: .6, fps: false, controlsLearned: false };
 export function newSave(): Save {
@@ -19,7 +21,7 @@ const validSealed = (v: unknown): v is SealedProduct => record(v) && validId(v.u
 const validCard = (v: unknown): v is OwnedCard => {
   if (!record(v) || !record(v.condition)) return false;
   const condition = v.condition;
-  if (!validCardMisprint(v)) return false;
+  if (!validCardMisprint(v) || !validSlabHistory(v)) return false;
   if (v.gradingHistory !== undefined && (!Array.isArray(v.gradingHistory) || !v.gradingHistory.every(h => record(h) && typeof h.grader === 'string' && Object.hasOwn(GRADERS, h.grader) && finite(h.grade) && h.grade >= 1 && h.grade <= 10 && finite(h.at) && validId(h.orderUid)))) return false;
   return v.owner === 'local-player' && ['normal', 'holo', 'reverse', 'metal'].includes(String(v.finish)) && ['pack', 'promo'].includes(String(v.origin)) && (v.finish !== 'metal' || (v.cardId === 'sv03.5-205' && v.origin === 'promo')) && validId(v.uid) && typeof v.cardId === 'string' && CARD_BY_ID.has(v.cardId) && ['centering', 'corners', 'edges', 'surface', 'print'].every(k => finite(condition[k]) && Number(condition[k]) >= 0 && Number(condition[k]) <= 100) && finite(v.acquiredAt) && typeof v.source === 'string' && typeof v.favorite === 'boolean' && ['raw', 'grading', 'graded'].includes(String(v.status)) && (v.grader === undefined || (typeof v.grader === 'string' && Object.hasOwn(GRADERS, v.grader))) && (v.grade === undefined || (finite(v.grade) && v.grade >= 1 && v.grade <= 10)) && (v.subgrades === undefined || (Array.isArray(v.subgrades) && v.subgrades.length === 4 && v.subgrades.every(n => finite(n) && n >= 1 && n <= 10))) && (v.status !== 'graded' || (v.grader !== undefined && v.grade !== undefined));
 };
@@ -36,6 +38,12 @@ export function parseSave(raw: string): Save {
   if (new Set(packs.map(p => p.uid)).size !== packs.length || new Set(cards.map(c => c.uid)).size !== cards.length) throw new Error('Duplicate inventory');
   const result = newSave();
   result.currency = v.currency; result.packs = packs; result.cards = cards;
+  if (v.gradingPopulation !== undefined) {
+    if (!Array.isArray(v.gradingPopulation) || !v.gradingPopulation.every(e => record(e) && validId(e.cardUid) && typeof e.cardId === 'string' && CARD_BY_ID.has(e.cardId) && typeof e.grader === 'string' && Object.hasOwn(GRADERS, e.grader) && finite(e.grade) && e.grade >= 1 && e.grade <= 10 && (!cards.some(c => c.uid === e.cardUid) || cards.find(c => c.uid === e.cardUid)!.cardId === e.cardId))) throw new Error('Invalid grading population');
+    result.gradingPopulation = [];
+    for (const e of v.gradingPopulation) if (!result.gradingPopulation.some(p => p.cardUid === e.cardUid && p.cardId === e.cardId && p.grader === e.grader && p.grade === e.grade)) result.gradingPopulation.push(e as unknown as NonNullable<Save['gradingPopulation']>[number]);
+  }
+  if (result.gradingPopulation || cards.some(c => c.status === 'graded' || c.gradingHistory?.length || c.crackHistory?.length)) hydratePopulation(result);
   if (v.packReceipts !== undefined) {
     if (!Array.isArray(v.packReceipts) || !v.packReceipts.every(r => {
       if (!record(r) || !validPack(r.pack) || r.pack.generationVersion !== 2 || !r.pack.rareEvents || !finite(r.generatedAt) || !Array.isArray(r.cards) || r.cards.length !== 11) return false;

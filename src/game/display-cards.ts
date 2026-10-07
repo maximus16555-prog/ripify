@@ -4,7 +4,7 @@ import { createPhysicalCard, placeOnStand, type PhysicalCard } from './physical-
 
 /** Only fields that affect geometry, artwork, wear or the certification label. */
 export function physicalCardSignature(c: OwnedCard) {
-  return JSON.stringify([c.uid, c.cardId, c.finish, c.condition, c.misprint, c.status, c.grader, c.grade, c.subgrades, c.gradingHistory?.at(-1)?.orderUid]);
+  return JSON.stringify([c.uid, c.cardId, c.finish, c.condition, c.misprint, c.crackHistory, c.status, c.grader, c.grade, c.subgrades, c.gradingHistory?.at(-1)?.orderUid]);
 }
 
 /** At most one rendered item per occupied stand; moves retain their GPU resources. */

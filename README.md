@@ -53,3 +53,5 @@ See [complete English 151 pool and unique pack selection](docs/151-completeness.
 See [persistent misprints and special-pack validation](docs/rare-events.md) for fixed independent odds, saved physical defects, one-time raw value modifiers, grading persistence and large-sample results. Run `npm run simulate:rare-events` to repeat the simulation.
 
 See [physical ETB/UPC unboxing and audit](docs/physical-unboxing.md) for separate 3D packaging, verified surface mapping, physical contents, interruption safety, and resource cleanup.
+
+Graded cards can be cracked from inspection, with a confirmed 50% risk of permanent physical damage. The same owned copy, misprint and grade history survive. See [slab cracking and validation](docs/slab-cracking.md). Run `npm run simulate:slab-cracks` for the isolated 200,000-attempt simulation.

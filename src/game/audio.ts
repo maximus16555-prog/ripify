@@ -1,5 +1,5 @@
 import type { Settings } from '../core/types';
-export type Sound = 'step' | 'click' | 'buy' | 'crinkle' | 'rip' | 'swipe' | 'rare' | 'return';
+export type Sound = 'step' | 'click' | 'buy' | 'crinkle' | 'rip' | 'swipe' | 'rare' | 'return' | 'plastic';
 export class GameAudio {
   private context?: AudioContext;
   private ambience?: OscillatorNode;
@@ -22,7 +22,7 @@ export class GameAudio {
     const ctx = this.context; if (!ctx || ctx.state !== 'running') return;
     const s = this.settings(); const volume = s.master * s.sfx;
     if (volume <= .0001) return;
-    const noise = ['step', 'crinkle', 'rip', 'swipe'].includes(sound);
+    const noise = ['step', 'crinkle', 'rip', 'swipe', 'plastic'].includes(sound);
     const duration = sound === 'rip' ? .36 : sound === 'crinkle' ? .07 : sound === 'rare' || sound === 'return' ? .75 : .13;
     const gain = ctx.createGain(); gain.gain.setValueAtTime(volume * (sound === 'step' ? .03 : sound === 'crinkle' ? .028 : noise ? .09 : .045), ctx.currentTime); gain.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime + duration); gain.connect(ctx.destination);
     if (noise) {
@@ -33,6 +33,7 @@ export class GameAudio {
         this.noiseBuffers.set(sound, buffer);
       }
       const source = ctx.createBufferSource(); source.buffer = buffer; const filter = ctx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = sound === 'step' ? 380 : sound === 'rip' ? 2900 : 1400;
+      if (sound === 'plastic') { filter.type = 'bandpass'; filter.frequency.value = 2100; filter.Q.value = 1.8; }
       source.connect(filter).connect(gain); source.start(); source.onended = () => { source.disconnect(); filter.disconnect(); gain.disconnect(); };
     } else {
       const frequencies = sound === 'rare' || sound === 'return' ? [523.25, 659.25, 783.99] : sound === 'buy' ? [660, 880] : [460];

@@ -12,6 +12,7 @@
     "test:production": "playwright test --config playwright.production.config.ts",
     "profile:performance": "node scripts/profile-performance.mjs",
     "simulate:rare-events": "node scripts/simulate-rare-events.mjs",
+    "simulate:slab-cracks": "node scripts/simulate-slab-cracks.mjs",
     "simulate:economy": "node scripts/simulate-economy.mjs",
     "validate:151": "node scripts/validate-151.mjs"
   },
