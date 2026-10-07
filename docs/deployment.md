@@ -6,8 +6,8 @@ Published through Freebuff managed hosting on October 6, 2026. This production s
 
 - Management: https://freebuff.com/cloud/project/beige-spoons-deny/settings?section=deploys
 - Private source: https://github.com/maximus16555-prog/ripify
-- Hosting deployment ID: `kn75aa5m`
-- Runtime source commit: `4a00296`.
+- Hosting deployment ID: `kn7cnxh8`
+- Runtime source commit: `ac6f2a6`.
 - Install: `npm ci`; build: `npm run build`; static output: `dist` at domain root.
 
 ## Compatibility changes
@@ -33,7 +33,7 @@ Opened the game in an unsigned-in/incognito browser and visually checked the roo
 - Collection and inventory persist; development debug object is absent.
 - No uncaught browser errors, failed requests, or localhost requests.
 
-All 109 logic tests pass. Audio verification confirms playback operation, not a subjective evaluation of sound quality.
+All 112 logic tests pass. Audio verification confirms playback operation, not a subjective evaluation of sound quality.
 
 The initial hosted test sent movement too early after reload, before asynchronous game startup registered input. The test now waits for the canvas/loading view; gameplay code needed no fix.
 
@@ -64,3 +64,9 @@ The October 6 pricing update pins seven exact Ascended Heroes printings to the r
 The hosted production game now retains the user-requested Ctrl+Shift+1/2 pack callbacks. The Vite development-only gate caused both shortcuts to be absent after deployment. Only input-to-pack-factory wiring changed; the generator, per-instance forced decisions, natural odds, and opener are retained. General development debug introspection remains disabled in production. Both production browser tests pass against the public domain: ordinary shop/opening/save flow, and special shortcut inventory, held-key suppression, repeated presses, save/reload, exact compositions/artwork, physical ripping, all manual reveals, and collecting 22 cards. No uncaught browser errors were recorded. Hosted runtime SHA256 matches the local tested build.
 
 Evidence: [hosted shortcut report](../artifacts/hosted-shortcuts.json), [shortcut smoke audit](../artifacts/production-shortcuts-check.json).
+
+## Progress reset release
+
+Settings > Save > Reset progress opens an explicit confirmation with Cancel focused. Confirmation replaces all progress with a fresh game (120 coins and one starter pack), preserves graphics/audio/control preferences, clears the old recovery copy, and reloads into the home room. Cards, grading orders, displays, sealed products, pending openings, receipts, statistics, and history are cleared. The new save is written before changing live state; a rejected write leaves existing progress intact and reports failure.
+
+The public-domain browser test verifies Cancel and Escape, a simulated storage failure, successful reset, retained preferences, recovery cleanup, and persistence through refresh. Tests run in isolated browser contexts, never against the user's own save. Evidence: [reset report](../artifacts/hosted-reset.json), [confirmation screen](../artifacts/reset-progress-confirmation.png).
