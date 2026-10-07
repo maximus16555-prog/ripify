@@ -78,8 +78,8 @@ export function parseSave(raw: string): Save {
   if (Array.isArray(v.history)) result.history = v.history.filter(h => record(h) && typeof h.uid === 'string' && ['purchase', 'sale', 'grading'].includes(String(h.type)) && finite(h.amount) && typeof h.label === 'string' && finite(h.at)).slice(-100) as Save['history'];
   return result;
 }
-export interface SaveStorage { read(): string | null; write(data: string): void; backup(data: string): void }
-export const browserStorage: SaveStorage = { read: () => localStorage.getItem(SAVE_KEY), write: d => localStorage.setItem(SAVE_KEY, d), backup: d => localStorage.setItem(`${SAVE_KEY}.recovery`, d) };
+export interface SaveStorage { read(): string | null; write(data: string): void; backup(data: string): void; clearRecovery?(): void }
+export const browserStorage: SaveStorage = { read: () => localStorage.getItem(SAVE_KEY), write: d => localStorage.setItem(SAVE_KEY, d), backup: d => localStorage.setItem(`${SAVE_KEY}.recovery`, d), clearRecovery: () => localStorage.removeItem(`${SAVE_KEY}.recovery`) };
 export function loadSave(storage: SaveStorage = browserStorage): { save: Save; warning?: string } {
   let raw: string | null = null;
   try { raw = storage.read(); const save = raw ? parseSave(raw) : newSave(); return { save, warning: save.legacyArchive ? 'Legacy inventory archived. Export your save to keep it.' : undefined }; }

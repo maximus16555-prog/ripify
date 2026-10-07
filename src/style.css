@@ -31,3 +31,4 @@
 .interaction-prompt{bottom:83px;min-width:0;gap:10px;font-size:12px;padding:8px 12px}
 .object-marker{position:absolute;width:10px;height:10px;border:1.5px solid #fff2c5;border-radius:50%;background:#263e3577;box-shadow:0 0 0 3px #263e3528;transform:translate(-50%,-50%);pointer-events:none}
 .hud.menu-open .object-marker,.hud.menu-open .interaction-prompt,.hud.menu-open .hud-bottom{display:none}
+.save-controls>div{flex-wrap:wrap}.danger-button{color:#a14e41;border-color:#bf8172}.primary-button.danger-button{background:#a14e41;color:#fff1df;border-color:#a14e41}.reset-progress-body{padding:26px 30px;max-width:560px;font-size:13px;line-height:1.7;color:#72795f}.reset-progress-body p+p{margin-top:14px}

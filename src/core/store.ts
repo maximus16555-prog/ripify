@@ -3,7 +3,7 @@ import { calculateGrade, GRADERS, ownedValue } from './economy';
 import { generatePack, uuid } from './packs';
 import { createPack, createSealed, createCard, seeded, canOpenProduct } from './inventory';
 import { PRODUCT_BY_ID } from '../data/products';
-import { browserStorage, loadSave, parseSave, type SaveStorage } from './save';
+import { browserStorage, loadSave, newSave, parseSave, type SaveStorage } from './save';
 import type { Grader, OwnedCard, Pack, Save, Settings } from './types';
 import { emptyRareEventStats, recordRareEvents } from './rare-events';
 export class GameStore {
@@ -114,6 +114,17 @@ export class GameStore {
     this.state.orders = this.state.orders.filter(o => o.uid !== uid); this.changed(); return c;
   }
   settings(patch: Partial<Settings>) { Object.assign(this.state.settings, patch); this.changed(); }
+  resetProgress() {
+    const replacement = newSave();
+    replacement.settings = { ...this.state.settings, controlsLearned: false };
+    // Commit the fresh save before replacing live inventory. A storage failure
+    // must not discard the session or falsely report a successful reset.
+    try { this.storage.write(JSON.stringify(replacement)); }
+    catch { this.warning = 'Reset failed. Your progress is unchanged.'; return false; }
+    try { this.storage.clearRecovery?.(); } catch { /* Recovery copies are never loaded as active saves. */ }
+    this.state = replacement; this.warning = undefined;
+    this.listeners.forEach(fn => fn()); return true;
+  }
   import(raw: string) { const replacement = parseSave(raw); this.state = replacement; this.changed(); }
 }
 export function orderStatus(sentAt: number, dueAt: number, now = Date.now()) {
