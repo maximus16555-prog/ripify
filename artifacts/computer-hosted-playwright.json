@@ -1,0 +1,464 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\Maxim\\Downloads\\Ripify\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.production.config.ts",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\Maxim\\Downloads\\Ripify\\playwright.production.config.ts",
+    "rootDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/Maxim/Downloads/Ripify/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "computer.spec.ts",
+      "file": "computer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "physical computer: five connected apps, purchases, locks, grading, search, profile and reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 70119,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T14:04:08.439Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computer-report",
+                      "contentType": "application/json",
+                      "body": "ewogICJ1cmwiOiAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwLyIsCiAgImVycm9ycyI6IFtdLAogICJkZWxpdmVyZWRQYWNrVWlkIjogImM5YWIwZGMwLThlNjMtNGViNC04YjIxLWRkOTJiOTdlMzYwOCIsCiAgImNhcmRVaWRzIjogWwogICAgIjgyZTllNDRkLWFlODgtNDUwMS1hNzE2LTg0OTE5MWRhODU4NSIsCiAgICAiODNiNGY5NTMtZThjZC00OWYzLTkyNTgtMGM4MzI3Y2VmNzFhIgogIF0sCiAgImFwcHMiOiBbCiAgICAic3RvcmUiLAogICAgImViYXkiLAogICAgImdyYWRpbmciLAogICAgImNvbGxlY3RyIiwKICAgICJwcm9maWxlIgogIF0sCiAgInByb2ZpbGUiOiB7CiAgICAibmFtZSI6ICJNYXgiLAogICAgImF2YXRhciI6ICJtaW50IgogIH0KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "63b54f864c251470a409-4920920754da367da552",
+          "file": "computer.spec.ts",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "computer windows release hidden content and reuse the bounded physical preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12139,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T14:05:18.623Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computer-performance",
+                      "contentType": "application/json",
+                      "body": "eyJjeWNsZXMiOjgsImNvbnRleHRzQ3JlYXRlZCI6MiwiaWRsZVdvcmxkRHJhd3NQZXJTZWNvbmQiOjAsImhpZGRlbkltYWdlcyI6MCwiaGlkZGVuUHJldmlld3MiOjB9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "63b54f864c251470a409-5a7498b29577b0d914c9",
+          "file": "computer.spec.ts",
+          "line": 72,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "playable.spec.ts",
+      "file": "playable.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "production gameplay: room, shop, purchase, manual rip/swipes, collection and persistent refresh",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20345,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T14:05:30.783Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "production-report",
+                      "contentType": "application/json",
+                      "body": "ewogICJ1cmwiOiAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwLyIsCiAgImVycm9ycyI6IFtdLAogICJmYWlsZWQiOiBbXSwKICAidW5pcXVlUmVxdWVzdHMiOiBbCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwLyIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2Fzc2V0cy9pbmRleC1DM0pqUnVmeC5qcyIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2Fzc2V0cy9pbmRleC1xSkJ6UFI2Mi5jc3MiLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hc3NldHMvbWFucm9wZS1sYXRpbi13Z2h0LW5vcm1hbC1ESEljQUpSZy53b2ZmMiIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2Fzc2V0cy9kbS1zYW5zLWxhdGluLXdnaHQtbm9ybWFsLVh6MUlaWkEwLndvZmYyIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXNzZXRzL21haW4tQ290cWdidlEuanMiLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hc3NldHMvZW5naW5lLUFvTk1uN3hsLmpzIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXNzZXRzL21haW4tQnlKdHppQmIuY3NzIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXJ0d29yay8xNTEtYm9vc3Rlci5qcGciLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hcnR3b3JrL2FzY2VuZGVkLWhlcm9lcy1ib29zdGVyLmpwZyIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2FydHdvcmsvMTUxLWV0Yi5qcGciLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hcnR3b3JrLzE1MS11cGMuanBnIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXJ0d29yay9zdmUtMS5qcGciLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzAwNy9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzAxNi9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzAxMy9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzEwMC9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzE0OC9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzA1Ny9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzE2Mi9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzEzNy9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzE0Ny9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzE0NC9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzAwNy9sb3cud2VicCIsCiAgICAiaHR0cHM6Ly9hc3NldHMudGNnZGV4Lm5ldC9lbi9zdi9zdjAzLjUvMDE2L2xvdy53ZWJwIiwKICAgICJodHRwczovL2Fzc2V0cy50Y2dkZXgubmV0L2VuL3N2L3N2MDMuNS8wMTMvbG93LndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzEwMC9sb3cud2VicCIsCiAgICAiaHR0cHM6Ly9hc3NldHMudGNnZGV4Lm5ldC9lbi9zdi9zdjAzLjUvMTQ4L2xvdy53ZWJwIiwKICAgICJodHRwczovL2Fzc2V0cy50Y2dkZXgubmV0L2VuL3N2L3N2MDMuNS8wNTcvbG93LndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzE2Mi9sb3cud2VicCIsCiAgICAiaHR0cHM6Ly9hc3NldHMudGNnZGV4Lm5ldC9lbi9zdi9zdjAzLjUvMTM3L2xvdy53ZWJwIiwKICAgICJodHRwczovL2Fzc2V0cy50Y2dkZXgubmV0L2VuL3N2L3N2MDMuNS8xNDcvbG93LndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzE0NC9sb3cud2VicCIKICBdLAogICJhdWRpbyI6IHsKICAgICJzdGFydHMiOiAxNSwKICAgICJzdGF0ZSI6ICJydW5uaW5nIgogIH0sCiAgInBhY2tVaWQiOiAiNTRkOTlmYjEtNTc5ZC00NWYzLTg4NjYtOTEzZWI3ZjVjZjk3IiwKICAiY2FyZENvdW50IjogMTEKfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7106448f066158a1526c-52085ac7b9a3737e226f",
+          "file": "playable.spec.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "reset-progress.spec.ts",
+      "file": "reset-progress.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "settings reset requires confirmation, handles failure, clears progress and stays reset after refresh",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2750,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T14:05:51.144Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reset-report",
+                      "contentType": "application/json",
+                      "body": "eyJ1cmwiOiJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvIiwiY2FuY2VsUHJlc2VydmVzU2F2ZSI6dHJ1ZSwiZmFpbHVyZVByZXNlcnZlc1NhdmUiOnRydWUsInJlc2V0UGVyc2lzdHMiOnRydWUsInByZWZlcmVuY2VzS2VwdCI6dHJ1ZSwicmVjb3ZlcnlDbGVhcmVkIjp0cnVlLCJlcnJvcnMiOltdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "644fc282fbb7e6018585-b3a6a00d779a8aa92ef9",
+          "file": "reset-progress.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "shortcuts.spec.ts",
+      "file": "shortcuts.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "production hidden shortcuts add one persistent special pack per press and open through normal gameplay",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 22030,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T14:05:53.920Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "shortcut-report",
+                      "contentType": "application/json",
+                      "body": "eyJ1cmwiOiJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvIiwiZXJyb3JzIjpbXSwiaGVsZEtleVBhY2tDb3VudCI6MiwicmVwZWF0ZWRQcmVzc1BhY2tDb3VudCI6Mywic2F2ZVJlbG9hZCI6dHJ1ZSwiY2FyZHNDb2xsZWN0ZWQiOjIyLCJmaXJzdCI6eyJ0eXBlIjoiZW5nbGlzaC0xNTEtZGVtaWdvZCIsImxpbmUiOiJjaGFyaXphcmQifSwic2Vjb25kIjp7InR5cGUiOiJhc2NlbmRlZC1oZXJvZXMtZ29kIn19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6225fe1afc44b80fe34b-fefe2bb3eac62a5c3544",
+          "file": "shortcuts.spec.ts",
+          "line": 38,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "slab-cracking.spec.ts",
+      "file": "slab-cracking.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "physical safe crack preserves the same card and survives reloading",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10762,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T14:06:15.964Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "slab-crack-report",
+                      "contentType": "application/json",
+                      "body": "eyJ1cmwiOiJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvIiwib3V0Y29tZSI6InNhZmUiLCJwZXJzaXN0ZWRCZWZvcmVBbmltYXRpb24iOnRydWUsInVpZCI6ImU1MDk2ZmJhLTg3YTctNDUzZC1hOGQzLWIzNDRjODljYmE5NiIsImNvbmRpdGlvbkJlZm9yZSI6eyJjZW50ZXJpbmciOjkwLCJjb3JuZXJzIjo5MSwiZWRnZXMiOjg3LCJzdXJmYWNlIjo5MywicHJpbnQiOjkyfSwiY29uZGl0aW9uQWZ0ZXIiOnsiY2VudGVyaW5nIjo5MCwiY29ybmVycyI6OTEsImVkZ2VzIjo4Nywic3VyZmFjZSI6OTMsInByaW50Ijo5Mn0sInJlZ3JhZGluZyI6dHJ1ZSwiZXJyb3JzIjpbXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "604c70537aeddd984f58-7505889b8f2b314d0335",
+          "file": "slab-cracking.spec.ts",
+          "line": 32,
+          "column": 71
+        },
+        {
+          "title": "physical damaged crack preserves the same card and survives reloading",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10751,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T14:06:26.736Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "slab-crack-report",
+                      "contentType": "application/json",
+                      "body": "eyJ1cmwiOiJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvIiwib3V0Y29tZSI6ImRhbWFnZWQiLCJwZXJzaXN0ZWRCZWZvcmVBbmltYXRpb24iOnRydWUsInVpZCI6IjEyMjUwOGZhLTFmODMtNGRiZC1hZGMxLWNiYTYwOGFjYmE4MCIsImNvbmRpdGlvbkJlZm9yZSI6eyJjZW50ZXJpbmciOjkwLCJjb3JuZXJzIjo5MSwiZWRnZXMiOjg3LCJzdXJmYWNlIjo5MywicHJpbnQiOjkyfSwiY29uZGl0aW9uQWZ0ZXIiOnsiY2VudGVyaW5nIjo5MCwiY29ybmVycyI6NTYsImVkZ2VzIjo2Mywic3VyZmFjZSI6NjUsInByaW50Ijo5Mn0sInJlZ3JhZGluZyI6dHJ1ZSwiZXJyb3JzIjpbXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "604c70537aeddd984f58-ae715636580197f23ca0",
+          "file": "slab-cracking.spec.ts",
+          "line": 32,
+          "column": 71
+        },
+        {
+          "title": "reload during slab animation cannot undo or reroll a failed crack",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7099,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T14:06:37.496Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "604c70537aeddd984f58-4c4f8fd2cb8ca785d4fa",
+          "file": "slab-cracking.spec.ts",
+          "line": 64,
+          "column": 58
+        },
+        {
+          "title": "close during slab animation cannot undo or reroll a failed crack",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6855,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T14:06:44.603Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "604c70537aeddd984f58-e5d49cb6a44a6c37b742",
+          "file": "slab-cracking.spec.ts",
+          "line": 64,
+          "column": 58
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-07T14:04:08.003Z",
+    "duration": 163580.994,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

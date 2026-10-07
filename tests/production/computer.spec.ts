@@ -72,6 +72,8 @@ test('physical computer: five connected apps, purchases, locks, grading, search,
 test('computer windows release hidden content and reuse the bounded physical preview', async ({ page }, info) => {
   const store = new GameStore({ read: () => null, write: () => {}, backup: () => {} });
   const card = createCard('svp-051', 'test-upc', seeded(24), 'holo', 'promo'); card.status = 'graded'; card.grader = 'PSA'; card.grade = 9; store.state.cards = [card];
+  const eligible = Array.from({ length: 61 }, (_, i) => createCard('sv03.5-001', 'test-source', seeded(100 + i), 'normal', 'pack'));
+  store.state.cards.push(...eligible);
   const state = store.state;
   await page.addInitScript(({ state, key }) => {
     if (!localStorage.getItem(key)) localStorage.setItem(key, JSON.stringify(state));
@@ -81,6 +83,10 @@ test('computer windows release hidden content and reuse the bounded physical pre
     for (const proto of [WebGLRenderingContext.prototype, WebGL2RenderingContext.prototype] as any[]) for (const key of ['drawElements', 'drawArrays']) { const original = proto[key]; proto[key] = function(...args: any[]) { stats.draws++; return original.apply(this, args); }; }
   }, { state, key: SAVE_KEY });
   await page.goto('/'); await computer(page);
+  await page.locator('[data-app="grading"]').click(); await expect(page.locator('.pc-card-grid .pc-item')).toHaveCount(36);
+  await page.getByRole('button', { name: 'Next', exact: true }).click(); await expect(page.locator('.pc-card-grid .pc-item')).toHaveCount(25);
+  await page.locator(`[data-action="item"][data-value="${eligible[60].uid}"]`).click(); await expect(page.locator('[data-action="submit"]')).toHaveAttribute('data-value', eligible[60].uid);
+  await page.getByRole('button', { name: 'Minimize Grading', exact: true }).click();
   for (let i = 0; i < 8; i++) {
     await page.locator('[data-app="grading"]').click(); await page.locator('[data-action="route"][data-value="returns"]').click(); await page.locator(`[data-action="item"][data-value="${card.uid}"]`).click(); await expect(page.locator('.physical-card-canvas')).toBeVisible();
     await page.getByRole('button', { name: 'Minimize Grading', exact: true }).click(); await expect(page.locator('.physical-card-canvas')).toHaveCount(0);

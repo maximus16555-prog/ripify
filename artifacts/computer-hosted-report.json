@@ -1,0 +1,20 @@
+{
+  "url": "https://ripify.freebuff.app/",
+  "errors": [],
+  "deliveredPackUid": "c9ab0dc0-8e63-4eb4-8b21-dd92b97e3608",
+  "cardUids": [
+    "82e9e44d-ae88-4501-a716-849191da8585",
+    "83b4f953-e8cd-49f3-9258-0c8327cef71a"
+  ],
+  "apps": [
+    "store",
+    "ebay",
+    "grading",
+    "collectr",
+    "profile"
+  ],
+  "profile": {
+    "name": "Max",
+    "avatar": "mint"
+  }
+}

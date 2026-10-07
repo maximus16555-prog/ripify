@@ -1,0 +1,98 @@
+{
+  "url": "https://ripify.freebuff.app/",
+  "deployment": "kn7cb5mc",
+  "runtimeCommit": "b630cb7",
+  "bundle": "main-CotqgbvQ.js",
+  "hostedAndLocalSha256": "f50df690eb0febf656f9bf1b82bd00bbd6853830c656fe7785a4ca57b18a80ca",
+  "build": "passed",
+  "unitTests": 139,
+  "hostedTests": {
+    "startTime": "2026-10-07T14:04:08.003Z",
+    "duration": 163580.994,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "testResults": [
+    {
+      "name": "physical computer: five connected apps, purchases, locks, grading, search, profile and reload",
+      "status": "expected"
+    },
+    {
+      "name": "computer windows release hidden content and reuse the bounded physical preview",
+      "status": "expected"
+    },
+    {
+      "name": "production gameplay: room, shop, purchase, manual rip/swipes, collection and persistent refresh",
+      "status": "expected"
+    },
+    {
+      "name": "settings reset requires confirmation, handles failure, clears progress and stays reset after refresh",
+      "status": "expected"
+    },
+    {
+      "name": "production hidden shortcuts add one persistent special pack per press and open through normal gameplay",
+      "status": "expected"
+    },
+    {
+      "name": "physical safe crack preserves the same card and survives reloading",
+      "status": "expected"
+    },
+    {
+      "name": "physical damaged crack preserves the same card and survives reloading",
+      "status": "expected"
+    },
+    {
+      "name": "reload during slab animation cannot undo or reroll a failed crack",
+      "status": "expected"
+    },
+    {
+      "name": "close during slab animation cannot undo or reroll a failed crack",
+      "status": "expected"
+    }
+  ],
+  "computer": {
+    "url": "https://ripify.freebuff.app/",
+    "errors": [],
+    "deliveredPackUid": "c9ab0dc0-8e63-4eb4-8b21-dd92b97e3608",
+    "cardUids": [
+      "82e9e44d-ae88-4501-a716-849191da8585",
+      "83b4f953-e8cd-49f3-9258-0c8327cef71a"
+    ],
+    "apps": [
+      "store",
+      "ebay",
+      "grading",
+      "collectr",
+      "profile"
+    ],
+    "profile": {
+      "name": "Max",
+      "avatar": "mint"
+    }
+  },
+  "performance": {
+    "cycles": 8,
+    "contextsCreated": 2,
+    "idleWorldDrawsPerSecond": 0,
+    "hiddenImages": 0,
+    "hiddenPreviews": 0
+  },
+  "preservedSystems": {
+    "src/ui/pack-opening.ts": true,
+    "src/ui/container-opening.ts": true,
+    "src/ui/container-view.ts": true,
+    "src/core/packs.ts": true,
+    "src/core/rare-events.ts": true,
+    "src/core/economy.ts": true,
+    "src/game/physical-card.ts": true,
+    "src/data/verified/151.json": true,
+    "src/data/verified/ascended-heroes.json": true,
+    "src/game/world.ts": true,
+    "src/game/player.ts": true,
+    "src/game/input.ts": true,
+    "src/game/audio.ts": true
+  },
+  "noLocalDevelopmentServerRequired": true
+}

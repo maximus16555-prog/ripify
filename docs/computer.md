@@ -31,3 +31,22 @@ Visually studied the current official [Collectr App Store screenshots](https://a
 `tests/computer.test.ts` covers exact drop timing, persistent stock/demand, sealed delivery, idempotence, rejected storage, card/pack/box locks, sale settlement, historical population, offers, exact authoritative prices, immutable copies and invalid save extensions. `tests/production/computer.spec.ts` walks to the physical computer with keyboard input, exercises all five applications through real browser controls, completes delivery/sale/grading return on real timers, checks exact artwork, inspects the returned slab and verifies UID/order/listing/profile persistence after Escape/reload. Browser contexts are isolated from the player's save. Existing shop, opener, shortcuts, reset and slab-crack browser regressions also run.
 
 Screenshots: `artifacts/computer-desktop.png`, `computer-store.png`, `computer-ebay.png`, `computer-grading.png`, `computer-collectr.png`, `computer-card-page.png`, `computer-profile.png`, `computer-returned-slab.png`. Preservation hashes are recorded in `artifacts/computer-preserved-systems.json`.
+
+
+## Files changed
+
+Runtime/UI: [computer services](../src/core/computer.ts), [computer state](../src/core/computer-state.ts), [save validation](../src/core/save.ts), [store transactions and locks](../src/core/store.ts), [types](../src/core/types.ts), [desktop windows](../src/ui/computer-desktop.ts), [application views](../src/ui/computer-apps.ts), [desktop styles](../src/ui/computer.css), [game UI integration](../src/ui/game-ui.ts), [computer camera anchor](../src/game/camera.ts), [main loop integration](../src/main.ts), [Collectr shortcut icon](../public/computer/collectr.png).
+
+Verification: [service tests](../tests/computer.test.ts), [hosted browser flows](../tests/production/computer.spec.ts), [reset clock-aware assertion](../tests/production/reset-progress.spec.ts). The complete changed-file manifest is [here](../artifacts/computer-owned-files.json). The reset regression permits the game clock to advance after refresh while preserving exact assertions for inventory, preferences and all progress.
+
+Final polish connects the Profile featured card to the same physical inspection renderer, includes its biggest recorded pull value, and paginates grading candidates rather than hiding copies after the first 60. The browser regression selects the 61st eligible owned card and returns safely from Profile inspection.
+
+## Public release
+
+Published to [RIPIFY on Freebuff](https://ripify.freebuff.app/) on October 7, 2026, deployment `kn7cb5mc`. Runtime source commit: `b630cb7` (following desktop implementation `060a554`). Hosted `main-CotqgbvQ.js` SHA256 `f50df690eb0febf656f9bf1b82bd00bbd6853830c656fe7785a4ca57b18a80ca` matches the tested local production build exactly. No localhost server was listening on 4173/5173 during hosted verification.
+
+Production build, all 139 logic tests and all nine final hosted browser tests pass (zero failed/skipped/flaky tests, about 2.7 minutes). No uncaught browser errors occurred in the five-app flow. Full hosted verification results are recorded in [the browser report](../artifacts/computer-hosted-playwright.json) and [the release audit](../artifacts/computer-release.json).
+
+Visual review inspected actual hosted screenshots of the desktop, order confirmation, eBay listing, grading submission, Collectr overview/card page, profile and returned slab. These are running game views with real owned-instance references, not mockups. All browser fixtures use isolated storage and do not modify the player's save.
+
+The window-lifecycle regression repeatedly opens/minimizes grading and Collectr eight times. It measures two WebGL contexts reused by the world and physical preview, zero hidden card images/previews, and zero world draw calls during the measured idle second after camera transition. This measures idle/cleanup behavior, not a claim about peak game FPS.

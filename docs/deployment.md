@@ -76,3 +76,10 @@ The public-domain browser test verifies Cancel and Escape, a simulated storage f
 Inspection now offers confirmed slab removal with an independent 50/50 outcome persisted before animation. Both outcomes keep the same owned card; failed attempts save visible corner/edge/surface damage and halve the raw value basis once per failure. Manufacturing misprints, previous grades/certificates/subgrades, regrading and distinct-copy historical population survive. Display references are removed transactionally. No pack mechanics, generation rules or rare-event odds changed.
 
 All 129 unit tests and seven production browser tests pass. The latter ran against this public domain and covered shop/opening/manual reveals, shortcuts, reset, both crack outcomes, regrading, Escape and refresh during animation. The 200,000-attempt simulation returned 49.933% safe / 50.067% damaged with zero invariant violations. Published `main-Bmoc2Zmo.js` SHA256 `d9e7b53e821b76c43f83a5ffe486c052d475c785ab61ad68202331edd940e64f` matches the tested local build. Evidence: [slab cracking report](slab-cracking.md), [hosted cracking](../artifacts/hosted-slab-cracks.json), [release audit](../artifacts/slab-cracking-release.json).
+
+
+## Bedroom desktop release
+
+The five connected computer applications are live on the existing public domain. Deployment `kn7cb5mc` serves `main-CotqgbvQ.js`, SHA256 `f50df690eb0febf656f9bf1b82bd00bbd6853830c656fe7785a4ca57b18a80ca`, matching the local production build. The cloud workspace received only the owned desktop release changes and final UI polish; the same project/domain/save origin is retained. No local server is required.
+
+The cloud type-check initially needed the existing production test fixture `tests/fixtures/progressed-game.ts`, which was absent from its older checkout. Transferring that unchanged fixture resolved the build; no gameplay compatibility patch was needed. See [computer implementation and release verification](computer.md) and [release audit](../artifacts/computer-release.json).
