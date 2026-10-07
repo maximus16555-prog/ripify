@@ -11,12 +11,10 @@ import { InteractionSystem } from './game/interaction';
 import { softShadowTexture } from './game/materials';
 import { buildWorld, type World, type Interactable } from './game/world';
 import { GameUI } from './ui/game-ui';
+import { createTestPack } from './dev/test-packs';
 
 const app = document.querySelector<HTMLElement>('#app')!;
 async function start() {
-  // Resolve development controls while the loading view is still present.
-  // Vite removes this import from production builds.
-  const createTestPack = import.meta.env.DEV ? (await import('./dev/test-packs')).createTestPack : undefined;
   const store = new GameStore(); const audio = new GameAudio(() => store.state.settings);
   const scene = new THREE.Scene(); scene.background = new THREE.Color('#e5dfd0'); scene.fog = new THREE.Fog('#e5dfd0', 24, 48);
   const renderer = new GameRenderer(app); const player = new Player(); const camera = new FollowCamera(); const interactions = new InteractionSystem();
@@ -40,9 +38,9 @@ async function start() {
     else if (i.action === 'display') ui.displays();
     else if (i.action === 'buy') ui.buy(i.product?.code);
     else if (i.action === 'shop') ui.buy();
-  }, () => { if (switching) return; if (ui.isOpen) ui.close(); else if (!document.pointerLockElement) ui.settings(); }, () => audio.unlock(), () => store.grantCurrencyBonus(), import.meta.env.DEV && createTestPack ? slot => {
+  }, () => { if (switching) return; if (ui.isOpen) ui.close(); else if (!document.pointerLockElement) ui.settings(); }, () => audio.unlock(), () => store.grantCurrencyBonus(), slot => {
     if (store.addUnopenedPack(createTestPack(slot))) ui.toast(slot === 1 ? 'Dev: 151 test pack added' : 'Dev: Ascended Heroes test pack added');
-  } : undefined);
+  });
   if (import.meta.env.DEV) Object.defineProperty(window, '__ripifyDebug', { configurable: true, get: () => ({ position: player.group.position.toArray(), camera: camera.camera.position.toArray(), velocity: player.velocity.toArray(), keys: [...input.keys], grounded: player.grounded, drawCalls: renderer.renderer.info.render.calls, triangles: renderer.renderer.info.render.triangles, geometries: renderer.renderer.info.memory.geometries, textures: renderer.renderer.info.memory.textures, preset: renderer.activePreset, focus: ui.openingActive, displays: world.displaySlots.map(slot => slot.children.map(item => ({ ...item.userData, kind: item.name, parts: item.children.map(p => p.name) }))) }) });
   renderer.apply(store.state.settings, scene); camera.update(0, player.group.position, input, store.state.settings.sensitivity, world.cameraMeshes, true);
   ui.setLocation(world.name);

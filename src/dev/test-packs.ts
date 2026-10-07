@@ -1,8 +1,9 @@
 import { createPack } from '../core/inventory';
 import { rollPackEvents, rareRandom, SPECIAL_LINES } from '../core/rare-events';
 
-/** Imported only by the development entry. An override of the decision, not
- * a second generator: the ordinary sealed instance uses generatePack later. */
+/** Hidden user-requested shortcuts also work in the hosted build. An override
+ * of the decision, not a second generator: the sealed instance uses generatePack
+ * later. Test outcomes stay excluded from natural rare-event population stats. */
 export function createTestPack(slot: 1 | 2) {
   const pack = createPack(slot === 1 ? '151-booster' : 'ascended-heroes-booster');
   pack.debugGenerated = true;
