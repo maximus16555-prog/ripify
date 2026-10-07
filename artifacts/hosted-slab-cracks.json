@@ -1,0 +1,46 @@
+[
+  {
+    "url": "https://ripify.freebuff.app/",
+    "outcome": "safe",
+    "persistedBeforeAnimation": true,
+    "uid": "1854489e-c219-4897-b094-481be52bba43",
+    "conditionBefore": {
+      "centering": 90,
+      "corners": 91,
+      "edges": 87,
+      "surface": 93,
+      "print": 92
+    },
+    "conditionAfter": {
+      "centering": 90,
+      "corners": 91,
+      "edges": 87,
+      "surface": 93,
+      "print": 92
+    },
+    "regrading": true,
+    "errors": []
+  },
+  {
+    "url": "https://ripify.freebuff.app/",
+    "outcome": "damaged",
+    "persistedBeforeAnimation": true,
+    "uid": "16822344-08f2-4f62-8aba-d77b062bc5be",
+    "conditionBefore": {
+      "centering": 90,
+      "corners": 91,
+      "edges": 87,
+      "surface": 93,
+      "print": 92
+    },
+    "conditionAfter": {
+      "centering": 90,
+      "corners": 56,
+      "edges": 63,
+      "surface": 65,
+      "print": 92
+    },
+    "regrading": true,
+    "errors": []
+  }
+]

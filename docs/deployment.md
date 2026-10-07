@@ -6,8 +6,8 @@ Published through Freebuff managed hosting on October 6, 2026. This production s
 
 - Management: https://freebuff.com/cloud/project/beige-spoons-deny/settings?section=deploys
 - Private source: https://github.com/maximus16555-prog/ripify
-- Hosting deployment ID: `kn7cnxh8`
-- Runtime source commit: `ac6f2a6`.
+- Hosting deployment ID: `kn7ftwwe`
+- Runtime source commit: `3b0d68c`.
 - Install: `npm ci`; build: `npm run build`; static output: `dist` at domain root.
 
 ## Compatibility changes
@@ -70,3 +70,9 @@ Evidence: [hosted shortcut report](../artifacts/hosted-shortcuts.json), [shortcu
 Settings > Save > Reset progress opens an explicit confirmation with Cancel focused. Confirmation replaces all progress with a fresh game (120 coins and one starter pack), preserves graphics/audio/control preferences, clears the old recovery copy, and reloads into the home room. Cards, grading orders, displays, sealed products, pending openings, receipts, statistics, and history are cleared. The new save is written before changing live state; a rejected write leaves existing progress intact and reports failure.
 
 The public-domain browser test verifies Cancel and Escape, a simulated storage failure, successful reset, retained preferences, recovery cleanup, and persistence through refresh. Tests run in isolated browser contexts, never against the user's own save. Evidence: [reset report](../artifacts/hosted-reset.json), [confirmation screen](../artifacts/reset-progress-confirmation.png).
+
+## Slab cracking release
+
+Inspection now offers confirmed slab removal with an independent 50/50 outcome persisted before animation. Both outcomes keep the same owned card; failed attempts save visible corner/edge/surface damage and halve the raw value basis once per failure. Manufacturing misprints, previous grades/certificates/subgrades, regrading and distinct-copy historical population survive. Display references are removed transactionally. No pack mechanics, generation rules or rare-event odds changed.
+
+All 129 unit tests and seven production browser tests pass. The latter ran against this public domain and covered shop/opening/manual reveals, shortcuts, reset, both crack outcomes, regrading, Escape and refresh during animation. The 200,000-attempt simulation returned 49.933% safe / 50.067% damaged with zero invariant violations. Published `main-Bmoc2Zmo.js` SHA256 `d9e7b53e821b76c43f83a5ffe486c052d475c785ab61ad68202331edd940e64f` matches the tested local build. Evidence: [slab cracking report](slab-cracking.md), [hosted cracking](../artifacts/hosted-slab-cracks.json), [release audit](../artifacts/slab-cracking-release.json).

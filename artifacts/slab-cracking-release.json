@@ -1,0 +1,21 @@
+{
+  "url": "https://ripify.freebuff.app/",
+  "deploymentId": "kn7ftwwe",
+  "runtimeCommit": "3b0d68c",
+  "runtimeAsset": "main-Bmoc2Zmo.js",
+  "sha256": "d9e7b53e821b76c43f83a5ffe486c052d475c785ab61ad68202331edd940e64f",
+  "hostedMatchesLocalBuild": true,
+  "unitTestsPassed": 129,
+  "simulation": {
+    "count": 200000,
+    "safe": 99866,
+    "damaged": 100134,
+    "successRate": 0.49933,
+    "damageRate": 0.50067,
+    "standardDeviations": -0.5992662179699436,
+    "violations": 0,
+    "realPlayerItemsAwarded": 0
+  },
+  "hostedBrowserTestsPassed": 7,
+  "hostedBrowserTestsFailed": 0
+}

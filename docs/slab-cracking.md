@@ -34,6 +34,8 @@ This checkout has no functioning eBay/trade/transfer subsystem. The shared guard
 
 See [simulation report](../artifacts/slab-crack-simulation.json) and [automated tests](../tests/slab-cracking.test.ts).
 
+Final validation: production build and all **129 unit tests** pass. All **7 production browser scenarios** pass on **https://ripify.freebuff.app/**, including safe/damaged cracking, regrading and close/reload during animation. The published main bundle matches the locally tested build by SHA256. See [hosted crack results](../artifacts/hosted-slab-cracks.json), [browser report](../artifacts/hosted-playwright-report.json), and [release audit](../artifacts/slab-cracking-release.json). All browser scenarios use isolated saves.
+
 ## Changed files
 
 - Core: [types](../src/core/types.ts), [store](../src/core/store.ts), [economy](../src/core/economy.ts), [save](../src/core/save.ts), [slab cracking](../src/core/slab-cracking.ts), [history validation](../src/core/slab-validation.ts), [population](../src/core/population.ts).
