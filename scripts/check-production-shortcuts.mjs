@@ -11,9 +11,10 @@ try {
   const before=await page.evaluate(()=>JSON.parse(localStorage.getItem('ripify.save.v1')||'null'));
   await page.keyboard.press('Control+Shift+Digit1'); await page.keyboard.press('Control+Shift+Digit2');
   const after=await page.evaluate(()=>JSON.parse(localStorage.getItem('ripify.save.v1')||'null'));
-  const added=after.packs.slice(before.packs.length);
+  // A fresh game need not write its starter save until the first mutation.
+  const added=after.packs.filter(p=>p.debugGenerated && !before?.packs.some(old=>old.uid===p.uid));
   if(added.length!==2 || added[0].productId!=='151-booster' || added[0].rareEvents?.special?.type!=='english-151-demigod' || added[1].productId!=='ascended-heroes-booster' || added[1].rareEvents?.special?.type!=='ascended-heroes-god')throw new Error('Production shortcuts did not add the correct special packs');
-  if(after.opening || after.cards.length!==before.cards.length || added.some(p=>p.state!=='unopened'))throw new Error('Shortcut auto-opened inventory');
+  if(after.opening || after.cards.length!==(before?.cards.length ?? 0) || added.some(p=>p.state!=='unopened'))throw new Error('Shortcut auto-opened inventory');
   if(await page.evaluate(()=>!!window.__ripifyDebug))throw new Error('Production debug surface exposed');
   if(errors.length)throw new Error(errors.join('\n'));
   const report={url:page.url(),bundleContainsHiddenShortcuts:true,productionShortcutsChangeInventory:true,addedSpecials:added.map(p=>p.rareEvents.special.type),debugSurfaceExposed:false,runtimeErrors:errors};
