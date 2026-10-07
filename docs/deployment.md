@@ -1,4 +1,4 @@
-﻿# RIPIFY production deployment
+# RIPIFY production deployment
 
 **Public game: https://ripify.freebuff.app/**
 
@@ -6,8 +6,8 @@ Published through Freebuff managed hosting on October 6, 2026. This production s
 
 - Management: https://freebuff.com/cloud/project/beige-spoons-deny/settings?section=deploys
 - Private source: https://github.com/maximus16555-prog/ripify
-- Hosting deployment ID: `kn7e3a3m`
-- Runtime source commit: `97a345c`.
+- Hosting deployment ID: `kn79qg8f`
+- Runtime source commit: `0e1e6de`.
 - Install: `npm ci`; build: `npm run build`; static output: `dist` at domain root.
 
 ## Compatibility changes
@@ -33,7 +33,7 @@ Opened the game in an unsigned-in/incognito browser and visually checked the roo
 - Collection and inventory persist; development debug object is absent.
 - No uncaught browser errors, failed requests, or localhost requests.
 
-All 101 logic tests pass. Audio verification confirms playback operation, not a subjective evaluation of sound quality.
+All 109 logic tests pass. Audio verification confirms playback operation, not a subjective evaluation of sound quality.
 
 The initial hosted test sent movement too early after reload, before asynchronous game startup registered input. The test now waits for the canvas/loading view; gameplay code needed no fix.
 
@@ -54,3 +54,7 @@ A remote URL starts no local server. The default checks built files on preview p
 Browser saves remain origin-scoped. Export existing localhost progress in local Settings and import it in hosted Settings. Hosting cannot automatically read local-origin storage.
 
 For future releases, sync only intended source changes into the existing private deployment repository/cloud workspace, build/test, and use Redeploy. Keep this domain so existing hosted saves remain accessible. Do not recreate the project or scaffold a replacement game.
+
+## Ascended Heroes pricing release
+
+The October 6 pricing update pins seven exact Ascended Heroes printings to the requested authoritative base raw values. Existing saved misprints resolve to these values with the single 30x raw modifier. Market variation is disabled only for these seven IDs. Generation, special-pack composition, all rare-event odds, grading rules, and the physical opener are unchanged. The hosted main bundle matches the verified local build by SHA256.
