@@ -4,22 +4,34 @@ import { slabPresentation } from '../assets/card-presentation';
 
 export const SLAB_CRACK_SUCCESS = .5;
 export const FAILED_CRACK_RAW_MODIFIER = .5;
+export const SAFE_CRACK_REPAIR = { minimum: 2, variation: 2, ceiling: 98 };
 /** Independent of printing, price, grader, condition and rare-pack events. */
 export function createSlabCrack(card: OwnedCard, seed = newSeed(), now = Date.now()): SlabCrackEvent {
   const slab = slabPresentation(card); if (!slab?.cert) throw new Error('Card is not slabbed');
   const random = seeded(seed), safe = random() < SLAB_CRACK_SUCCESS;
   const before = { ...card.condition }, after = { ...before };
   const damage: SlabCrackEvent['damage'] = [];
-  if (!safe) {
+  let improvement: SlabCrackEvent['improvement'];
+  if (safe) {
+    improvement = { corners: 0, edges: 0, surface: 0 };
+    for (const key of ['corners', 'edges', 'surface'] as const) {
+      // Recovery never regenerates a missing corner or removes a permanent defect.
+      const defects = crackDamage(card).filter(d => key === 'corners' ? ['missing-corner', 'bent-corner'].includes(d.type) : key === 'edges' ? d.type === 'edge-chip' : ['crease', 'dent', 'scratch'].includes(d.type));
+      const cap = Math.min(SAFE_CRACK_REPAIR.ceiling, ...defects.map(d => 98 - Math.ceil(d.severity * 28)));
+      const gain = SAFE_CRACK_REPAIR.minimum + Math.floor(random() * (SAFE_CRACK_REPAIR.variation + 1));
+      after[key] = Math.max(before[key], Math.min(cap, before[key] + gain));
+      improvement[key] = after[key] - before[key];
+    }
+  } else {
     const corner = Math.floor(random() * 4), severity = .55 + random() * .35;
-    damage.push({ type: 'bent-corner', side: 'both', x: corner % 2, y: Math.floor(corner / 2), severity, length: .09, angle: 0 });
-    damage.push({ type: random() < .5 ? 'scratch' : 'crease', side: random() < .5 ? 'front' : 'back', x: .2 + random() * .5, y: .25 + random() * .5, severity, length: .18 + random() * .15, angle: random() * Math.PI });
+    damage.push({ type: random() < .35 ? 'missing-corner' : 'bent-corner', side: 'both', x: corner % 2, y: Math.floor(corner / 2), severity, length: .09, angle: 0 });
+    damage.push({ type: (['scratch', 'crease', 'dent'] as const)[Math.floor(random() * 3)], side: random() < .5 ? 'front' : 'back', x: .2 + random() * .5, y: .25 + random() * .5, severity, length: .18 + random() * .15, angle: random() * Math.PI });
     damage.push({ type: 'edge-chip', side: 'both', x: corner % 2, y: .2 + random() * .6, severity: severity * .8, length: .08, angle: 0 });
     after.corners = Math.max(0, before.corners - Math.round(22 + severity * 18));
     after.edges = Math.max(0, before.edges - Math.round(14 + severity * 13));
     after.surface = Math.max(0, before.surface - Math.round(17 + severity * 15));
   }
-  return { uid: uuid(), at: now, seed, grader: slab.grader, grade: slab.grade, cert: slab.cert, ...(slab.subgrades ? { subgrades: [...slab.subgrades] } : {}), outcome: safe ? 'safe' : 'damaged', rawModifier: safe ? 1 : FAILED_CRACK_RAW_MODIFIER, conditionBefore: before, conditionAfter: after, damage };
+  return { uid: uuid(), at: now, seed, grader: slab.grader, grade: slab.grade, cert: slab.cert, ...(slab.subgrades ? { subgrades: [...slab.subgrades] } : {}), outcome: safe ? 'safe' : 'damaged', rawModifier: safe ? 1 : FAILED_CRACK_RAW_MODIFIER, conditionBefore: before, conditionAfter: after, ...(improvement ? { improvement } : {}), damage };
 }
 export function crackDamageFactor(card: Pick<OwnedCard, 'crackHistory'>) {
   return (card.crackHistory ?? []).reduce((factor, event) => factor * (event.outcome === 'damaged' ? FAILED_CRACK_RAW_MODIFIER : 1), 1);

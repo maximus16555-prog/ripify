@@ -5,6 +5,7 @@ export class GameAudio {
   private ambience?: OscillatorNode;
   private ambienceGain?: GainNode;
   private noiseBuffers = new Map<Sound, AudioBuffer>();
+  private fractureBuffers: AudioBuffer[] = [];
   constructor(private settings: () => Settings) {}
   unlock() {
     try {
@@ -18,6 +19,20 @@ export class GameAudio {
   update() { if (this.context && this.ambienceGain) { const s = this.settings(); this.ambienceGain.gain.setTargetAtTime(s.master * s.music * .013, this.context.currentTime, .2); } }
   suspend() { void this.context?.suspend(); }
   resume() { if (this.context) void this.context.resume(); }
+  /** Original short rigid-plastic impulses; called only when a fracture stage actually occurs. */
+  plasticFracture(phase: number) {
+    const ctx = this.context, s = this.settings(); if (!ctx || ctx.state !== 'running' || s.master * s.sfx < .0001) return;
+    if (!this.fractureBuffers.length) for (let n = 0; n < 4; n++) {
+      const b = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * .095), ctx.sampleRate), data = b.getChannelData(0);
+      for (let i = 0; i < data.length; i++) { const t = i / ctx.sampleRate; data[i] = ((Math.random() * 2 - 1) * Math.exp(-t * (70 + n * 8)) + .2 * Math.sin(t * (950 + n * 173) * Math.PI * 2) * Math.exp(-t * 100)); }
+      this.fractureBuffers.push(b);
+    }
+    const source = ctx.createBufferSource(), filter = ctx.createBiquadFilter(), gain = ctx.createGain();
+    source.buffer = this.fractureBuffers[(phase + Math.floor(Math.random() * 2)) % 4]; source.playbackRate.value = .95 + Math.random() * .1;
+    filter.type = 'highpass'; filter.frequency.value = phase === 0 ? 1300 : 1800;
+    gain.gain.setValueAtTime(s.master * s.sfx * (phase === 0 ? .12 : .065), ctx.currentTime); gain.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime + .09);
+    source.connect(filter).connect(gain).connect(ctx.destination); source.start(); source.onended = () => { source.disconnect(); filter.disconnect(); gain.disconnect(); };
+  }
   play(sound: Sound) {
     const ctx = this.context; if (!ctx || ctx.state !== 'running') return;
     const s = this.settings(); const volume = s.master * s.sfx;
@@ -41,5 +56,5 @@ export class GameAudio {
       setTimeout(() => gain.disconnect(), (duration + .1) * 1000);
     }
   }
-  dispose() { this.ambience?.stop(); this.noiseBuffers.clear(); void this.context?.close(); }
+  dispose() { this.ambience?.stop(); this.noiseBuffers.clear(); this.fractureBuffers = []; void this.context?.close(); }
 }

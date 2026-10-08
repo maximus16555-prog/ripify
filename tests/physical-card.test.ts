@@ -4,12 +4,46 @@ import type { OwnedCard, Grader } from '../src/core/types';
 import { createPhysicalCard, placeOnStand, CARD_SIZE, SLAB_SIZE } from '../src/game/physical-card';
 import { conditionAppearance, slabPresentation, SLAB_STYLES } from '../src/assets/card-presentation';
 import { GameStore } from '../src/core/store';
+import { createSlabCrack } from '../src/core/slab-cracking';
+import { damageClipStyle } from '../src/assets/card-damage-shape';
+import { cardDamageHeight } from '../src/game/card-damage-geometry';
 
 const copy = (): OwnedCard => ({ uid: 'physical-copy-1', cardId: 'sve-1', condition: { centering: 92, corners: 76, edges: 71, surface: 62, print: 94 }, acquiredAt: 100, source: '151', favorite: false, status: 'raw', owner: 'local-player', finish: 'normal', origin: 'pack' });
 const textures = { face: (_: OwnedCard, side: string) => { const t = new THREE.Texture(); t.userData.side = side; return t; }, label: (_: OwnedCard, rear: boolean) => { const t = new THREE.Texture(); t.userData.side = rear ? 'rear label' : 'front label'; return t; } };
 const mesh = (group: THREE.Group, name: string) => group.getObjectByName(name) as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
 
 describe('physical card faces and slabs', () => {
+  it('never exposes an untextured stock cap through bent artwork', () => {
+    const owned = copy(), event = createSlabCrack({ ...owned, status: 'graded', grader: 'PSA', grade: 9 }, 1000);
+    event.damage = [{type:'bent-corner',side:'both',x:1,y:1,length:.09,severity:.85,angle:0}, {type:'crease',side:'front',x:.6,y:.7,length:.3,severity:.8,angle:1}];
+    owned.crackHistory = [event]; const item = createPhysicalCard(owned, textures); item.group.updateMatrixWorld(true);
+    for (const direction of [-1,1]) for (let x = -.14; x <= .14; x += .02) for (let y = -.2; y <= .2; y += .02) {
+      const hits = new THREE.Raycaster(new THREE.Vector3(x,y,direction),new THREE.Vector3(0,0,-direction)).intersectObject(item.group);
+      expect(hits[0]?.object.name).toBe(direction === 1 ? 'card-front' : 'card-back');
+    }
+    item.dispose();
+  });
+  it('cuts missing material through both artwork faces and the cardstock, retaining exact UVs', () => {
+    const owned = copy(), event = createSlabCrack({ ...owned, status: 'graded', grader: 'PSA', grade: 9 }, 1000);
+    event.damage = [{ type: 'missing-corner', side: 'both', x: 0, y: 0, length: .12, severity: .9, angle: 0 }, { type: 'edge-chip', side: 'both', x: 1, y: .5, length: .08, severity: .8, angle: 0 }];
+    owned.crackHistory = [event]; const item = createPhysicalCard(owned, textures); item.group.updateMatrixWorld(true);
+    for (const direction of [-1, 1]) {
+      const ray = new THREE.Raycaster(new THREE.Vector3(-CARD_SIZE.width / 2 + .008, CARD_SIZE.height / 2 - .008, direction), new THREE.Vector3(0, 0, -direction));
+      expect(ray.intersectObject(item.group)).toHaveLength(0);
+      const chip = new THREE.Raycaster(new THREE.Vector3(CARD_SIZE.width / 2 - .001, 0, direction), new THREE.Vector3(0,0,-direction)); expect(chip.intersectObject(item.group)).toHaveLength(0);
+      const middle = new THREE.Raycaster(new THREE.Vector3(0,0,direction),new THREE.Vector3(0,0,-direction)); expect(middle.intersectObject(item.group).length).toBeGreaterThan(0);
+    }
+    expect(damageClipStyle(owned)).toContain('clip-path:polygon');
+    expect(mesh(item.group,'card-front').material.map!.userData.side).toBe('front'); expect(mesh(item.group,'card-back').material.map!.userData.side).toBe('back'); item.dispose();
+  });
+  it('deforms folds and dents while whitening and scratches leave the silhouette intact', () => {
+    const owned = copy(), event = createSlabCrack({ ...owned, status: 'graded', grader: 'PSA', grade: 9 }, 1000);
+    for (const type of ['crease', 'dent', 'scratch', 'whitening'] as const) {
+      event.damage = [{type, side:'front', x:.5,y:.5,length:.2,severity:.8,angle:0}]; owned.crackHistory = [event];
+      expect(damageClipStyle(owned)).toBe(''); const height = cardDamageHeight(owned,.5,.5);
+      if(type==='crease')expect(height).toBeGreaterThan(0); else if(type==='dent')expect(height).toBeLessThan(0); else expect(height).toBe(0);
+    }
+  });
   it('renders outward front/back faces and untextured cardstock from an edge', () => {
     const owned = copy(), before = JSON.stringify(owned), item = createPhysicalCard(owned, textures);
     item.group.updateMatrixWorld(true);

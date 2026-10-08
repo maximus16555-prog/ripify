@@ -4,7 +4,7 @@ import { CARD_BY_ID } from '../data/cards';
 import { createPhysicalCard } from '../game/physical-card';
 import { slabPresentation } from '../assets/card-presentation';
 import { physicalCardSignature } from '../game/display-cards';
-import { SlabCrackPresentation } from '../game/slab-crack-presentation';
+import { SlabCrackPresentation, SLAB_FRACTURES } from '../game/slab-crack-presentation';
 
 // One context retains at most one raw copy and one slab to keep both shader
 // variants warm. Dormant previews never render or keep interaction listeners.
@@ -60,6 +60,7 @@ export class CardInspector {
     canvas.dataset.uid = owned.uid; canvas.dataset.kind = slab ? 'slab' : 'raw';
     if (slab?.cert) canvas.dataset.cert = slab.cert; else delete canvas.dataset.cert;
     delete canvas.dataset.frontImage; delete canvas.dataset.backImage;
+    delete canvas.dataset.cracking; delete canvas.dataset.fractureState;
     root.append(canvas);
     const controls = document.createElement('div'); controls.className = 'physical-card-controls';
     controls.innerHTML = '<span>Drag to rotate</span><button class="text-button" data-flip>Flip</button><button class="text-button" data-reset-view>Reset view</button>';
@@ -129,7 +130,7 @@ export class CardInspector {
       this.retained.set(this.kind, { item: this.item, signature: this.signature });
     });
   }
-  animateCrack(owned: OwnedCard, onFinish: () => void, onSnap: () => void) {
+  animateCrack(owned: OwnedCard, onFinish: () => void, onSnap: (phase: number) => void) {
     cancelAnimationFrame(this.frame); this.frame = 0; this.drag = undefined;
     this.yaw = this.pitch = 0; this.item.group.rotation.set(0, 0, 0);
     this.cracking = new SlabCrackPresentation(this.item, owned);
@@ -138,13 +139,14 @@ export class CardInspector {
     this.root.querySelector('.physical-card-caption')!.textContent = 'Opening slab…';
     this.root.querySelector('.physical-card-caption')!.setAttribute('role', 'status');
     this.renderer.domElement.dataset.cracking = 'true';
-    let started = 0, snapped = false;
+    let started = 0, snapped = 0;
     const tick = (now: number) => {
       if (this.disposed || !this.cracking) return;
       if (!started) started = now;
-      const t = Math.min(1, (now - started) / 1900);
+      const t = Math.min(1, (now - started) / 2600);
       this.cracking.update(t);
-      if (t >= .34 && !snapped) { snapped = true; onSnap(); }
+      this.renderer.domElement.dataset.fractureState = String(this.item.group.userData.fractureState);
+      while (snapped < SLAB_FRACTURES.length && t >= SLAB_FRACTURES[snapped]) { onSnap(snapped); snapped++; }
       this.renderer.render(this.scene, this.camera);
       if (t < 1) this.crackFrame = requestAnimationFrame(tick); else onFinish();
     };

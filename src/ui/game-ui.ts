@@ -220,7 +220,7 @@ export class GameUI {
       this.open(`${this.header('SLAB REMOVAL', CARD_BY_ID.get(card.cardId)!.name)}<div class="crack-stage"><div class="inspection-card"></div></div>`, false, 'Opening slab');
       this.crackingUid = uid;
       const finish = () => { this.inspect(uid, back); this.toast(event.outcome === 'safe' ? 'Slab removed safely' : 'Card damaged'); };
-      try { this.inspector = new CardInspector(this.modal.querySelector<HTMLElement>('.inspection-card')!, slab); this.inspector.animateCrack(card, finish, () => this.audio.play('plastic')); }
+      try { this.inspector = new CardInspector(this.modal.querySelector<HTMLElement>('.inspection-card')!, slab); this.inspector.animateCrack(card, finish, phase => this.audio.plasticFracture(phase)); }
       catch { finish(); }
     };
   }

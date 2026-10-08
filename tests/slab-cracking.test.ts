@@ -25,17 +25,33 @@ function fixture(misprint = false) {
 const textures = { face: () => new THREE.Texture(), label: () => new THREE.Texture() };
 
 describe('transactional slab cracking', () => {
-  it('safe cracking keeps the exact owned object, printing, condition and history', () => {
+  it('safe cracking improves repairable condition on the exact owned object, preserving manufacturing and history', () => {
     const f = fixture(), before = structuredClone(f.card), conditionObject = f.card.condition;
     f.store.display(f.card.uid, 1); const count = f.writes();
     const event = f.store.crackSlab(f.card.uid, 0, 789)!;
     expect(event.outcome).toBe('safe'); expect(f.writes()).toBe(count + 1);
     expect(f.store.state.cards[0]).toBe(f.card); expect(f.card.condition).toBe(conditionObject);
-    expect(f.card.condition).toEqual(before.condition); expect(f.card.cardId).toBe(before.cardId);
+    for (const key of ['corners', 'edges', 'surface'] as const) { expect(f.card.condition[key]).toBeGreaterThan(before.condition[key]); expect(f.card.condition[key] - before.condition[key]).toBe(event.improvement![key]); }
+    expect(f.card.condition.centering).toBe(before.condition.centering); expect(f.card.condition.print).toBe(before.condition.print); expect(f.card.cardId).toBe(before.cardId);
     for (const field of ['uid', 'acquiredAt', 'source', 'favorite', 'origin', 'owner', 'finish', 'baseRawValue', 'gradingHistory'] as const) expect(f.card[field]).toEqual(before[field]);
     expect(f.card.status).toBe('raw'); expect(f.card.grader).toBeUndefined(); expect(f.card.grade).toBeUndefined();
     expect(f.store.state.displays).toEqual([null, null, null]); expect(f.store.state.cards).toHaveLength(1);
     expect(parseSave(f.saved()).cards[0]).toEqual(f.card);
+  });
+  it('successful recovery applies once, uses current condition on regrading and stops at a bounded ceiling', () => {
+    const f = fixture(true), misprint = structuredClone(f.card.misprint), first = f.store.crackSlab(f.card.uid, 0)!;
+    for (let i = 0; i < 4; i++) expect(new GameStore(f.storage).state.cards[0].condition).toEqual(first.conditionAfter);
+    f.store.finishCrack(f.card.uid);
+    for (let i = 0; i < 12; i++) {
+      const before = { ...f.card.condition }; f.store.submit(f.card.uid, 'BGS', 'Standard'); const order = f.store.state.orders[0]; f.store.receive(order.uid, order.dueAt);
+      const event = f.store.crackSlab(f.card.uid, 0)!; expect(event.conditionBefore).toEqual(before); f.store.finishCrack(f.card.uid);
+    }
+    expect(f.card.condition).toEqual({ centering: 91, corners: 98, edges: 98, surface: 98, print: 95 });
+    expect(f.card.misprint).toEqual(misprint); expect(new GameStore(f.storage).state.cards[0]).toEqual(f.card);
+  });
+  it('old safe-crack saves keep their historical unchanged condition without retroactive repair', () => {
+    const f = fixture(), e = f.store.crackSlab(f.card.uid, 0)!; delete e.improvement; e.conditionAfter = { ...e.conditionBefore }; f.card.condition = { ...e.conditionBefore };
+    const loaded = parseSave(JSON.stringify(f.store.state)); expect(loaded.cards[0].condition).toEqual(e.conditionBefore); expect(loaded.cards[0].crackHistory![0].improvement).toBeUndefined();
   });
   it('failed cracking permanently damages condition and halves raw basis, never the graded value', () => {
     const f = fixture(), before = structuredClone(f.card), oldGraded = ownedValue(f.card, 0);
@@ -137,7 +153,9 @@ describe('physical crack damage and presentation', () => {
     const f = fixture(), before = structuredClone(f.card), slab = createPhysicalCard(before, textures); f.store.crackSlab(f.card.uid, 1000);
     const animation = new SlabCrackPresentation(slab, f.card, textures);
     animation.update(0); expect(animation.raw.group.visible).toBe(false);
-    animation.update(.5); expect(slab.group.getObjectByName('slab-cover-front')!.parent!.rotation.x).toBeLessThan(0);
+    animation.update(.2); expect(slab.group.userData.fractureState).toBe('stressed'); expect(slab.group.getObjectByName('slab-cover-front')!.visible).toBe(true);
+    animation.update(.35); expect(slab.group.userData.fractureState).toBe('initial');
+    animation.update(.5); expect(slab.group.getObjectByName('slab-cover-front')!.visible).toBe(false); expect(slab.group.getObjectByName('broken-slab-corner')).toBeTruthy();
     animation.update(1); expect(animation.raw.group.visible).toBe(true); expect(animation.raw.group.userData.uid).toBe(f.card.uid);
     expect(slab.group.getObjectByName('card-front')!.visible).toBe(false); expect(f.store.state.cards).toHaveLength(1);
     animation.dispose(); slab.dispose();

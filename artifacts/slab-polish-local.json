@@ -1,0 +1,207 @@
+{
+  "tests": {
+    "startTime": "2026-10-08T02:24:22.417Z",
+    "duration": 200636.9,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "evidence": [
+    {
+      "url": "http://127.0.0.1:4173/",
+      "outcome": "safe",
+      "persistedBeforeAnimation": true,
+      "uid": "4bc1d58d-255c-4677-a5d5-56285fe8bd0b",
+      "conditionBefore": {
+        "centering": 90,
+        "corners": 91,
+        "edges": 87,
+        "surface": 93,
+        "print": 92
+      },
+      "conditionAfter": {
+        "centering": 90,
+        "corners": 93,
+        "edges": 91,
+        "surface": 97,
+        "print": 92
+      },
+      "fractureSounds": [
+        5106.200000047684,
+        5503.799999952316,
+        5837.899999856949
+      ],
+      "regrading": true,
+      "errors": []
+    },
+    {
+      "url": "http://127.0.0.1:4173/",
+      "outcome": "damaged",
+      "persistedBeforeAnimation": true,
+      "uid": "d83939e4-98da-492b-9b89-df1b559874db",
+      "conditionBefore": {
+        "centering": 90,
+        "corners": 91,
+        "edges": 87,
+        "surface": 93,
+        "print": 92
+      },
+      "conditionAfter": {
+        "centering": 90,
+        "corners": 56,
+        "edges": 63,
+        "surface": 65,
+        "print": 92
+      },
+      "fractureSounds": [
+        5128.799999952316,
+        5526.400000095367,
+        5860.600000143051
+      ],
+      "regrading": true,
+      "errors": []
+    },
+    {
+      "evidence": [
+        {
+          "type": "missing-corner",
+          "seed": 685,
+          "damage": [
+            {
+              "type": "missing-corner",
+              "side": "both",
+              "x": 1,
+              "y": 0,
+              "severity": 0.8456451094476507,
+              "length": 0.09,
+              "angle": 0
+            },
+            {
+              "type": "dent",
+              "side": "back",
+              "x": 0.502046520402655,
+              "y": 0.3524072157451883,
+              "severity": 0.8456451094476507,
+              "length": 0.3266466737911105,
+              "angle": 2.934296634375669
+            },
+            {
+              "type": "edge-chip",
+              "side": "both",
+              "x": 1,
+              "y": 0.5592767658643425,
+              "severity": 0.6765160875581206,
+              "length": 0.08,
+              "angle": 0
+            }
+          ],
+          "reloadUnchanged": true
+        },
+        {
+          "type": "crease",
+          "seed": 683,
+          "damage": [
+            {
+              "type": "bent-corner",
+              "side": "both",
+              "x": 0,
+              "y": 0,
+              "severity": 0.7163493188098073,
+              "length": 0.09,
+              "angle": 0
+            },
+            {
+              "type": "crease",
+              "side": "front",
+              "x": 0.5710094881244003,
+              "y": 0.43625425396021456,
+              "severity": 0.7163493188098073,
+              "length": 0.32403213376645,
+              "angle": 2.5733371037852195
+            },
+            {
+              "type": "edge-chip",
+              "side": "both",
+              "x": 0,
+              "y": 0.6148059878498315,
+              "severity": 0.5730794550478459,
+              "length": 0.08,
+              "angle": 0
+            }
+          ],
+          "reloadUnchanged": true
+        },
+        {
+          "type": "dent",
+          "seed": 682,
+          "damage": [
+            {
+              "type": "bent-corner",
+              "side": "both",
+              "x": 0,
+              "y": 0,
+              "severity": 0.8267014234908856,
+              "length": 0.09,
+              "angle": 0
+            },
+            {
+              "type": "dent",
+              "side": "back",
+              "x": 0.3554909719852731,
+              "y": 0.4781777730677277,
+              "severity": 0.8267014234908856,
+              "length": 0.24772486375411973,
+              "angle": 2.392857338489995
+            },
+            {
+              "type": "edge-chip",
+              "side": "both",
+              "x": 0,
+              "y": 0.3425705988425761,
+              "severity": 0.6613611387927085,
+              "length": 0.08,
+              "angle": 0
+            }
+          ],
+          "reloadUnchanged": true
+        },
+        {
+          "type": "scratch",
+          "seed": 684,
+          "damage": [
+            {
+              "type": "bent-corner",
+              "side": "both",
+              "x": 1,
+              "y": 0,
+              "severity": 0.605997214128729,
+              "length": 0.09,
+              "angle": 0
+            },
+            {
+              "type": "scratch",
+              "side": "front",
+              "x": 0.2865280042635277,
+              "y": 0.3943307348527014,
+              "severity": 0.605997214128729,
+              "length": 0.2503394037787802,
+              "angle": 2.753816869080444
+            },
+            {
+              "type": "edge-chip",
+              "side": "both",
+              "x": 1,
+              "y": 0.287041376857087,
+              "severity": 0.4847977713029832,
+              "length": 0.08,
+              "angle": 0
+            }
+          ],
+          "reloadUnchanged": true
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

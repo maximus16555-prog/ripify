@@ -1,5 +1,7 @@
 # Slab cracking
 
+This document records the original slab-cracking release. The current condition-recovery and physical-fracture behavior is described in [slab polish](slab-polish.md), which supersedes the unchanged-condition and clean-separation behavior below.
+
 Inspect an owned graded card, choose **Crack slab**, then confirm. Cancel is focused initially. Each committed attempt has an independent 50% safe / 50% damaged outcome, regardless of printing, price, misprint, condition or grader. Displayed cards are removed from their stand in the same transaction.
 
 ## Transaction and identity
