@@ -53,6 +53,11 @@ describe('physical card faces and slabs', () => {
     expect(ray([1, 0, 0], [-1, 0, 0])[0]).toBe('cardstock');
     expect(mesh(item.group, 'card-front').material.map!.userData.side).toBe('front');
     expect(mesh(item.group, 'card-back').material.map!.userData.side).toBe('back');
+    for (const side of ['front', 'back']) {
+      const material = mesh(item.group, `card-${side}`).material;
+      expect(material.transparent).toBe(true);
+      expect(material.alphaTest).toBeGreaterThan(0);
+    }
     expect(mesh(item.group, 'cardstock').material.map).toBeNull();
     expect(new THREE.Box3().setFromObject(item.group).getSize(new THREE.Vector3()).z).toBeGreaterThan(0);
     for (const name of ['card-front', 'card-back']) {

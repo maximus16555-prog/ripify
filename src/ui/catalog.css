@@ -1,5 +1,6 @@
 ﻿.real-card { background: transparent; border: 0; padding: 0; position: relative; }
-.real-card .card-paper { padding: 0; border: 0; overflow: hidden; background: #e9e8df; width: 100%; height: 100%; border-radius: 8px; }
+.tcg-card.real-card { background: transparent; }
+.tcg-card.real-card .card-paper { padding: 0; border: 0; overflow: hidden; background: transparent; width: 100%; height: 100%; border-radius: 8px; }
 .real-card .exact-card-image { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
 .real-card .exact-card-image[hidden], .missing-card-image[hidden] { display: none; }
 .real-card.slab { padding: 10px; background: #e2e6e2; }

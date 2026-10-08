@@ -15,7 +15,10 @@ export function printAppearance(owned: Pick<OwnedCard, 'misprint'>, rear = false
 /** Exact source artwork, with simulated physical print/cut faults over that copy. */
 export function drawPrintedFace(ctx: CanvasRenderingContext2D, image: CanvasImageSource, owned: OwnedCard, rear: boolean, width: number, height: number) {
   const a = printAppearance(owned, rear);
-  ctx.save(); ctx.fillStyle = '#eee9dc'; ctx.fillRect(0, 0, width, height);
+  ctx.save();
+  // Exposed stock belongs only to a saved displaced printing. Filling every
+  // texture also fills the original image's transparent corners with pale patches.
+  if (a.x || a.y) { ctx.fillStyle = '#eee9dc'; ctx.fillRect(0, 0, width, height); }
   ctx.drawImage(image, a.x * width, a.y * height, width, height);
   if (a.type === 'registration') {
     // A displaced, faint impression of the same printing; no replacement artwork.

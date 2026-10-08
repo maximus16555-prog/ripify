@@ -1,0 +1,218 @@
+[
+  {
+    "cardId": "sve-1",
+    "score": 100,
+    "side": "front",
+    "changedPixels": 0,
+    "edgeChanges": 0,
+    "originalWhitePixels": 14298,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sve-1",
+    "score": 100,
+    "side": "back",
+    "changedPixels": 0,
+    "edgeChanges": 0,
+    "originalWhitePixels": 4963,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sve-1",
+    "score": 87,
+    "side": "front",
+    "changedPixels": 553,
+    "edgeChanges": 45,
+    "originalWhitePixels": 14298,
+    "changedWhitePixels": 16
+  },
+  {
+    "cardId": "sve-1",
+    "score": 87,
+    "side": "back",
+    "changedPixels": 610,
+    "edgeChanges": 34,
+    "originalWhitePixels": 4963,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sve-1",
+    "score": 63,
+    "side": "front",
+    "changedPixels": 884,
+    "edgeChanges": 139,
+    "originalWhitePixels": 14298,
+    "changedWhitePixels": 56
+  },
+  {
+    "cardId": "sve-1",
+    "score": 63,
+    "side": "back",
+    "changedPixels": 906,
+    "edgeChanges": 122,
+    "originalWhitePixels": 4963,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sv03.5-001",
+    "score": 100,
+    "side": "front",
+    "changedPixels": 1234,
+    "edgeChanges": 898,
+    "originalWhitePixels": 4122,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sv03.5-001",
+    "score": 100,
+    "side": "back",
+    "changedPixels": 0,
+    "edgeChanges": 0,
+    "originalWhitePixels": 4963,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sv03.5-001",
+    "score": 87,
+    "side": "front",
+    "changedPixels": 4861,
+    "edgeChanges": 967,
+    "originalWhitePixels": 4122,
+    "changedWhitePixels": 5
+  },
+  {
+    "cardId": "sv03.5-001",
+    "score": 87,
+    "side": "back",
+    "changedPixels": 645,
+    "edgeChanges": 31,
+    "originalWhitePixels": 4963,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sv03.5-001",
+    "score": 63,
+    "side": "front",
+    "changedPixels": 5035,
+    "edgeChanges": 1027,
+    "originalWhitePixels": 4122,
+    "changedWhitePixels": 5
+  },
+  {
+    "cardId": "sv03.5-001",
+    "score": 63,
+    "side": "back",
+    "changedPixels": 872,
+    "edgeChanges": 122,
+    "originalWhitePixels": 4963,
+    "changedWhitePixels": 20
+  },
+  {
+    "cardId": "sv03.5-006",
+    "score": 100,
+    "side": "front",
+    "changedPixels": 1250,
+    "edgeChanges": 911,
+    "originalWhitePixels": 2571,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sv03.5-006",
+    "score": 100,
+    "side": "back",
+    "changedPixels": 0,
+    "edgeChanges": 0,
+    "originalWhitePixels": 4963,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sv03.5-006",
+    "score": 87,
+    "side": "front",
+    "changedPixels": 3795,
+    "edgeChanges": 1011,
+    "originalWhitePixels": 2571,
+    "changedWhitePixels": 1
+  },
+  {
+    "cardId": "sv03.5-006",
+    "score": 87,
+    "side": "back",
+    "changedPixels": 610,
+    "edgeChanges": 33,
+    "originalWhitePixels": 4963,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sv03.5-006",
+    "score": 63,
+    "side": "front",
+    "changedPixels": 4049,
+    "edgeChanges": 1047,
+    "originalWhitePixels": 2571,
+    "changedWhitePixels": 1
+  },
+  {
+    "cardId": "sv03.5-006",
+    "score": 63,
+    "side": "back",
+    "changedPixels": 940,
+    "edgeChanges": 110,
+    "originalWhitePixels": 4963,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sv03.5-199",
+    "score": 100,
+    "side": "front",
+    "changedPixels": 1233,
+    "edgeChanges": 897,
+    "originalWhitePixels": 6215,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sv03.5-199",
+    "score": 100,
+    "side": "back",
+    "changedPixels": 0,
+    "edgeChanges": 0,
+    "originalWhitePixels": 4963,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sv03.5-199",
+    "score": 87,
+    "side": "front",
+    "changedPixels": 3798,
+    "edgeChanges": 916,
+    "originalWhitePixels": 6215,
+    "changedWhitePixels": 8
+  },
+  {
+    "cardId": "sv03.5-199",
+    "score": 87,
+    "side": "back",
+    "changedPixels": 604,
+    "edgeChanges": 33,
+    "originalWhitePixels": 4963,
+    "changedWhitePixels": 0
+  },
+  {
+    "cardId": "sv03.5-199",
+    "score": 63,
+    "side": "front",
+    "changedPixels": 4028,
+    "edgeChanges": 974,
+    "originalWhitePixels": 6215,
+    "changedWhitePixels": 8
+  },
+  {
+    "cardId": "sv03.5-199",
+    "score": 63,
+    "side": "back",
+    "changedPixels": 938,
+    "edgeChanges": 122,
+    "originalWhitePixels": 4963,
+    "changedWhitePixels": 0
+  }
+]

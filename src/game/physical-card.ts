@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import type { OwnedCard } from '../core/types';
 import { CARD_BY_ID } from '../data/cards';
 import { cardArtwork } from '../assets/cards';
-import { conditionAppearance, slabPresentation, stableHash } from '../assets/card-presentation';
+import { slabPresentation } from '../assets/card-presentation';
 import cardBack from '../data/verified/card-back.json';
 import { drawPrintedFace, printAppearance } from '../assets/misprint-presentation';
 import { drawCrackDamage } from '../assets/crack-damage-presentation';
@@ -64,32 +64,6 @@ function bodyGeometry(width: number, height: number, depth: number, radius: numb
   geo.dispose(); return edge;
 }
 
-function drawWear(ctx: CanvasRenderingContext2D, owned: OwnedCard, side: 'front' | 'back', width: number, height: number) {
-  const wear = conditionAppearance(owned);
-  ctx.save(); ctx.strokeStyle = '#eee8d6'; ctx.lineCap = 'round';
-  for (const mark of wear[side]) {
-    ctx.globalAlpha = mark.opacity * .35; ctx.lineWidth = .6;
-    ctx.beginPath(); ctx.moveTo(mark.x * width, mark.y * height);
-    ctx.lineTo((mark.x + Math.cos(mark.angle) * mark.length) * width, (mark.y + Math.sin(mark.angle) * mark.length) * height); ctx.stroke();
-  }
-  // Matching edge/corner locations when viewed from the opposite face.
-  let seed = stableHash(owned.uid + ':edges');
-  const random = () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; };
-  ctx.globalAlpha = .25 + wear.edges * .2; ctx.lineWidth = .6 + wear.edges * 1.3;
-  for (let i = 0; i < Math.floor(wear.edges * 28); i++) {
-    let x = random() * width, y = random() * height;
-    if (i % 2) x = i % 4 === 1 ? 1 : width - 1; else y = i % 4 === 0 ? 1 : height - 1;
-    let endX = Math.min(width - 1, x + (i % 2 ? 0 : 3 + wear.edges * 8));
-    const endY = Math.min(height - 1, y + (i % 2 ? 3 + wear.edges * 8 : 0));
-    if (side === 'back') { x = width - x; endX = width - endX; }
-    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(endX, endY); ctx.stroke();
-  }
-  ctx.fillStyle = '#cfc8b6'; ctx.globalAlpha = Math.min(.3, wear.corners * .45);
-  for (const [x, y] of [[0, 0], [width, 0], [0, height], [width, height]]) { ctx.beginPath(); ctx.arc(x, y, wear.corners * 9, 0, Math.PI * 2); ctx.fill(); }
-  ctx.restore();
-  drawCrackDamage(ctx, owned, side, width, height);
-}
-
 function canvasTexture(width: number, height: number) {
   const canvas = document.createElement('canvas'); canvas.width = width; canvas.height = height;
   const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace;
@@ -123,9 +97,9 @@ export function createPhysicalCard(owned: OwnedCard, factories?: TextureFactory)
     const { canvas, ctx, texture } = canvasTexture(660, 921); textures.add(texture);
     const d = CARD_BY_ID.get(owned.cardId)!, url = side === 'back' ? owned.finish === 'metal' ? undefined : CARD_BACK : cardArtwork(d, owned);
     texture.userData = { side, source: url, uid: owned.uid, state: url ? 'loading' : 'unavailable' };
-    const missing = (loading: boolean) => { ctx.fillStyle = '#e8e5d9'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#3b483d'; ctx.font = 'bold 34px sans-serif'; ctx.fillText(side === 'front' ? d.name : 'Card back', 35, 370, 590); ctx.font = '25px sans-serif'; ctx.fillText(side === 'front' ? `${d.set} · #${d.number}` : 'Pokémon TCG', 35, 413, 590); ctx.fillText(loading ? 'Loading image…' : 'Image unavailable', 35, 475); drawWear(ctx, owned, side, canvas.width, canvas.height); texture.needsUpdate = true; };
+    const missing = (loading: boolean) => { ctx.fillStyle = '#e8e5d9'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#3b483d'; ctx.font = 'bold 34px sans-serif'; ctx.fillText(side === 'front' ? d.name : 'Card back', 35, 370, 590); ctx.font = '25px sans-serif'; ctx.fillText(side === 'front' ? `${d.set} · #${d.number}` : 'Pokémon TCG', 35, 413, 590); ctx.fillText(loading ? 'Loading image…' : 'Image unavailable', 35, 475); drawCrackDamage(ctx, owned, side, canvas.width, canvas.height); texture.needsUpdate = true; };
     missing(!!url);
-    if (url) tasks.push(imageFor(url).then(image => { if (disposed) return; ctx.clearRect(0, 0, canvas.width, canvas.height); drawPrintedFace(ctx, image, owned, side === 'back', canvas.width, canvas.height); drawWear(ctx, owned, side, canvas.width, canvas.height); texture.userData.state = 'ready'; texture.needsUpdate = true; }).catch(() => { if (!disposed) { texture.userData.state = 'unavailable'; missing(false); } }));
+    if (url) tasks.push(imageFor(url).then(image => { if (disposed) return; ctx.clearRect(0, 0, canvas.width, canvas.height); drawPrintedFace(ctx, image, owned, side === 'back', canvas.width, canvas.height); drawCrackDamage(ctx, owned, side, canvas.width, canvas.height); texture.userData.state = 'ready'; texture.needsUpdate = true; }).catch(() => { if (!disposed) { texture.userData.state = 'unavailable'; missing(false); } }));
     return texture;
   };
   const add = (name: string, geo: THREE.BufferGeometry, mat: THREE.Material, y = 0, z = 0, rear = false) => {
@@ -159,7 +133,7 @@ export function createPhysicalCard(owned: OwnedCard, factories?: TextureFactory)
       for (const d of scratches) { const x = (side === 'back' ? 1 - d.x : d.x) * 330, y = d.y * 460; c.ctx.strokeStyle = '#ededed'; c.ctx.lineWidth = .8 + d.severity; c.ctx.beginPath(); c.ctx.moveTo(x, y); c.ctx.lineTo(x + (side === 'back' ? -1 : 1) * Math.cos(d.angle) * d.length * 330, y + Math.sin(d.angle) * d.length * 330); c.ctx.stroke(); }
       finish.needsUpdate = true;
     }
-    add(`card-${side}`, cutGeometry(faceGeometry(CARD_SIZE.width, CARD_SIZE.height, .012, damagedCardShape(owned, CARD_SIZE.width, CARD_SIZE.height, .012, side === 'back')), side === 'back'), new THREE.MeshStandardMaterial({ map: face(side), roughness: finish ? 1 : roughness, roughnessMap: finish, metalness: side === 'front' && owned.finish !== 'normal' ? .1 : 0 }), cardY, (side === 'front' ? 1 : -1) * (CARD_SIZE.depth / 2 + .0001), side === 'back');
+    add(`card-${side}`, cutGeometry(faceGeometry(CARD_SIZE.width, CARD_SIZE.height, .012, damagedCardShape(owned, CARD_SIZE.width, CARD_SIZE.height, .012, side === 'back')), side === 'back'), new THREE.MeshStandardMaterial({ map: face(side), transparent: true, alphaTest: .01, roughness: finish ? 1 : roughness, roughnessMap: finish, metalness: side === 'front' && owned.finish !== 'normal' ? .1 : 0 }), cardY, (side === 'front' ? 1 : -1) * (CARD_SIZE.depth / 2 + .0001), side === 'back');
   }
   if (slab) {
     const rim = roundedShape(size.width, size.height, .015);

@@ -1,0 +1,28 @@
+{
+  "verifiedAt": "2026-10-08T02:59:40.683692+00:00",
+  "url": "https://ripify.freebuff.app/",
+  "deployment": "kn75n7gk",
+  "bundle": "main-Dk9eaGtj.js",
+  "bundleSha256": "dee221ae4bf07d91a1f9b75d2bc1f8fbbabebf5c5114ddd02082dbc3c394fc4c",
+  "runtimeFilesChanged": [
+    "src/game/physical-card.ts",
+    "src/assets/misprint-presentation.ts",
+    "src/ui/catalog.css"
+  ],
+  "unitTestsPassed": 145,
+  "browserPixelAndDamageTestsPassed": 2,
+  "hostedGameplayTestsPassed": 3,
+  "pixelComparisons": 24,
+  "addedOrChangedUndamagedPixels": 0,
+  "sourceArtworkFilesModified": 0,
+  "preserved": [
+    "source image white pixels and alpha",
+    "UVs and card sizing",
+    "saved physical damage",
+    "misprint effects",
+    "holo finish",
+    "card/slab geometry",
+    "pack opener and generation",
+    "inventory and condition data"
+  ]
+}
