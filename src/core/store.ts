@@ -1,6 +1,6 @@
 import { activeListing } from './computer-state';
 import { CARD_BY_ID, PRODUCTS } from '../data/cards';
-import { calculateGrade, GRADERS, ownedValue } from './economy';
+import { calculateGrade, GRADERS } from './economy';
 import { generatePack, uuid } from './packs';
 import { createPack, createSealed, createCard, seeded, canOpenProduct } from './inventory';
 import { PRODUCT_BY_ID } from '../data/products';
@@ -142,14 +142,6 @@ export class GameStore {
     this.state.cards.push(...o.cards); this.state.stats.opened++; this.state.opening = null; this.changed(); return true;
   }
   favorite(uid: string) { const c = this.state.cards.find(c => c.uid === uid); if (c) { c.favorite = !c.favorite; this.changed(); } }
-  sell(uid: string) {
-    const c = this.state.cards.find(c => c.uid === uid); if (!c || this.isCardLocked(uid)) return false;
-    const value = ownedValue(c, this.state.marketSeed);
-    this.state.currency = Math.round((this.state.currency + value) * 100) / 100;
-    this.state.cards = this.state.cards.filter(c => c.uid !== uid);
-    this.state.displays = this.state.displays.map(d => d === uid ? null : d);
-    this.state.stats.sold++; this.log('sale', value, CARD_BY_ID.get(c.cardId)!.name); this.changed(); return true;
-  }
   display(uid: string, slot: number) {
     const c = this.state.cards.find(c => c.uid === uid); if (!c || this.isCardLocked(uid) || !Number.isInteger(slot) || slot < 0 || slot > 2) return false;
     this.state.displays = this.state.displays.map(d => d === uid ? null : d); this.state.displays[slot] = uid; this.changed(); return true;

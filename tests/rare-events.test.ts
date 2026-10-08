@@ -1,3 +1,4 @@
+import { sellOnEbay } from './fixtures/ebay-sale';
 import { receiveReturn } from './fixtures/receive-return';
 import { describe, it, expect } from 'vitest';
 import * as THREE from 'three';
@@ -117,7 +118,7 @@ describe('single raw modifier, grading and persistence', () => {
     const order = reloaded.state.orders[0]; expect(receiveReturn(reloaded, order.uid, order.dueAt)!.uid).toBe(c.uid);
     expect(c.misprint).toEqual(defect); expect(c.condition).toEqual(condition);
     reloaded.display(c.uid, 0); const again = new GameStore(storage); expect(again.state.displays[0]).toBe(c.uid);
-    expect(again.state.cards[0].misprint).toEqual(defect); again.clearDisplay(0); again.sell(c.uid);
+    expect(again.state.cards[0].misprint).toEqual(defect); again.clearDisplay(0); sellOnEbay(again, c.uid);
     expect(new GameStore(storage).state.packReceipts![0].cards[0].misprint).toEqual(defect);
     expect(again.state.rareEventStats).toEqual(stats);
   });

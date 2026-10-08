@@ -41,7 +41,7 @@ describe('shared computer commerce', () => {
   it('card listing locks every gameplay operation; cancellation releases the same UID', () => {
     const f = fixture(), card = createCard('me02.5-276', 'test', seeded(1), 'holo', 'pack'); f.store.state.cards.push(card);
     expect(f.services.list('card', card.uid, 4582)).toBe(true);
-    expect(f.store.sell(card.uid)).toBe(false); expect(f.store.submit(card.uid, 'PSA', 'Standard')).toBe(false); expect(f.store.display(card.uid, 0)).toBe(false); expect(f.store.canCrack(card.uid)).toBe(false);
+    expect(f.store.deleteCards([card.uid])).toBe(false); expect(f.store.submit(card.uid, 'PSA', 'Standard')).toBe(false); expect(f.store.display(card.uid, 0)).toBe(false); expect(f.store.canCrack(card.uid)).toBe(false);
     const reloaded = new GameStore(f.storage); expect(reloaded.isCardLocked(card.uid)).toBe(true);
     expect(f.services.resolve(f.store.state.computer!.listings[0].uid, false)).toBe(true); expect(f.store.state.cards[0].uid).toBe(card.uid); expect(f.store.isCardLocked(card.uid)).toBe(false);
   });

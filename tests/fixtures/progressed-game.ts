@@ -1,3 +1,4 @@
+import { sellOnEbay } from './ebay-sale';
 import { receiveReturn } from './receive-return';
 import { GameStore } from '../../src/core/store';
 
@@ -11,7 +12,7 @@ export function progressedGame() {
   store.buy('151-etb');
   store.startOpening(store.state.packs[0].uid); store.rip();
   for (let i = 0; i < 11; i++) store.swipe();
-  store.collect(); store.sell(store.state.cards.at(-1)!.uid);
+  store.collect(); sellOnEbay(store, store.state.cards.at(-1)!.uid);
   store.startOpening(store.state.packs[0].uid); store.rip(); store.swipe();
   store.settings({ graphics: 'Medium', master: .35, sensitivity: 1.3, controlsLearned: true });
   store.state.legacyArchive = { oldProgress: true };

@@ -1,3 +1,5 @@
+import { sellOnEbay } from './fixtures/ebay-sale';
+import { ComputerServices } from '../src/core/computer';
 import { receiveReturn } from './fixtures/receive-return';
 import { describe, expect, it } from 'vitest';
 import * as THREE from 'three';
@@ -88,7 +90,7 @@ describe('transactional slab cracking', () => {
     const f = fixture(); let notified = false;
     f.store.subscribe(() => { notified = true; expect(JSON.parse(f.saved()).cards[0].status).toBe('raw'); });
     const result = f.store.crackSlab(f.card.uid, 1000)!; expect(notified).toBe(true);
-    expect(f.store.crackSlab(f.card.uid, 0)).toBeNull(); expect(f.store.sell(f.card.uid)).toBe(false);
+    expect(f.store.crackSlab(f.card.uid, 0)).toBeNull(); expect(new ComputerServices(f.store).list('card', f.card.uid, 100)).toBe(false);
     expect(f.store.submit(f.card.uid, 'BGS', 'Standard')).toBe(false);
     const loaded = new GameStore(f.storage); expect(loaded.state.cards[0].crackHistory).toEqual([result]);
     expect(loaded.crackSlab(f.card.uid, 0)).toBeNull(); expect(loaded.state.cards).toHaveLength(1);
@@ -101,7 +103,7 @@ describe('transactional slab cracking', () => {
   });
   it.each(['ebay', 'trade', 'transfer'] as const)('respects %s ownership locks', kind => {
     const f = fixture(); f.card.ownershipLock = { kind, uid: 'lock-id' };
-    expect(f.store.crackSlab(f.card.uid, 0)).toBeNull(); expect(f.store.sell(f.card.uid)).toBe(false); expect(f.store.display(f.card.uid, 1)).toBe(false);
+    expect(f.store.crackSlab(f.card.uid, 0)).toBeNull(); expect(new ComputerServices(f.store).list('card', f.card.uid, 100)).toBe(false); expect(f.store.display(f.card.uid, 1)).toBe(false);
     expect(new GameStore({ ...f.storage, read: () => JSON.stringify(f.store.state) }).state.cards[0].ownershipLock).toEqual(f.card.ownershipLock);
   });
   it('rejects raw, unowned, missing and grading-order locked cards', () => {
@@ -127,7 +129,7 @@ describe('transactional slab cracking', () => {
     f.store.finishCrack(f.card.uid); f.store.submit(f.card.uid, 'PSA', 'Standard');
     const order = f.store.state.orders[0]; order.result = 9; receiveReturn(f.store, order.uid, order.dueAt);
     expect(gradedPopulation(f.store.state, f.card.cardId, 'PSA', 9)).toEqual({ current: 1, allTime: 1 });
-    f.store.sell(f.card.uid); const reloaded = new GameStore(f.storage);
+    sellOnEbay(f.store, f.card.uid); const reloaded = new GameStore(f.storage);
     expect(gradedPopulation(reloaded.state, f.card.cardId, 'PSA', 9)).toEqual({ current: 0, allTime: 1 });
   });
   it('valuable and bulk cards use the identical independent 50/50 decision', () => {

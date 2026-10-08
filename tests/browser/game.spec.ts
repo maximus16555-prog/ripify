@@ -45,8 +45,8 @@ test('old room opens directly and manual pack reveals survive Escape and reload'
   await page.locator('[data-collect]').click(); expect((await save(page)).cards).toHaveLength(11);
   await walkToPrompt(page, 'd', 'Open Binder'); await page.keyboard.press('e'); await expect(page.locator('[data-inspect]')).toHaveCount(11);
   await page.locator('[data-inspect]').first().click(); await page.locator('[data-display]').click(); await page.locator('[data-slot="0"]').click(); expect((await save(page)).displays[0]).toBeTruthy();
-  await page.keyboard.press('e'); await page.locator('[data-inspect]').first().click(); await page.locator('[data-sell]').click(); await page.locator('[data-sell]').click(); expect((await save(page)).cards).toHaveLength(10);
-  await page.keyboard.press('Escape'); await page.reload(); expect((await save(page)).cards).toHaveLength(10); expect(errors).toEqual([]);
+  await page.keyboard.press('e'); await page.locator('[data-inspect]').first().click(); await expect(page.locator('[data-sell]')).toHaveCount(0); await expect(page.locator('[data-delete-card]')).toBeVisible(); expect((await save(page)).cards).toHaveLength(11);
+  await page.keyboard.press('Escape'); await page.reload(); expect((await save(page)).cards).toHaveLength(11); expect(errors).toEqual([]);
 });
 
 test('old shop sells unopened packs and its left door returns home', async ({ page }) => {

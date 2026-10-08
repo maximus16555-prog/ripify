@@ -1,3 +1,4 @@
+import { sellOnEbay } from './fixtures/ebay-sale';
 import { describe, it, expect } from 'vitest';
 import { CARDS, CARD_BY_ID } from '../src/data/cards';
 import { baseCardValue, INDIVIDUAL_RAW_CARD_VALUES, FIXED_RAW_CARD_VALUES, CARD_VALUES, INDIVIDUAL_PRICE_POLICY } from '../src/data/balance';
@@ -64,9 +65,9 @@ describe('individual authoritative card prices', () => {
     expect(marketHistory(card.cardId, store.state.marketSeed, 30).at(-1)!.value).toBe(rawValue(CARD_BY_ID.get(card.cardId)!, store.state.marketSeed));
     expect(services.list('card', card.uid, expected)).toBe(true);
     expect(store.state.computer!.listings[0].market).toBe(expected);
-    expect(store.sell(card.uid)).toBe(false);
+    expect(store.deleteCards([card.uid])).toBe(false);
     expect(services.resolve(store.state.computer!.listings[0].uid, false)).toBe(true);
-    const before = store.state.currency; expect(store.sell(card.uid)).toBe(true);
+    const before = store.state.currency; expect(sellOnEbay(store, card.uid)).toBe(true);
     expect(store.state.currency).toBe(Math.round((before + expected) * 100) / 100);
     expect(new GameStore(storage).state.cards).toHaveLength(0);
     expect(card.baseRawValue).toBe(CARD_BY_ID.get(card.cardId)!.value);
