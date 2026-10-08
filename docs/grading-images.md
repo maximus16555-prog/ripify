@@ -25,3 +25,9 @@ The desktop's one-second stock/status timer previously also refreshed Grading's 
 The post-fix preview nodes also remain identical through card/service/grader selection, with no additional load events. The grid itself remains connected while controls around it change; moving cached images through a detached fragment was also found to restart load events and has been avoided. Browsing both pages requests 48 unique image URLs once each. The separate existing computer flows cover real purchases, listings/locks, grading/returns, inspection, save/reload and eight window lifecycle cycles with bounded WebGL contexts and no mounted hidden previews.
 
 Evidence: [before](../artifacts/grading-images-before.json), [local results](../artifacts/grading-images-local.json), [stable Grading view](../artifacts/grading-stable-images.png).
+
+## Published verification
+
+Published to [the existing public game](https://ripify.freebuff.app/) as deployment `kn73s7tr`, runtime source `4c0f4a2`. Hosted `main-BBmReq7i.js` matches the tested local bundle exactly by SHA256. The production build, 167 logic tests, all three local browser checks and all three hosted browser checks pass. Hosted browsing/selection recorded zero image reload events, 48 unique requested printing images with no repeat requests, and no uncaught browser errors. The eight-cycle window check retains two WebGL contexts, zero hidden images/previews and zero idle world draw calls.
+
+[Hosted browser results](../artifacts/grading-images-hosted.json) ? [Release audit](../artifacts/grading-images-release.json).

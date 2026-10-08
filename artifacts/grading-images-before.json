@@ -1,0 +1,201 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\Maxim\\Downloads\\Ripify\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.production.config.ts",
+      "tests/production/grading-images.spec.ts",
+      "--output",
+      ".freebuff/grading-images-before",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\Maxim\\Downloads\\Ripify\\playwright.production.config.ts",
+    "rootDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/Maxim/Downloads/Ripify/.freebuff/grading-images-before",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\Maxim\\Downloads\\Ripify\\.freebuff\\grading-images-before",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production",
+        "snapshotDir": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "screenshot": "only-on-failure",
+          "launchOptions": {
+            "args": [
+              "--enable-webgl",
+              "--use-angle=d3d11",
+              "--ignore-gpu-blocklist"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://127.0.0.1:4173",
+      "reuseExistingServer": true
+    }
+  },
+  "suites": [
+    {
+      "title": "grading-images.spec.ts",
+      "file": "grading-images.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "grading previews survive timers, scrolling, selection and unrelated save updates",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7896,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m108\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m108\u001b[39m\n    at C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\grading-images.spec.ts:58:30",
+                    "location": {
+                      "file": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\grading-images.spec.ts",
+                      "column": 30,
+                      "line": 58
+                    },
+                    "snippet": "  56 |   });\n  57 |   await info.attach('grading-idle-images', { body: JSON.stringify({ ...idle, requestsDuringIdle: requests.length - beforeRequests }), contentType: 'application/json' });\n> 58 |   expect(idle.removedImages).toBe(0);\n     |                              ^\n  59 |   expect(idle.addedImages).toBe(0);\n  60 |   expect(idle.stableNodes).toBe(true);\n  61 |   expect(idle.scrollTop).toBe(200);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\grading-images.spec.ts",
+                        "column": 30,
+                        "line": 58
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m108\u001b[39m\n\n  56 |   });\n  57 |   await info.attach('grading-idle-images', { body: JSON.stringify({ ...idle, requestsDuringIdle: requests.length - beforeRequests }), contentType: 'application/json' });\n> 58 |   expect(idle.removedImages).toBe(0);\n     |                              ^\n  59 |   expect(idle.addedImages).toBe(0);\n  60 |   expect(idle.stableNodes).toBe(true);\n  61 |   expect(idle.scrollTop).toBe(200);\n    at C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\grading-images.spec.ts:58:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T14:04:48.535Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "grading-idle-images",
+                      "contentType": "application/json",
+                      "body": "eyJhZGRlZEltYWdlcyI6MTA4LCJyZW1vdmVkSW1hZ2VzIjoxMDgsImxvYWRzIjoxMDgsInN0YWJsZU5vZGVzIjpmYWxzZSwic2Nyb2xsVG9wIjoyMDAsInJlcXVlc3RzRHVyaW5nSWRsZSI6MH0="
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\Maxim\\Downloads\\Ripify\\.freebuff\\grading-images-before\\grading-images-grading-pre-94a9a--and-unrelated-save-updates\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\Maxim\\Downloads\\Ripify\\.freebuff\\grading-images-before\\grading-images-grading-pre-94a9a--and-unrelated-save-updates\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\grading-images.spec.ts",
+                    "column": 30,
+                    "line": 58
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d9465791b87940b064b6-0599fe46fc88d7568ad1",
+          "file": "grading-images.spec.ts",
+          "line": 21,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-08T14:04:47.239Z",
+    "duration": 9473.94,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

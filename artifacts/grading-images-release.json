@@ -1,0 +1,35 @@
+{
+  "url": "https://ripify.freebuff.app/",
+  "deployment": "kn73s7tr",
+  "sourceCommit": "4c0f4a2",
+  "mainBundle": "main-BBmReq7i.js",
+  "sha256": "db293d8fb4feebe2d5c189cff81bde613fbe898c3f2964422344a3d65a3a9c2c",
+  "hostedLocalMatch": true,
+  "logicTestsPassed": 167,
+  "localBrowserTestsPassed": 3,
+  "before": {
+    "seconds": 3.3,
+    "imageNodesRemoved": 108,
+    "imageNodesAdded": 108,
+    "imageLoadEvents": 108,
+    "extraNetworkRequests": 0
+  },
+  "after": {
+    "seconds": 3.3,
+    "imageNodesRemoved": 0,
+    "imageNodesAdded": 0,
+    "imageLoadEvents": 0,
+    "extraNetworkRequests": 0,
+    "selectionLoadEvents": 0,
+    "uniqueRequestedPrintings": 48
+  },
+  "preserved": [
+    "grading calculations and fees",
+    "ownership and save state",
+    "app styles",
+    "exact artwork and shared image helpers",
+    "pack opener"
+  ],
+  "hostedBrowserTestsPassed": 3,
+  "browserErrors": []
+}
