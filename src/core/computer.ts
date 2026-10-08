@@ -8,6 +8,7 @@ import type { Save } from './types';
 import { arrivePackages, deliveryDue } from './delivery';
 export const COMMERCE = {
   deliveryMinutes: 60, listingMinutes: 120,
+  maxOrderItems: 100, maxProductQuantity: 50,
   restockMinute: 9 * 60 + 30, restockInterval: 1440,
   stock: { '151-booster': 64, '151-etb': 18, '151-upc': 10, 'ascended-heroes-booster': 48 } as Record<string, number>,
   demandPerMinute: { '151-booster': .045, '151-etb': .013, '151-upc': .008, 'ascended-heroes-booster': .04 } as Record<string, number>
@@ -53,7 +54,7 @@ export class ComputerServices {
   }
   checkout(cart: Record<string, number>): string | null {
     const entries = Object.entries(cart).filter(([, n]) => n > 0);
-    if (!entries.length || entries.some(([id, n]) => !Number.isInteger(n) || n > 50 || !PRODUCT_BY_ID.has(id) || !canOpenProduct(PRODUCT_BY_ID.get(id)!) || stock(this.store.state, id) < n)) return null;
+    if (!entries.length || entries.reduce((sum, [, n]) => sum + n, 0) > COMMERCE.maxOrderItems || entries.some(([id, n]) => !Number.isInteger(n) || n > COMMERCE.maxProductQuantity || !PRODUCT_BY_ID.has(id) || !canOpenProduct(PRODUCT_BY_ID.get(id)!) || stock(this.store.state, id) < n)) return null;
     const total = Math.round(entries.reduce((n, [id, q]) => n + PRODUCT_BY_ID.get(id)!.onlineDropPrice * q, 0) * 100) / 100;
     if (total > this.store.state.currency) return null;
     const s = structuredClone(this.store.state), c = s.computer!, uid = uuid();

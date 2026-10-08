@@ -73,6 +73,15 @@ describe('scheduled store replenishment', () => {
       expect(stock(new GameStore(f.storage).state, id)).toBe(0);
     }
   });
+  it('keeps larger batches inside the existing per-product and 100-item order/save limits', () => {
+    const f = fixture(), before = structuredClone(f.store.state);
+    expect(f.services.checkout({ '151-booster': 51 })).toBeNull();
+    expect(f.services.checkout({ '151-booster': 50, 'ascended-heroes-booster': 40, '151-etb': 10, '151-upc': 1 })).toBeNull();
+    expect(f.store.state).toEqual(before);
+    expect(f.services.checkout({ '151-booster': 50, 'ascended-heroes-booster': 40, '151-etb': 10 })).toBeTruthy();
+    expect(f.saved().computer!.orders[0].items).toHaveLength(100);
+    expect(new GameStore(f.storage).state.computer!.orders[0].items).toHaveLength(100);
+  });
   it('uses existing save ledger keys and skips missed cycles without accumulating unlimited stock', () => {
     const f = fixture();
     f.store.state.computer!.drops['0:151-booster'] = 3;

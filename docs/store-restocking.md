@@ -11,6 +11,7 @@ The daily drop already occurred, but deterministic NPC demand exhausted small ba
 - Visible elapsed time is no longer capped at one second. Crossing a scheduled drop immediately persists the clock. Reloading preserves the current batch's purchase ledger and demand rather than replenishing it again.
 - [Store views](../src/ui/computer-apps.ts) display the next drop and disable checkout when demand has exhausted a cart item. [Desktop polling](../src/ui/computer-desktop.ts) updates catalog/detail/cart availability in place, retaining product image DOM nodes and decoded artwork. Existing order/status polling remains; hidden apps do not poll their contents.
 - Prices, products, contents, order/delivery timing, grading calculations, card generation, rare-event odds and the pack opener are unchanged.
+- The larger batches still respect the existing save format's 100-item order limit and the existing 50-per-product checkout limit. Cart controls prevent exceeding those limits, and checkout rejects oversized requests before creating or persisting any items.
 
 ## Deterministic demand comparison
 
