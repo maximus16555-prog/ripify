@@ -1,3 +1,4 @@
+import { CardCleanup } from './card-cleanup';
 import { ComputerDesktop } from './computer-desktop';
 import { ComputerServices } from '../core/computer';
 import './catalog.css';
@@ -20,6 +21,7 @@ export class GameUI {
   isOpen = false;
   get openingActive() { return this.isOpen && !!(this.opener || this.containerOpener); }
   get computerActive() { return this.isOpen && !!this.desktop; }
+  private cleanup?: CardCleanup;
   private desktop?: ComputerDesktop;
   private computerServices: ComputerServices;
   tickComputer(dt: number) { this.computerServices.tick(dt); }
@@ -81,7 +83,7 @@ export class GameUI {
   toast(text: string) { clearTimeout(this.toastTimer); this.toastEl.innerHTML = `<span>✓</span>${escapeHtml(text)}`; this.toastEl.hidden = false; this.toastTimer = window.setTimeout(() => { this.toastEl.hidden = true; }, 3800); }
   private open(html: string, wide = false, title = 'Game menu') {
     this.finishCrack(); this.desktop?.dispose(); this.desktop = undefined;
-    this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = true; this.pause(); this.hud.classList.add('menu-open');
+    this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = true; this.pause(); this.hud.classList.add('menu-open');
     this.modal.hidden = false; this.modal.className = `modal-root ${wide ? 'wide' : ''}`;
     this.modal.innerHTML = `<section class="game-panel" role="dialog" aria-modal="true" aria-label="${title}">${html}</section>`;
     this.modal.querySelector<HTMLButtonElement>('[data-close]')?.addEventListener('click', () => this.close());
@@ -92,7 +94,7 @@ export class GameUI {
     const trap = (e: KeyboardEvent) => { if (e.key !== 'Tab' || !this.isOpen) return; const focusable = Array.from(this.modal.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([hidden]), select, [tabindex="0"]')); if (!focusable.length) return; const a = focusable[0]; const b = focusable[focusable.length - 1]; if (e.shiftKey && (document.activeElement === a || !this.modal.contains(document.activeElement))) { e.preventDefault(); b.focus(); } else if (!e.shiftKey && document.activeElement === b) { e.preventDefault(); a.focus(); } };
     document.addEventListener('keydown', trap); this.focusCleanup = () => document.removeEventListener('keydown', trap);
   }
-  close() { if (!this.isOpen) return; this.desktop?.dispose(); this.desktop = undefined; this.finishCrack(); this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = false; this.modal.hidden = true; this.modal.replaceChildren(); this.hud.classList.remove('menu-open'); this.resume(); }
+  close() { if (!this.isOpen) return; this.desktop?.dispose(); this.desktop = undefined; this.finishCrack(); this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = false; this.modal.hidden = true; this.modal.replaceChildren(); this.hud.classList.remove('menu-open'); this.resume(); }
   private header(eyebrow: string, title: string, suffix = '') { return `<header class="panel-header"><div><span class="eyebrow">${eyebrow}</span><h1>${title}${suffix}</h1></div><button class="close-button" data-close aria-label="Close">✕</button></header>`; }
   packs() {
     const s = this.store.state;
@@ -117,11 +119,19 @@ export class GameUI {
     this.modal.querySelectorAll<HTMLButtonElement>('[data-buy]').forEach(b => { b.onclick = () => { const p = PRODUCTS.find(p => p.code === b.dataset.buy)!; if (this.store.buy(p.code)) { this.audio.unlock(); this.audio.play('buy'); this.toast(`${p.name} added to sealed inventory`); this.buy(productCode); } }; });
   }
   binder() {
-    this.open(`${this.header('YOUR COLLECTION', 'The binder', `<span class="small-count">${this.store.state.cards.length} cards</span>`)}<div class="binder-toolbar"><input type="search" placeholder="Find a card…" aria-label="Search cards" data-search value="${escapeHtml(this.binderQuery)}"/><select aria-label="Filter collection" data-filter>${[['all', 'All cards'], ['raw', 'Raw'], ['graded', 'Graded'], ['grading', 'Away grading'], ['favorite', 'Favorites'], ...RARITIES.map(r => [r, r])].map(([v, t]) => `<option value="${v}" ${v === this.binderFilter ? 'selected' : ''}>${t}</option>`).join('')}</select><select aria-label="Sort collection" data-sort>${[['newest', 'Newest first'], ['value', 'Highest value'], ['name', 'Name A–Z'], ['set', 'Set']].map(([v, t]) => `<option value="${v}" ${v === this.binderSort ? 'selected' : ''}>${t}</option>`).join('')}</select></div><div class="binder-pages" data-grid></div><footer class="panel-footer"><span>Raw & graded cards</span><span data-binder-count></span></footer>`, true, 'Binder');
+    this.open(`${this.header('YOUR COLLECTION', 'The binder', `<span class="small-count">${this.store.state.cards.length} cards</span>`)}<div class="binder-toolbar"><button class="secondary-button" data-bulk-manage>Select / Bulk manage</button><input type="search" placeholder="Find a card…" aria-label="Search cards" data-search value="${escapeHtml(this.binderQuery)}"/><select aria-label="Filter collection" data-filter>${[['all', 'All cards'], ['raw', 'Raw'], ['graded', 'Graded'], ['grading', 'Away grading'], ['favorite', 'Favorites'], ...RARITIES.map(r => [r, r])].map(([v, t]) => `<option value="${v}" ${v === this.binderFilter ? 'selected' : ''}>${t}</option>`).join('')}</select><select aria-label="Sort collection" data-sort>${[['newest', 'Newest first'], ['value', 'Highest value'], ['name', 'Name A–Z'], ['set', 'Set']].map(([v, t]) => `<option value="${v}" ${v === this.binderSort ? 'selected' : ''}>${t}</option>`).join('')}</select></div><div class="binder-pages" data-grid></div><footer class="panel-footer"><span>Raw & graded cards</span><span data-binder-count></span></footer>`, true, 'Binder');
     this.modal.querySelector<HTMLInputElement>('[data-search]')!.oninput = e => { this.binderQuery = (e.target as HTMLInputElement).value; this.renderBinderGrid(); };
     this.modal.querySelector<HTMLSelectElement>('[data-filter]')!.onchange = e => { this.binderFilter = (e.target as HTMLSelectElement).value; this.renderBinderGrid(); };
     this.modal.querySelector<HTMLSelectElement>('[data-sort]')!.onchange = e => { this.binderSort = (e.target as HTMLSelectElement).value; this.renderBinderGrid(); };
+    this.modal.querySelector<HTMLButtonElement>('[data-bulk-manage]')!.onclick = () => this.manageCards();
     this.renderBinderGrid();
+  }
+  private manageCards(single?: string, back: 'binder' | 'market' | 'display' = 'binder') {
+    this.open(`${this.header('YOUR COLLECTION', single ? 'Delete card' : 'Bulk manage')}<div data-card-cleanup></div>`, true, 'Manage cards');
+    this.cleanup = new CardCleanup(this.modal.querySelector('[data-card-cleanup]')!, this.store, () => {
+      if (single && this.store.state.cards.some(c => c.uid === single)) this.inspect(single, back);
+      else if (back === 'market') this.computer('market'); else if (back === 'display') this.displays(); else this.binder();
+    }, single);
   }
   private renderBinderGrid() {
     const s = this.store.state;
@@ -147,6 +157,9 @@ export class GameUI {
       const crack = document.createElement('button'); crack.className = 'secondary-button'; crack.dataset.crackSlab = ''; crack.textContent = 'Crack slab';
       crack.onclick = () => this.confirmSlabCrack(uid, back); actions?.append(crack);
     }
+    const remove = document.createElement('button'); remove.className = 'secondary-button danger-button'; remove.dataset.deleteCard = ''; remove.textContent = 'Delete card';
+    const protection = this.store.deletionProtection(uid); remove.disabled = !!protection; remove.title = protection || 'Permanently dispose of this owned copy; no payout';
+    remove.onclick = () => this.manageCards(uid, back); this.modal.querySelector('.inspection-info')!.append(remove);
     const events = [...(c.gradingHistory ?? []).map(g => ({ at: g.at, text: `${g.grader} grade ${g.grade}` })), ...(c.crackHistory ?? []).map(e => ({ at: e.at, text: `${e.grader} ${e.grade} slab ${e.outcome === 'safe' ? 'removed safely' : 'cracked · card permanently damaged'}${e.damage.length ? ' · ' + e.damage.map(d => d.type).join(', ') : ''}` }))].sort((a, b) => a.at - b.at);
     if (events.length) {
       const history = document.createElement('details'); history.className = 'printed-data card-history';

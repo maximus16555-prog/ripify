@@ -39,6 +39,12 @@ export function parseSave(raw: string): Save {
   if (new Set(packs.map(p => p.uid)).size !== packs.length || new Set(cards.map(c => c.uid)).size !== cards.length) throw new Error('Duplicate inventory');
   const result = newSave();
   result.currency = v.currency; result.packs = packs; result.cards = cards;
+  if (v.cardDisposals !== undefined) {
+    if (!Array.isArray(v.cardDisposals) || !v.cardDisposals.every(r => record(r) && validId(r.uid) && finite(r.at) && Array.isArray(r.cards) && r.cards.length > 0 && r.cards.every(c => record(c) && validCard({ ...c, owner: 'local-player', status: 'raw', favorite: false })))) throw new Error('Invalid card disposal history');
+    const disposed = v.cardDisposals.flatMap(r => r.cards.map((c: { uid: string }) => c.uid));
+    if (new Set(v.cardDisposals.map(r => r.uid)).size !== v.cardDisposals.length || new Set(disposed).size !== disposed.length || disposed.some(uid => [...packs, ...cards].some(c => c.uid === uid) || (record(v.opening) && Array.isArray(v.opening.cards) && v.opening.cards.some(c => record(c) && c.uid === uid)))) throw new Error('Disposed card still in inventory');
+    result.cardDisposals = v.cardDisposals as unknown as Save['cardDisposals'];
+  }
   if (v.gradingPopulation !== undefined) {
     if (!Array.isArray(v.gradingPopulation) || !v.gradingPopulation.every(e => record(e) && validId(e.cardUid) && typeof e.cardId === 'string' && CARD_BY_ID.has(e.cardId) && typeof e.grader === 'string' && Object.hasOwn(GRADERS, e.grader) && finite(e.grade) && e.grade >= 1 && e.grade <= 10 && (!cards.some(c => c.uid === e.cardUid) || cards.find(c => c.uid === e.cardUid)!.cardId === e.cardId))) throw new Error('Invalid grading population');
     result.gradingPopulation = [];

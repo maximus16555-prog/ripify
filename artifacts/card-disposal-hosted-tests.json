@@ -1,0 +1,225 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\Maxim\\Downloads\\Ripify\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.production.config.ts",
+      "tests/production/card-disposal.spec.ts",
+      "tests/production/card-prices.spec.ts",
+      "tests/production/playable.spec.ts",
+      "--output",
+      ".freebuff/card-disposal-hosted",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\Maxim\\Downloads\\Ripify\\playwright.production.config.ts",
+    "rootDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/Maxim/Downloads/Ripify/.freebuff/card-disposal-hosted",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "card-disposal.spec.ts",
+      "file": "card-disposal.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "binder and Collectr: disposal, protected copies, duplicate cleanup, valuable warning and reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15232,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T03:43:41.195Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "card-disposal-gameplay",
+                      "contentType": "application/json",
+                      "body": "eyJ1cmwiOiJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvIiwiZGlzcG9zZWQiOjYzLCJyZXRhaW5lZCI6NiwiY3VycmVuY3lVbmNoYW5nZWQiOnRydWUsInByb3RlY3RlZFJldGFpbmVkIjp0cnVlLCJlcnJvcnMiOltdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "253995ae5325622e834c-9075bdb76a3f391daef9",
+          "file": "card-disposal.spec.ts",
+          "line": 17,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "card-prices.spec.ts",
+      "file": "card-prices.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "individual prices propagate through binder, inspection, Collectr, eBay and reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13052,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T03:43:56.552Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "individual-pricing-gameplay",
+                      "contentType": "application/json",
+                      "body": "eyJ1cmwiOiJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvIiwidmFsdWVzIjp7Ijc2YzIxY2YzLWVkOTktNDNjYS05NzE0LWRiNWZiNGU3OGZmNCI6IjAuMzMiLCI4Y2EwZmJjNC0wNGQzLTQ4YWUtYjk5Yy0xNzk3NDYwNjgxNjUiOiIwLjQ3IiwiZjZkNzcwODMtNWViMC00MWM5LWE3NmUtODNjNjcyMjQzM2VmIjoiMC4xMiIsIjk1MTAwZTIwLTE2ZDEtNDdkNS04MDQzLTkxOWE4ODU5ZjgyNiI6IjExLjMyIiwiM2NlMDQzZTMtNGM3Yi00NmUyLTlhN2MtYzg3YTI2Yzk2ZDE1IjoiMS43MiIsIjIxZmNhZjFhLTJhOTctNDk3Mi04OTc1LTdhMDk1N2E3OGVhMiI6IjQsNTgyLjAwIiwibGVnYWN5LXByaWNlLW1pc3ByaW50IjoiOS45MCIsInByaWNlZC1zbGFiIjoiMjkuNDMifSwicG9ydGZvbGlvIjoiNCw2NDMuMjkiLCJjYXJkc1VuY2hhbmdlZCI6dHJ1ZSwiZXJyb3JzIjpbXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4f71a565defd22ecc3ad-061fbfadc36f09a23f89",
+          "file": "card-prices.spec.ts",
+          "line": 9,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "playable.spec.ts",
+      "file": "playable.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "production gameplay: room, shop, purchase, manual rip/swipes, collection and persistent refresh",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 22229,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T03:44:09.627Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "production-report",
+                      "contentType": "application/json",
+                      "body": "ewogICJ1cmwiOiAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwLyIsCiAgImVycm9ycyI6IFtdLAogICJmYWlsZWQiOiBbXSwKICAidW5pcXVlUmVxdWVzdHMiOiBbCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwLyIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2Fzc2V0cy9pbmRleC1CaG8yZ0ZkMS5qcyIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2Fzc2V0cy9pbmRleC1xSkJ6UFI2Mi5jc3MiLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hc3NldHMvbWFucm9wZS1sYXRpbi13Z2h0LW5vcm1hbC1ESEljQUpSZy53b2ZmMiIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2Fzc2V0cy9kbS1zYW5zLWxhdGluLXdnaHQtbm9ybWFsLVh6MUlaWkEwLndvZmYyIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXNzZXRzL21haW4tQ283TlByaHguanMiLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hc3NldHMvZW5naW5lLXRVTm16MTF4LmpzIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXNzZXRzL21haW4tQ3ptcVJBcVYuY3NzIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXJ0d29yay8xNTEtYm9vc3Rlci5qcGciLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hcnR3b3JrL2FzY2VuZGVkLWhlcm9lcy1ib29zdGVyLmpwZyIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2FydHdvcmsvMTUxLWV0Yi5qcGciLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hcnR3b3JrLzE1MS11cGMuanBnIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXJ0d29yay9zdmUtNC5qcGciLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzEyOS9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzA5Ni9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzEzMy9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzA2MS9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzE2NC9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzA3NS9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzAyMC9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzEwOS9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzE3Mi9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzE0Ni9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzEyOS9sb3cud2VicCIsCiAgICAiaHR0cHM6Ly9hc3NldHMudGNnZGV4Lm5ldC9lbi9zdi9zdjAzLjUvMDk2L2xvdy53ZWJwIiwKICAgICJodHRwczovL2Fzc2V0cy50Y2dkZXgubmV0L2VuL3N2L3N2MDMuNS8xMzMvbG93LndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzA2MS9sb3cud2VicCIsCiAgICAiaHR0cHM6Ly9hc3NldHMudGNnZGV4Lm5ldC9lbi9zdi9zdjAzLjUvMTY0L2xvdy53ZWJwIiwKICAgICJodHRwczovL2Fzc2V0cy50Y2dkZXgubmV0L2VuL3N2L3N2MDMuNS8wNzUvbG93LndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzAyMC9sb3cud2VicCIsCiAgICAiaHR0cHM6Ly9hc3NldHMudGNnZGV4Lm5ldC9lbi9zdi9zdjAzLjUvMTA5L2xvdy53ZWJwIiwKICAgICJodHRwczovL2Fzc2V0cy50Y2dkZXgubmV0L2VuL3N2L3N2MDMuNS8xNzIvbG93LndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzE0Ni9sb3cud2VicCIKICBdLAogICJhdWRpbyI6IHsKICAgICJzdGFydHMiOiAxNSwKICAgICJzdGF0ZSI6ICJydW5uaW5nIgogIH0sCiAgInBhY2tVaWQiOiAiMDE5ZWIyZjYtM2U1MS00NjE2LTllMWMtMGNlNmUyMjE2YWFhIiwKICAiY2FyZENvdW50IjogMTEKfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7106448f066158a1526c-52085ac7b9a3737e226f",
+          "file": "playable.spec.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-08T03:43:40.618Z",
+    "duration": 51400.249,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

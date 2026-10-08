@@ -9,6 +9,8 @@ import type { Grader, OwnedCard, Pack, Save, Settings } from './types';
 import { createSlabCrack } from './slab-cracking';
 import { hydratePopulation, recordGradedCopy } from './population';
 import { emptyRareEventStats, recordRareEvents } from './rare-events';
+import { disposalProtection, valuableCard } from './card-disposal';
+import { samplePortfolio } from './computer';
 export class GameStore {
   state: Save;
   warning?: string;
@@ -28,6 +30,27 @@ export class GameStore {
     return !c || c.owner !== 'local-player' || c.status === 'grading' || !!c.ownershipLock || !!activeListing(this.state, uid) || this.cracking.has(uid) || this.state.orders.some(o => o.cardUid === uid);
   }
   canCrack(uid: string) { const c = this.state.cards.find(c => c.uid === uid); return !!c && c.status === 'graded' && !this.isCardLocked(uid); }
+  deletionProtection(uid: string) {
+    const c = this.state.cards.find(c => c.uid === uid);
+    return c ? disposalProtection(c, this.isCardLocked(uid)) : 'Card no longer owned';
+  }
+  /** All or nothing, including stale selections and storage failure. No payout. */
+  deleteCards(uids: string[], valuableConfirmed = false, now = Date.now()) {
+    const ids = new Set(uids);
+    if (!ids.size || [...ids].some(uid => this.deletionProtection(uid))) return false;
+    const selected = this.state.cards.filter(c => ids.has(c.uid));
+    if (selected.some(c => valuableCard(c, this.state)) && !valuableConfirmed) return false;
+    const next = { ...this.state, ...(this.state.computer ? { computer: structuredClone(this.state.computer) } : {}), cards: this.state.cards.filter(c => !ids.has(c.uid)),
+      displays: this.state.displays.map(uid => uid && ids.has(uid) ? null : uid),
+      gradingPopulation: hydratePopulation({ cards: this.state.cards, gradingPopulation: structuredClone(this.state.gradingPopulation ?? []) }),
+      cardDisposals: [...(this.state.cardDisposals ?? []), { uid: uuid(), at: now, cards: selected.map(c => {
+        const { uid, cardId, condition, acquiredAt, source, finish, origin, baseRawValue, misprint, gradingHistory, crackHistory } = c;
+        return structuredClone({ uid, cardId, condition, acquiredAt, source, finish, origin, baseRawValue, misprint, gradingHistory, crackHistory });
+      }) }]
+    };
+    samplePortfolio(next);
+    return this.commit(next);
+  }
   crackSlab(uid: string, seed?: number, now = Date.now()) {
     if (!this.canCrack(uid)) return null;
     const card = this.state.cards.find(c => c.uid === uid)!;

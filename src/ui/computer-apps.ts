@@ -1,3 +1,4 @@
+import { CardCleanup } from './card-cleanup';
 import { CARD_BY_ID } from '../data/cards';
 import { PRODUCT_BY_ID } from '../data/products';
 import { GRADERS, gradeMultiplier, money, rawValue, ownedRawMarketValue, ownedValue } from '../core/economy';
@@ -17,9 +18,10 @@ export class ComputerApp {
   route = 'home'; selected = ''; query = ''; filter = 'all'; sort = 'value'; page = 0; range = '1M';
   cart: Record<string, number> = {}; grader: Grader = 'PSA'; service: 'Standard' | 'Express' = 'Standard';
   give: string[] = []; receive: string[] = []; notice = '';
+  private cleanup?: CardCleanup;
   private inspector?: CardInspector;
   constructor(public id: AppId, private store: GameStore, private services: ComputerServices, private refresh: () => void) {}
-  suspend() { this.inspector?.dispose(); this.inspector = undefined; }
+  suspend() { this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; }
   private nav(entries: [string, string][]) { return `<nav class="pc-app-nav">${entries.map(([id, label]) => button('route', label, id)).join('')}</nav>`; }
   private tile(i: ReturnType<typeof collectionItems>[number]) {
     const c = this.store.state.cards.find(c => c.uid === i.uid);
@@ -36,6 +38,12 @@ export class ComputerApp {
     if (search) search.oninput = () => { this.query = search.value; this.page = 0; this.refresh(); const next = root.querySelector<HTMLInputElement>('[data-search]'); next?.focus(); next?.setSelectionRange(this.query.length, this.query.length); };
     const physical = root.querySelector<HTMLElement>('[data-physical]'), owned = this.store.state.cards.find(c => c.uid === this.selected);
     if (physical && owned) this.inspector = new CardInspector(physical, owned);
+    const cleanup = root.querySelector<HTMLElement>('[data-card-cleanup]');
+    if (cleanup) this.cleanup = new CardCleanup(cleanup, this.store, () => { this.route = 'collection'; this.refresh(); }, this.route === 'deleteCard' ? this.selected : undefined);
+    if (this.id === 'collectr' && physical && owned) {
+      const remove = document.createElement('button'); remove.textContent = 'Delete card'; remove.dataset.action = 'deleteCard'; remove.dataset.value = owned.uid;
+      const protection = this.store.deletionProtection(owned.uid); remove.disabled = !!protection; remove.title = protection; root.append(remove);
+    }
   }
   private storeView() {
     const s = this.store.state, c = s.computer!, before = c.minute % 1440 < 570;
@@ -80,10 +88,11 @@ export class ComputerApp {
   private collectrView() {
     const s = this.store.state, items = collectionItems(s), total = portfolioValue(s);
     const header = `<header class="pc-site-header"><b class="pc-collectr-brand"><img src="/computer/collectr.png" alt=""/>Collectr</b><small>RIPIFY collection · simulated market</small></header>${this.nav([['home', 'Overview'], ['collection', 'Collection'], ['search', 'Search'], ['trade', 'Trade Analyzer']])}`;
+    if (['cleanup', 'deleteCard'].includes(this.route)) return header + '<div data-card-cleanup></div>';
     if (this.route === 'card') {
       const d = CARD_BY_ID.get(this.selected)!;
       const days = ({ '1D': 1, '1W': 7, '1M': 30, '3M': 90, '1Y': 365, ALL: 365 } as Record<string, number>)[this.range];
-      const owned = s.cards.filter(c => c.cardId === d.id), allTime = new Set((s.packReceipts ?? []).flatMap(r => r.cards.filter(c => c.cardId === d.id).map(c => c.uid)).concat(owned.map(c => c.uid))).size;
+      const owned = s.cards.filter(c => c.cardId === d.id), allTime = new Set((s.packReceipts ?? []).flatMap(r => r.cards.filter(c => c.cardId === d.id).map(c => c.uid)).concat(owned.map(c => c.uid), (s.cardDisposals ?? []).flatMap(r => r.cards.filter(c => c.cardId === d.id).map(c => c.uid)))).size;
       const sales = s.computer!.listings.filter(l => l.status === 'SOLD' && l.cardId === d.id);
       return header + `<div class="pc-card-page"><div>${cardMarkup(d)}</div><section><small>${esc(d.set)} · #${esc(d.number)} · ${esc(d.rarity)}</small><h2>${esc(d.name)}</h2><span>Current raw value</span><strong class="pc-price">${price(rawValue(d, s.marketSeed))}</strong><p>${owned.length} owned ${owned.some(c => c.misprint) ? '· includes MISPRINT' : ''}</p>${this.chart(marketHistory(d.id, s.marketSeed, days), true)}<nav class="pc-ranges">${['1D', '1W', '1M', '3M', '1Y', 'ALL'].map(r => button('range', r, r)).join('')}</nav><small>Historical samples of RIPIFY’s existing simulated price model. ALL = available one-year model window; not real-world sales.</small></section></div><h3>Compare grades</h3><div class="pc-grade-prices">${(Object.keys(GRADERS) as Grader[]).flatMap(g => [8, 9, 10].map(n => `<span>${g} ${n}<b>${price(rawValue(d, s.marketSeed) * gradeMultiplier(n) * GRADERS[g].premium)}</b></span>`)).join('')}</div><h3>RIPIFY population</h3><p>Local simulated population · current / all-time distinct copies</p><div class="pc-counts"><span>Raw <b>${owned.filter(c => c.status === 'raw').length}</b></span><span>Graded <b>${owned.filter(c => c.status === 'graded').length}</b></span><span>Misprints <b>${owned.filter(c => c.misprint).length}</b></span><span>Recorded copies <b>${allTime}</b></span>${(Object.keys(GRADERS) as Grader[]).map(g => { const pop = gradedPopulation(s, d.id, g, 10); return `<span>${g} 10 <b>${pop.current} / ${pop.allTime}</b></span>`; }).join('')}</div><h3>Your physical copies</h3>${owned.map(c => `<p>${c.uid.slice(0, 8)} · ${c.status}${c.grade ? ` · ${c.grader} ${c.grade}` : ''} · ${price(ownedValue(c, s.marketSeed))}${c.misprint ? ` · MISPRINT raw ${price(ownedRawMarketValue(c, s.marketSeed))}` : ''} · ${c.gradingHistory?.length ?? 0} previous grading records${button('physical', 'Inspect copy', c.uid)}</p>`).join('') || empty('You do not own this printing yet.')}<h3>Recent RIPIFY sales</h3>${sales.map(l => `<p>${gameDate(l.completed!)} · ${price(l.paid!)}</p>`).join('') || empty('No recorded sales of this printing.')}`;
     }
@@ -103,7 +112,7 @@ export class ComputerApp {
     if (this.route === 'collection') {
       const filtered = items.filter(i => this.filter === 'all' || this.filter === 'raw' && i.status === 'raw' || this.filter === 'graded' && i.status === 'graded' || this.filter === 'sealed' && i.status === 'sealed' || this.filter === 'misprints' && i.misprint);
       filtered.sort((a, b) => this.sort === 'value' ? b.value - a.value : this.sort === 'newest' ? b.at - a.at : this.sort === 'oldest' ? a.at - b.at : this.sort === 'grade' ? b.grade - a.grade : this.sort === 'set' ? a.set.localeCompare(b.set) : this.sort === 'rarity' ? a.rarity.localeCompare(b.rarity) : a.name.localeCompare(b.name));
-      return header + `<h2>Your collection</h2><div class="pc-filters"><select data-field="filter">${['all', 'raw', 'graded', 'sealed', 'misprints'].map(f => `<option value="${f}" ${this.filter === f ? 'selected' : ''}>${f.toUpperCase()}</option>`).join('')}</select><select data-field="sort">${['value', 'newest', 'oldest', 'name', 'set', 'rarity', 'grade'].map(f => `<option value="${f}" ${this.sort === f ? 'selected' : ''}>${f}</option>`).join('')}</select><span>${filtered.length} owned instances</span></div><div class="pc-card-grid">${filtered.slice(this.page * 36, (this.page + 1) * 36).map(i => this.tile(i)).join('') || empty('No items match this filter.')}</div>${this.pagination(filtered.length)}`;
+      return header + `<h2>Your collection</h2>${button('route', 'Select / Bulk manage', 'cleanup')}<div class="pc-filters"><select data-field="filter">${['all', 'raw', 'graded', 'sealed', 'misprints'].map(f => `<option value="${f}" ${this.filter === f ? 'selected' : ''}>${f.toUpperCase()}</option>`).join('')}</select><select data-field="sort">${['value', 'newest', 'oldest', 'name', 'set', 'rarity', 'grade'].map(f => `<option value="${f}" ${this.sort === f ? 'selected' : ''}>${f}</option>`).join('')}</select><span>${filtered.length} owned instances</span></div><div class="pc-card-grid">${filtered.slice(this.page * 36, (this.page + 1) * 36).map(i => this.tile(i)).join('') || empty('No items match this filter.')}</div>${this.pagination(filtered.length)}`;
     }
     const history = s.computer!.portfolio, gain = total - (history[0]?.value ?? total), movers = items.filter(i => i.cardId).map(i => { const d = CARD_BY_ID.get(i.cardId)!; const prev = rawValue(d, s.marketSeed, Date.now() - 86400000), current = rawValue(d, s.marketSeed); return { ...i, delta: (current / Math.max(.01, prev) - 1) * 100 }; });
     const list = (rows: typeof movers) => rows.slice(0, 4).map(i => `<div class="pc-mover">${button('card', esc(i.name), i.cardId)}<span>${i.delta > 0 ? '+' : ''}${i.delta.toFixed(2)}%</span></div>`).join('') || empty('No market movers in your collection.');
@@ -120,6 +129,7 @@ export class ComputerApp {
   private action(action: string, value: string, root: HTMLElement) {
     this.notice = '';
     if (action === 'route') { this.route = value; this.page = 0; }
+    else if (action === 'deleteCard') { this.selected = value; this.route = 'deleteCard'; }
     else if (action === 'product') { this.selected = value; this.route = 'product'; }
     else if (action === 'plus') { if ((this.cart[value] ?? 0) < stock(this.store.state, value)) this.cart[value] = (this.cart[value] ?? 0) + 1; this.notice = 'Added to cart'; }
     else if (action === 'minus') this.cart[value] = Math.max(0, (this.cart[value] ?? 0) - 1);

@@ -1,0 +1,38 @@
+{
+  "filesChanged": [
+    "src/core/card-disposal.ts",
+    "src/core/store.ts",
+    "src/core/types.ts",
+    "src/core/save.ts",
+    "src/ui/card-cleanup.ts",
+    "src/ui/card-cleanup.css",
+    "src/ui/game-ui.ts",
+    "src/ui/computer-apps.ts",
+    "tests/card-disposal.test.ts",
+    "tests/production/card-disposal.spec.ts",
+    "docs/card-disposal.md"
+  ],
+  "unitTests": 154,
+  "unitPassed": 154,
+  "localGameplayFlowsPassed": 2,
+  "disposalGameplay": {
+    "singleCommon": 1,
+    "bulkDuplicateDeletion": 61,
+    "collectrDeletion": 1,
+    "totalDisposed": 63,
+    "protectedRetained": true,
+    "valuableWarning": true,
+    "currencyUnchanged": true,
+    "reloadPersists": true
+  },
+  "highValueThreshold": 100,
+  "publicURL": "https://ripify.freebuff.app/",
+  "deployment": "kn7b0ztw",
+  "bundle": "main-Co7NPrhx.js",
+  "bundleSha256": "d8fcaba2e554e7c20704581af382788794347fda45d9e43fc24f7e6ec20b6a9a",
+  "protectedFilesUnchanged": true,
+  "hostedBundleMatchesLocal": true,
+  "expandedLocalDisposalFlow": "passed",
+  "hostedTestsPassed": 3,
+  "hostedGameErrors": 0
+}
