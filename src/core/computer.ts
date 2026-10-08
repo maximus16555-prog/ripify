@@ -6,7 +6,15 @@ import { newComputerState, activeListing, type ItemKind, type Listing } from './
 import type { GameStore } from './store';
 import type { Save } from './types';
 import { arrivePackages, deliveryDue } from './delivery';
-export const COMMERCE = { deliveryMinutes: 60, listingMinutes: 120, stock: { '151-booster': 35, '151-etb': 12, '151-upc': 6, 'ascended-heroes-booster': 24 } as Record<string, number>, demandPerMinute: { '151-booster': .13, '151-etb': .055, '151-upc': .033, 'ascended-heroes-booster': .2 } as Record<string, number> };
+export const COMMERCE = {
+  deliveryMinutes: 60, listingMinutes: 120,
+  restockMinute: 9 * 60 + 30, restockInterval: 1440,
+  stock: { '151-booster': 64, '151-etb': 18, '151-upc': 10, 'ascended-heroes-booster': 48 } as Record<string, number>,
+  demandPerMinute: { '151-booster': .045, '151-etb': .013, '151-upc': .008, 'ascended-heroes-booster': .04 } as Record<string, number>
+};
+/** Purchase ledgers belong to the latest 9:30 AM drop, not the calendar midnight. */
+export const restockDay = (minute: number) => Math.floor((minute - COMMERCE.restockMinute) / COMMERCE.restockInterval);
+export const nextRestockMinute = (minute: number) => COMMERCE.restockMinute + (restockDay(minute) + 1) * COMMERCE.restockInterval;
 export function collectionItems(s: Save) {
   return [...s.cards.map(c => { const d = CARD_BY_ID.get(c.cardId)!; return { uid: c.uid, kind: 'card' as const, name: d.name, set: d.set, number: d.number, rarity: d.rarity, cardId: d.id, image: d.imageSmall ?? d.image, value: ownedValue(c, s.marketSeed), at: c.acquiredAt, grade: c.grade ?? 0, status: c.status, misprint: !!c.misprint }; }), ...[...s.packs, ...s.sealedProducts].map(p => { const d = PRODUCT_BY_ID.get(p.productId)!; return { uid: p.uid, kind: ('generationVersion' in p ? 'pack' : 'sealed') as ItemKind, name: d.name, set: d.subtitle, number: '', rarity: d.type, cardId: '', image: d.artwork, value: d.physicalStorePrice, at: p.purchasedAt, grade: 0, status: 'sealed', misprint: false }; })];
 }
@@ -17,8 +25,9 @@ export function samplePortfolio(s: Save) {
   if (!last || last.value !== value || at - last.at >= 30) { h.push({ at, value }); if (h.length > 1500) h.splice(0, h.length - 1500); }
 }
 export function stock(s: Save, productId: string) {
-  const minute = s.computer?.minute ?? 560, day = Math.floor(minute / 1440), since = minute % 1440 - 570;
-  if (since < 0) return 0;
+  const minute = s.computer?.minute ?? 560, day = restockDay(minute);
+  if (day < 0) return 0;
+  const since = minute - (COMMERCE.restockMinute + day * COMMERCE.restockInterval);
   const hash = [...productId].reduce((n, c) => n + c.charCodeAt(0), 0), r = seeded((Math.floor(s.marketSeed * 1000) + day * 917 + hash) >>> 0)();
   return Math.max(0, (COMMERCE.stock[productId] ?? 0) - (s.computer?.drops[`${day}:${productId}`] ?? 0) - Math.floor(since * (COMMERCE.demandPerMinute[productId] ?? .1) * (.8 + r * .4)));
 }
@@ -33,7 +42,11 @@ export class ComputerServices {
   dispose() { this.unsubscribe(); }
   tick(dt: number) {
     const s = this.store.state, c = s.computer ??= newComputerState();
-    c.minute += Math.min(dt, 1) * c.speed / 60; this.seconds += dt; this.savedSeconds += dt;
+    if (!Number.isFinite(dt) || dt <= 0) return;
+    const previousDrop = restockDay(c.minute);
+    // main.ts supplies real visible elapsed time; a slow frame must not delay a scheduled drop.
+    c.minute += dt * c.speed / 60; this.seconds += dt; this.savedSeconds += dt;
+    if (restockDay(c.minute) !== previousDrop) { this.store.persist(); this.savedSeconds = 0; }
     if (this.seconds < 1) return; this.seconds %= 1;
     if (deliveryDue(s) || c.listings.some(l => ['LISTED', 'WATCHING', 'OFFER'].includes(l.status) && (c.minute >= l.due || (l.status === 'LISTED' && c.minute >= l.started + 15) || (l.status === 'WATCHING' && l.outcome === 'offer' && c.minute >= l.started + 60)))) this.advance();
     if (this.savedSeconds >= 15) { samplePortfolio(this.store.state); this.store.persist(); this.savedSeconds = 0; }
@@ -45,7 +58,7 @@ export class ComputerServices {
     if (total > this.store.state.currency) return null;
     const s = structuredClone(this.store.state), c = s.computer!, uid = uuid();
     const items = entries.flatMap(([id, q]) => Array.from({ length: q }, () => { const p = PRODUCT_BY_ID.get(id)!; return p.type === 'booster' ? createPack(id, p.onlineDropPrice) : createSealed(p, p.onlineDropPrice); }));
-    for (const [id, q] of entries) { const key = `${Math.floor(c.minute / 1440)}:${id}`; c.drops[key] = (c.drops[key] ?? 0) + q; }
+    for (const [id, q] of entries) { const key = `${restockDay(c.minute)}:${id}`; c.drops[key] = (c.drops[key] ?? 0) + q; }
     s.currency = Math.round((s.currency - total) * 100) / 100; s.stats.spent += total;
     c.orders.push({ uid, placed: c.minute, due: c.minute + COMMERCE.deliveryMinutes, total, status: 'SHIPPING', items });
     s.history.push({ uid, type: 'purchase', amount: -total, label: 'Pokémon Store order', at: Date.now() }); s.history = s.history.slice(-100);

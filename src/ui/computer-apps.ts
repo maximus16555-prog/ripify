@@ -2,7 +2,7 @@ import { CardCleanup } from './card-cleanup';
 import { CARD_BY_ID } from '../data/cards';
 import { PRODUCT_BY_ID } from '../data/products';
 import { GRADERS, gradeMultiplier, money, rawValue, ownedRawMarketValue, ownedValue } from '../core/economy';
-import { collectionItems, marketHistory, portfolioValue, searchCards, stock, verifiedOnlineProducts, type ComputerServices } from '../core/computer';
+import { collectionItems, marketHistory, portfolioValue, searchCards, stock, restockDay, nextRestockMinute, verifiedOnlineProducts, type ComputerServices } from '../core/computer';
 import { activeListing, gameDate, gameTime, type ItemKind } from '../core/computer-state';
 import { gradedPopulation } from '../core/population';
 import { orderStatus, type GameStore } from '../core/store';
@@ -84,20 +84,42 @@ export class ComputerApp {
       const protection = this.store.deletionProtection(owned.uid); remove.disabled = !!protection; remove.title = protection; root.append(remove);
     }
   }
+  private stockLabel(id: string, unit: string) {
+    const s = this.store.state, minute = s.computer!.minute, remaining = stock(s, id);
+    return restockDay(minute) < 0 ? 'DROP AT 9:30 AM' : remaining ? `${remaining} ${unit}` : unit === 'in stock' ? `SOLD OUT · Restocks ${gameDate(nextRestockMinute(minute))}` : 'SOLD OUT';
+  }
+  private storeSchedule() {
+    const minute = this.store.state.computer!.minute;
+    return `${restockDay(minute) < 0 ? 'Today’s drop opens at 9:30 AM' : 'Daily drop · limited stock'} · ${gameTime(minute)} · Next restock ${gameDate(nextRestockMinute(minute))}`;
+  }
+  /** Clock-driven availability changes update controls in place, preserving decoded product images. */
+  refreshStoreStock(root: HTMLElement) {
+    if (this.id !== 'store') return;
+    const s = this.store.state;
+    for (const label of root.querySelectorAll<HTMLElement>('[data-store-stock]')) label.textContent = this.stockLabel(label.dataset.storeStock!, label.dataset.stockUnit!);
+    for (const b of root.querySelectorAll<HTMLButtonElement>('[data-action="plus"]')) b.disabled = stock(s, b.dataset.value!) <= (this.route === 'cart' ? this.cart[b.dataset.value!] ?? 0 : 0);
+    const checkout = root.querySelector<HTMLButtonElement>('[data-action="checkout"]');
+    if (checkout) {
+      const total = Object.entries(this.cart).reduce((sum, [id, q]) => sum + PRODUCT_BY_ID.get(id)!.onlineDropPrice * q, 0);
+      checkout.disabled = restockDay(s.computer!.minute) < 0 || Math.round(total * 100) / 100 > s.currency || Object.entries(this.cart).some(([id, q]) => q > stock(s, id));
+    }
+    const schedule = root.querySelector<HTMLElement>('[data-store-schedule]');
+    if (schedule) schedule.textContent = this.storeSchedule();
+  }
   private storeView() {
-    const s = this.store.state, c = s.computer!, before = c.minute % 1440 < 570;
+    const s = this.store.state, c = s.computer!, before = restockDay(c.minute) < 0;
     const count = Object.values(this.cart).reduce((n, q) => n + q, 0);
     const header = `<header class="pc-site-header store-header"><b>Pokémon <span>Store</span></b><small>RIPIFY simulated storefront</small><span>Wallet ${price(s.currency)}</span></header>${this.nav([['home', 'Products'], ['cart', `Cart (${count})`], ['orders', 'Your orders']])}`;
     if (this.route === 'orders') return header + `<h2>Your orders</h2>${c.orders.length ? [...c.orders].reverse().map(o => `<article class="pc-order"><b>Order ${o.uid.slice(0, 8)}</b><span>${o.status === 'DELIVERED' ? (s.shippingPackages?.some(p => p.source === 'store' && p.orderUids.includes(o.uid) && p.stage !== 'claimed') ? 'Delivered - box by bedroom door' : 'Collected') : 'Shipping'} · ${price(o.total)}</span><small>${o.items.map(i => esc(PRODUCT_BY_ID.get(i.productId)!.name)).join(' · ')}</small>${o.status === 'SHIPPING' ? `<small data-due="${o.due}">Arrives ${gameDate(o.due)}</small>` : ''}</article>`).join('') : empty('No orders yet.')}`;
     if (this.route === 'cart') {
       const total = Object.entries(this.cart).reduce((n, [id, q]) => n + PRODUCT_BY_ID.get(id)!.onlineDropPrice * q, 0);
-      return header + `<h2>Your cart</h2>${count ? Object.entries(this.cart).filter(([, q]) => q > 0).map(([id, q]) => { const p = PRODUCT_BY_ID.get(id)!; return `<article class="pc-cart-row"><img src="${p.artwork}" alt="${esc(p.name)}"/><div><b>${esc(p.name)}</b><small>${q} × ${price(p.onlineDropPrice)}</small></div>${button('minus', '−', id)}<span>${q}</span>${button('plus', '+', id, stock(s, id) <= q)}<strong>${price(q * p.onlineDropPrice)}</strong></article>`; }).join('') + `<div class="pc-checkout"><strong>Total ${price(total)}</strong><p>In-game currency only · delivery in one game hour. Products arrive sealed.</p>${button('checkout', 'Place order', '', before || total > s.currency)}</div>` : empty('Your cart is empty.')}`;
+      return header + `<h2>Your cart</h2>${count ? Object.entries(this.cart).filter(([, q]) => q > 0).map(([id, q]) => { const p = PRODUCT_BY_ID.get(id)!; return `<article class="pc-cart-row"><img src="${p.artwork}" alt="${esc(p.name)}"/><div><b>${esc(p.name)}</b><small>${q} × ${price(p.onlineDropPrice)}</small></div>${button('minus', '−', id)}<span>${q}</span>${button('plus', '+', id, stock(s, id) <= q)}<strong>${price(q * p.onlineDropPrice)}</strong></article>`; }).join('') + `<div class="pc-checkout"><strong>Total ${price(total)}</strong><p>In-game currency only · delivery in one game hour. Products arrive sealed.</p>${button('checkout', 'Place order', '', before || total > s.currency || Object.entries(this.cart).some(([id, q]) => q > stock(s, id)))}</div>` : empty('Your cart is empty.')}`;
     }
     if (this.route === 'product') {
       const p = PRODUCT_BY_ID.get(this.selected)!;
-      return header + `<div class="pc-product-page"><img src="${p.artwork}" alt="${esc(p.name)}"/><div><small>${esc(p.subtitle)}</small><h2>${esc(p.name)}</h2><strong class="pc-price">${price(p.onlineDropPrice)}</strong><p>${before ? 'DROP AT 9:30 AM' : stock(s, p.code) ? `${stock(s, p.code)} in stock` : 'SOLD OUT'}</p>${button('plus', 'Add to cart', p.code, !stock(s, p.code))}<h3>Verified contents</h3><ul>${p.type === 'booster' ? '<li>10 cards and 1 Basic Energy from this set’s supported pool</li>' : p.manifest.packs.map(i => `<li>${i.quantity} × ${esc(PRODUCT_BY_ID.get(i.productId)!.name)}</li>`).join('') + p.manifest.cards.map(i => `<li>${i.quantity} × ${esc(CARD_BY_ID.get(i.cardId)!.name)} #${esc(CARD_BY_ID.get(i.cardId)!.number)}${i.finish === 'metal' ? ' (metal)' : ''}</li>`).join('')}</ul></div></div>`;
+      return header + `<div class="pc-product-page"><img src="${p.artwork}" alt="${esc(p.name)}"/><div><small>${esc(p.subtitle)}</small><h2>${esc(p.name)}</h2><strong class="pc-price">${price(p.onlineDropPrice)}</strong><p data-store-stock="${p.code}" data-stock-unit="in stock">${this.stockLabel(p.code, 'in stock')}</p>${button('plus', 'Add to cart', p.code, !stock(s, p.code))}<h3>Verified contents</h3><ul>${p.type === 'booster' ? '<li>10 cards and 1 Basic Energy from this set’s supported pool</li>' : p.manifest.packs.map(i => `<li>${i.quantity} × ${esc(PRODUCT_BY_ID.get(i.productId)!.name)}</li>`).join('') + p.manifest.cards.map(i => `<li>${i.quantity} × ${esc(CARD_BY_ID.get(i.cardId)!.name)} #${esc(CARD_BY_ID.get(i.cardId)!.number)}${i.finish === 'metal' ? ' (metal)' : ''}</li>`).join('')}</ul></div></div>`;
     }
-    return header + `<div class="pc-store-banner"><small>ONLINE RELEASES</small><h2>Something worth opening.</h2><p>${before ? 'Today’s drop opens at 9:30 AM' : 'Daily drop · limited stock'} · ${gameTime(c.minute)}</p></div><div class="pc-product-grid">${verifiedOnlineProducts.map(p => `<article>${button('product', `<img src="${p.artwork}" alt="${esc(p.name)}" loading="lazy"/><b>${esc(p.name)}</b><small>${esc(p.subtitle)}</small>`, p.code)}<strong>${price(p.onlineDropPrice)}</strong><span>${before ? 'DROP AT 9:30 AM' : stock(s, p.code) ? `${stock(s, p.code)} available` : 'SOLD OUT'}</span>${button('plus', 'Add to cart', p.code, !stock(s, p.code))}</article>`).join('')}</div>`;
+    return header + `<div class="pc-store-banner"><small>ONLINE RELEASES</small><h2>Something worth opening.</h2><p data-store-schedule>${this.storeSchedule()}</p></div><div class="pc-product-grid">${verifiedOnlineProducts.map(p => `<article>${button('product', `<img src="${p.artwork}" alt="${esc(p.name)}" loading="lazy"/><b>${esc(p.name)}</b><small>${esc(p.subtitle)}</small>`, p.code)}<strong>${price(p.onlineDropPrice)}</strong><span data-store-stock="${p.code}" data-stock-unit="available">${this.stockLabel(p.code, 'available')}</span>${button('plus', 'Add to cart', p.code, !stock(s, p.code))}</article>`).join('')}</div>`;
   }
   private ebayView() {
     const s = this.store.state;

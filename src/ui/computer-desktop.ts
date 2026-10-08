@@ -27,7 +27,8 @@ export class ComputerDesktop {
       const w = this.active && this.windows.get(this.active);
       // Only live stock and submission countdowns need polling. The grading
       // collection changes through store notifications, never the clock.
-      const timedView = w && ((this.active === 'store' && ['home', 'orders'].includes(w.app.route)) || (this.active === 'grading' && w.app.route === 'orders'));
+      if (w && this.active === 'store' && ['home', 'product', 'cart'].includes(w.app.route)) w.app.refreshStoreStock(w.el.querySelector<HTMLElement>('.pc-app-content')!);
+      const timedView = w && ((this.active === 'store' && w.app.route === 'orders') || (this.active === 'grading' && w.app.route === 'orders'));
       if (w && timedView && !root.contains(document.activeElement?.closest('input, select, textarea') ?? null)) { w.dirty = true; this.scheduleRefresh(); }
     }, 1000);
     root.querySelector('time')!.textContent = gameTime(store.state.computer!.minute);
