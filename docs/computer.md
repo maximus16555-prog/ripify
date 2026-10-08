@@ -53,3 +53,5 @@ The window-lifecycle regression repeatedly opens/minimizes grading and Collectr 
 ## Profile app removal
 
 The RIPIFY Profile shortcut, window, editing form, highlights and exclusive styles have been removed. Store, eBay, Grading and Collectr retain their existing appearance and behavior. Saved name/avatar fields, statistics, receipts, population history and the shared profile setter remain compatible with existing saves. The computer browser regression verifies all four applications and retained profile/statistics after reload.
+
+Published to the existing public domain as deployment `kn7dyrc2`. The production build, 167 logic tests, two local browser flows and both hosted browser flows pass. The hosted runtime matches the tested local bundle exactly. [Release audit](../artifacts/profile-removal-release.json) ? [Hosted browser results](../artifacts/profile-removal-hosted.json).

@@ -1,0 +1,18 @@
+{
+  "url": "https://ripify.freebuff.app/",
+  "deployment": "kn7dyrc2",
+  "sourceCommit": "86129a9",
+  "runtimeFiles": [
+    "src/ui/computer-apps.ts",
+    "src/ui/computer.css"
+  ],
+  "mainBundle": "assets/main-CZi04Q5c.js",
+  "sha256": "7923fcf09b2ae15b9ce0e9b647f35480af852515120614bba19ac6594f9a364a",
+  "exactHostedLocalMatch": true,
+  "logicTests": 167,
+  "localBrowserTests": 2,
+  "savedProfileAndStatsBackendUnchanged": true,
+  "otherAppStylesUnchanged": true,
+  "hostedBrowserTests": 2,
+  "browserErrors": []
+}
