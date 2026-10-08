@@ -1,6 +1,6 @@
 # Bedroom computer
 
-The existing bedroom computer opens a monitor-framed RIPIFY desktop. Its five shortcuts launch movable windows with close, minimize, restore, maximize, scrolling and a taskbar. Escape safely returns to exploration. The camera moves toward the existing monitor; furniture, exploration controls and pack-opening cameras remain unchanged.
+The existing bedroom computer opens a monitor-framed RIPIFY desktop. Its four shortcuts launch movable windows with close, minimize, restore, maximize, scrolling and a taskbar. Escape safely returns to exploration. The camera moves toward the existing monitor; furniture, exploration controls and pack-opening cameras remain unchanged.
 
 ## Connected applications
 
@@ -8,7 +8,6 @@ The existing bedroom computer opens a monitor-framed RIPIFY desktop. Its five sh
 - **eBay:** owned raw cards, slabs, misprints, unopened packs and boxes can be listed with an asking price. Existing copy values drive simulated sale/offer probabilities. Listings move through LISTED, WATCHING, OFFER, SOLD or UNSOLD. Accept offers or end listings. Card ownership locks block sale, display, grading and cracking; listed packs/boxes cannot be opened. Displayed cards must be removed first. Settlement transfers the exact item out of the owned inventory and adds currency once in one durable save transaction. Historical grading population remains.
 - **Grading:** all five existing graders, their centralized fees and styles, standard/express review, submission status and returns. Uses the existing `submit`, `receive`, grading calculation and physical slab renderer. Hidden condition scores are not disclosed. Existing grading turnaround uses the preserved backend's real-duration deadlines; new store/listing scheduling uses saved game time.
 - **Collectr:** portfolio-first overview, observed portfolio history, exact owned instances, ALL/RAW/GRADED/SEALED/MISPRINT filters, seven sorts, paginated collection/catalog search, exact-printing card pages, authoritative base values, graded comparisons, current/all-time local population, recorded sales, physical copy inspection, real simulated market movers and a two-sided informational trade comparison. Search is indexed once. The receive side currently compares supported raw printings; it does not execute or claim multiplayer trading. Portfolio changes include acquisitions/sales/condition/grading as well as price movement, and are labeled accordingly. Catalog charts sample the existing deterministic economy model; fixed chase prices remain flat. No decorative random curves or invented sales. ALL on catalog charts covers the available one-year model window. Empty historical records stay empty.
-- **RIPIFY Profile:** editable saved name/avatar, collection totals, packs/cards/grades/misprints/specials, biggest completed recorded pull, most valuable current copy and cumulative sales. Card Show trades are explicitly unavailable because this checkout has no trade backend. Unfinished opening results are excluded from biggest-pull/special/misprint statistics to avoid spoilers. Old saves can recover historical sale totals only from their retained transaction ledger; subsequent totals persist independently of the ledger's 100-entry limit.
 
 ## One source of truth
 
@@ -28,9 +27,9 @@ Visually studied the current official [Collectr App Store screenshots](https://a
 
 ## Validation
 
-`tests/computer.test.ts` covers exact drop timing, persistent stock/demand, sealed delivery, idempotence, rejected storage, card/pack/box locks, sale settlement, historical population, offers, exact authoritative prices, immutable copies and invalid save extensions. `tests/production/computer.spec.ts` walks to the physical computer with keyboard input, exercises all five applications through real browser controls, completes delivery/sale/grading return on real timers, checks exact artwork, inspects the returned slab and verifies UID/order/listing/profile persistence after Escape/reload. Browser contexts are isolated from the player's save. Existing shop, opener, shortcuts, reset and slab-crack browser regressions also run.
+`tests/computer.test.ts` covers exact drop timing, persistent stock/demand, sealed delivery, idempotence, rejected storage, card/pack/box locks, sale settlement, historical population, offers, exact authoritative prices, immutable copies and invalid save extensions. `tests/production/computer.spec.ts` walks to the physical computer with keyboard input, exercises all four applications through real browser controls, completes delivery/sale/grading return on real timers, checks exact artwork, inspects the returned slab and verifies UID/order/listing/profile persistence after Escape/reload. Browser contexts are isolated from the player's save. Existing shop, opener, shortcuts, reset and slab-crack browser regressions also run.
 
-Screenshots: `artifacts/computer-desktop.png`, `computer-store.png`, `computer-ebay.png`, `computer-grading.png`, `computer-collectr.png`, `computer-card-page.png`, `computer-profile.png`, `computer-returned-slab.png`. Preservation hashes are recorded in `artifacts/computer-preserved-systems.json`.
+Screenshots: `artifacts/computer-desktop.png`, `computer-store.png`, `computer-ebay.png`, `computer-grading.png`, `computer-collectr.png`, `computer-card-page.png`, `computer-returned-slab.png`. Preservation hashes are recorded in `artifacts/computer-preserved-systems.json`.
 
 
 ## Files changed
@@ -39,7 +38,7 @@ Runtime/UI: [computer services](../src/core/computer.ts), [computer state](../sr
 
 Verification: [service tests](../tests/computer.test.ts), [hosted browser flows](../tests/production/computer.spec.ts), [reset clock-aware assertion](../tests/production/reset-progress.spec.ts). The complete changed-file manifest is [here](../artifacts/computer-owned-files.json). The reset regression permits the game clock to advance after refresh while preserving exact assertions for inventory, preferences and all progress.
 
-Final polish connects the Profile featured card to the same physical inspection renderer, includes its biggest recorded pull value, and paginates grading candidates rather than hiding copies after the first 60. The browser regression selects the 61st eligible owned card and returns safely from Profile inspection.
+Grading candidates are paginated rather than hiding copies after the first 60. The browser regression selects the 61st eligible owned card and verifies the shared physical inspection renderer.
 
 ## Public release
 
@@ -50,3 +49,7 @@ Production build, all 139 logic tests and all nine final hosted browser tests pa
 Visual review inspected actual hosted screenshots of the desktop, order confirmation, eBay listing, grading submission, Collectr overview/card page, profile and returned slab. These are running game views with real owned-instance references, not mockups. All browser fixtures use isolated storage and do not modify the player's save.
 
 The window-lifecycle regression repeatedly opens/minimizes grading and Collectr eight times. It measures two WebGL contexts reused by the world and physical preview, zero hidden card images/previews, and zero world draw calls during the measured idle second after camera transition. This measures idle/cleanup behavior, not a claim about peak game FPS.
+
+## Profile app removal
+
+The RIPIFY Profile shortcut, window, editing form, highlights and exclusive styles have been removed. Store, eBay, Grading and Collectr retain their existing appearance and behavior. Saved name/avatar fields, statistics, receipts, population history and the shared profile setter remain compatible with existing saves. The computer browser regression verifies all four applications and retained profile/statistics after reload.

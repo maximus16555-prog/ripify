@@ -14,15 +14,18 @@ async function computer(page: Page) {
   await page.keyboard.down('a'); try { await expect(page.locator('.interaction-prompt')).toContainText('Use Computer', { timeout: 15000 }); } finally { await page.keyboard.up('a'); }
   await page.keyboard.press('e'); await expect(page.locator('.pc-monitor')).toBeVisible();
 }
-test('physical computer: five connected apps, purchases, locks, grading, search, profile and reload', async ({ page }, info) => {
+test('physical computer: four connected apps, purchases, locks, grading, search and saved statistics', async ({ page }, info) => {
   test.setTimeout(180000);
-  const store = new GameStore({ read: () => null, write: () => {}, backup: () => {} }); new ComputerServices(store);
+  const store = new GameStore({ read: () => null, write: () => {}, backup: () => {} }); new ComputerServices(store).profile('Max', 'blue');
   store.state.currency = 1000; store.state.settings.controlsLearned = true; store.state.computer!.minute = 570; store.state.computer!.speed = 120;
   const raw = createCard('me02.5-276', 'test-source', seeded(21), 'holo', 'pack'), sale = createCard('sv03.5-001', 'test-source', seeded(22), 'normal', 'pack'), slab = createCard('svp-051', 'test-upc', seeded(23), 'holo', 'promo');
   store.state.cards = [raw, sale, slab]; store.submit(slab.uid, 'BGS', 'Standard'); const o = store.state.orders[0]; receiveReturn(store, o.uid, o.dueAt); store.state.sealedProducts.push(createSealed(PRODUCT_BY_ID.get('151-etb')!, 50));
   const state = store.state, errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
   await page.addInitScript(({ state, key }) => { if (!localStorage.getItem(key)) localStorage.setItem(key, JSON.stringify(state)); }, { state, key: SAVE_KEY });
   await page.goto('/'); await computer(page); await page.waitForTimeout(900);
+  await expect(page.locator('.pc-shortcuts [data-app]')).toHaveCount(4);
+  expect(await page.locator('.pc-shortcuts [data-app]').evaluateAll(nodes => nodes.map(n => n.getAttribute('data-app')))).toEqual(['store', 'ebay', 'grading', 'collectr']);
+  await expect(page.locator('[data-app="profile"], [data-window="profile"], [data-task="profile"]')).toHaveCount(0);
   await page.screenshot({ path: 'artifacts/computer-desktop.png' });
   await page.locator('[data-app="store"]').click(); await expect(page.locator('[data-window="store"]')).toBeVisible();
   await page.getByRole('button', { name: 'Maximize Pokémon Store', exact: true }).click();
@@ -59,13 +62,10 @@ test('physical computer: five connected apps, purchases, locks, grading, search,
   await expect(page.locator('.pc-trade section').first().locator('p')).toContainText('Snorlax');
   await page.locator('[data-trade-query]').fill('Pikachu ex'); await page.locator('[data-receive]').selectOption('me02.5-276'); await page.locator('[data-action="receiveTrade"]').click(); await expect(page.locator('.pc-trade')).toContainText('Pikachu ex');
   await page.getByRole('button', { name: 'Minimize Collectr', exact: true }).click();
-  await page.locator('[data-app="profile"]').click(); await expect(page.locator('.pc-profile-header')).toContainText('Collector'); await page.locator('[name="name"]').fill('Max'); await page.locator('[data-action="profile"]').click(); await expect(page.locator('.pc-profile-header')).toContainText('Max');
-  await page.screenshot({ path: 'artifacts/computer-profile.png' });
-  await page.locator('.pc-profile-highlights [data-action="item"]').click(); await expect(page.locator('.physical-card-canvas')).toBeVisible(); await page.getByRole('button', { name: 'Back to profile', exact: true }).click(); await expect(page.locator('.pc-profile-header')).toContainText('Max');
   // Real timers progress in the shared game even while a different application is foregrounded.
   await expect.poll(async () => (await saved(page)).computer!.orders[0].status, { timeout: 45000 }).toBe('DELIVERED');
   await expect.poll(async () => (await saved(page)).computer!.listings[0].status, { timeout: 80000 }).toBe('SOLD');
-  await page.getByRole('button', { name: 'Minimize RIPIFY Profile', exact: true }).click(); await page.getByRole('button', { name: 'Restore Grading', exact: true }).click();
+  await page.getByRole('button', { name: 'Restore Grading', exact: true }).click();
   await expect.poll(async () => (await saved(page)).shippingPackages!.filter(p => p.stage !== 'claimed').length, { timeout: 70000 }).toBe(2);
   await expect(page.locator('[data-action="receive"]')).toHaveCount(0);
   await page.keyboard.press('Escape'); await page.reload(); await approachPackages(page);
@@ -75,8 +75,8 @@ test('physical computer: five connected apps, purchases, locks, grading, search,
   await expect(page.locator('.physical-card-canvas')).toHaveAttribute('data-kind', 'slab'); await expect(page.locator('.physical-card-canvas')).toHaveAttribute('data-front-image', 'ready'); await page.screenshot({ path: 'artifacts/computer-returned-slab.png' });
   const finished = await saved(page); expect(finished.cards.find(c => c.uid === raw.uid)!.status).toBe('graded'); expect(finished.cards.some(c => c.uid === sale.uid)).toBe(false); expect(finished.packs.filter(p => p.uid === orderPack)).toHaveLength(1);
   await page.keyboard.press('Escape'); await expect(page.locator('.pc-monitor')).toHaveCount(0); await page.reload(); await computer(page);
-  const reloaded = await saved(page); expect(reloaded.cards).toEqual(finished.cards); expect(reloaded.computer!.orders).toEqual(finished.computer!.orders); expect(reloaded.computer!.listings).toEqual(finished.computer!.listings); expect(reloaded.computer!.profile.name).toBe('Max'); expect(reloaded.packs.filter(p => p.uid === orderPack)).toHaveLength(1); expect(errors).toEqual([]);
-  await info.attach('computer-report', { body: JSON.stringify({ url: page.url(), errors, deliveredPackUid: orderPack, cardUids: reloaded.cards.map(c => c.uid), apps: ['store', 'ebay', 'grading', 'collectr', 'profile'], profile: reloaded.computer!.profile }, null, 2), contentType: 'application/json' });
+  const reloaded = await saved(page); expect(reloaded.cards).toEqual(finished.cards); expect(reloaded.computer!.orders).toEqual(finished.computer!.orders); expect(reloaded.computer!.listings).toEqual(finished.computer!.listings); expect(reloaded.computer!.profile).toEqual({ name: 'Max', avatar: 'blue' }); expect(reloaded.stats).toEqual(finished.stats); expect(reloaded.rareEventStats).toEqual(finished.rareEventStats); expect(reloaded.gradingPopulation).toEqual(finished.gradingPopulation); expect(reloaded.packReceipts).toEqual(finished.packReceipts); expect(reloaded.packs.filter(p => p.uid === orderPack)).toHaveLength(1); expect(errors).toEqual([]);
+  await info.attach('computer-report', { body: JSON.stringify({ url: page.url(), errors, deliveredPackUid: orderPack, cardUids: reloaded.cards.map(c => c.uid), apps: ['store', 'ebay', 'grading', 'collectr'], profile: reloaded.computer!.profile }, null, 2), contentType: 'application/json' });
 });
 
 test('computer windows release hidden content and reuse the bounded physical preview', async ({ page }, info) => {
