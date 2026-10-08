@@ -20,18 +20,57 @@ export class ComputerApp {
   give: string[] = []; receive: string[] = []; notice = '';
   private cleanup?: CardCleanup;
   private inspector?: CardInspector;
+  private gradingMarkup = '';
+  // Weak caches retain only mounted previews, never an entire collection of scans.
+  private gradingTiles = new WeakMap<HTMLElement, string>();
+  private gradingImages = new WeakSet<HTMLImageElement>();
   constructor(public id: AppId, private store: GameStore, private services: ComputerServices, private refresh: () => void) {}
-  suspend() { this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; }
+  suspend() { this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.gradingMarkup = ''; }
   private nav(entries: [string, string][]) { return `<nav class="pc-app-nav">${entries.map(([id, label]) => button('route', label, id)).join('')}</nav>`; }
   private tile(i: ReturnType<typeof collectionItems>[number]) {
     const c = this.store.state.cards.find(c => c.uid === i.uid);
     return `<button class="pc-item" data-action="item" data-value="${i.uid}">${c ? ownedMarkup(c, true) : `<img src="${esc(i.image ?? '')}" alt="${esc(i.name)}" loading="lazy"/>`}<b>${esc(i.name)}</b><small>${esc(i.set)} ${esc(i.number)}</small><span>${c?.grade ? `${c.grader} ${c.grade}` : i.status === 'sealed' ? 'Sealed' : 'Raw'} ${i.misprint ? '<em>MISPRINT</em>' : ''} ${activeListing(this.store.state, i.uid) ? '<em>LISTED</em>' : ''}</span><strong>${price(i.value)}</strong></button>`;
   }
   render(root: HTMLElement) {
+    const markup = `${this.notice ? `<p class="pc-notice" role="status">${esc(this.notice)}</p>` : ''}${this.id === 'store' ? this.storeView() : this.id === 'ebay' ? this.ebayView() : this.id === 'grading' ? this.gradingView() : this.collectrView()}`;
+    if (this.id === 'grading' && this.gradingMarkup === markup && root.firstElementChild) return;
     this.suspend();
     root.className = `pc-app-content pc-${this.id}`;
-    root.innerHTML = `${this.notice ? `<p class="pc-notice" role="status">${esc(this.notice)}</p>` : ''}${this.id === 'store' ? this.storeView() : this.id === 'ebay' ? this.ebayView() : this.id === 'grading' ? this.gradingView() : this.collectrView()}`;
-    installImageFallback(root);
+    if (this.id === 'grading') {
+      const mounted = new Map([...root.querySelectorAll<HTMLElement>('.pc-card-grid > .pc-item')].map(el => [el.dataset.value, el]));
+      // The template is inert. Keep the live grid connected: even moving an
+      // existing lazy image through a fragment can restart its load/decode.
+      const template = document.createElement('template'); template.innerHTML = markup;
+      const grid = root.querySelector<HTMLElement>('.pc-card-grid'), nextGrid = template.content.querySelector<HTMLElement>('.pc-card-grid');
+      const tiles: HTMLElement[] = [];
+      for (const tile of template.content.querySelectorAll<HTMLElement>('.pc-card-grid > .pc-item')) {
+        const previous = mounted.get(tile.dataset.value), html = tile.outerHTML;
+        if (previous && this.gradingTiles.get(previous) === html) tiles.push(previous);
+        else { this.gradingTiles.set(tile, html); tiles.push(tile); }
+      }
+      if (grid && nextGrid) {
+        const siblings = [...template.content.childNodes], index = siblings.indexOf(nextGrid);
+        // Review/service controls may change, but the image-bearing grid never
+        // leaves the document. Insert/remove only copies that actually changed.
+        for (const node of [...root.childNodes]) if (node !== grid) node.remove();
+        for (const node of siblings.slice(0, index)) root.insertBefore(node, grid);
+        for (const node of siblings.slice(index + 1)) root.appendChild(node);
+        if (tiles.length) {
+          const wanted = new Set(tiles);
+          for (const node of [...grid.childNodes]) if (!wanted.has(node as HTMLElement)) node.remove();
+          let cursor = grid.firstChild;
+          for (const tile of tiles) {
+            if (tile === cursor) cursor = tile.nextSibling;
+            else grid.insertBefore(tile, cursor);
+          }
+        } else grid.replaceChildren(...nextGrid.childNodes);
+      } else root.replaceChildren(template.content);
+      this.gradingMarkup = markup;
+      for (const img of root.querySelectorAll<HTMLImageElement>('img[data-exact-image]')) {
+        if (this.gradingImages.has(img)) continue;
+        this.gradingImages.add(img); installImageFallback(img.parentElement!);
+      }
+    } else { root.innerHTML = markup; installImageFallback(root); }
     root.onclick = e => { const b = (e.target as Element).closest<HTMLButtonElement>('button[data-action]'); if (b && !b.disabled) this.action(b.dataset.action!, b.dataset.value ?? '', root); };
     root.onchange = e => { const el = e.target as HTMLInputElement; if (el.dataset.field === 'filter') { this.filter = el.value; this.page = 0; this.refresh(); } else if (el.dataset.field === 'sort') { this.sort = el.value; this.page = 0; this.refresh(); } else if (el.dataset.field === 'service') { this.service = el.value as 'Standard' | 'Express'; this.refresh(); } };
     const search = root.querySelector<HTMLInputElement>('[data-search]');

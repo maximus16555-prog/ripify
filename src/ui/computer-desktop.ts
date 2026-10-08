@@ -25,8 +25,10 @@ export class ComputerDesktop {
     this.timer = window.setInterval(() => {
       const clock = root.querySelector('time')!; clock.textContent = gameTime(store.state.computer!.minute); clock.setAttribute('title', gameDate(store.state.computer!.minute));
       const w = this.active && this.windows.get(this.active);
-      // Stock/status views refresh at most once per second, without replacing a user's active form or physical preview.
-      if (w && ['store', 'grading'].includes(this.active!) && ['home', 'orders'].includes(w.app.route) && !root.contains(document.activeElement?.closest('input, select, textarea') ?? null)) { w.dirty = true; this.scheduleRefresh(); }
+      // Only live stock and submission countdowns need polling. The grading
+      // collection changes through store notifications, never the clock.
+      const timedView = w && ((this.active === 'store' && ['home', 'orders'].includes(w.app.route)) || (this.active === 'grading' && w.app.route === 'orders'));
+      if (w && timedView && !root.contains(document.activeElement?.closest('input, select, textarea') ?? null)) { w.dirty = true; this.scheduleRefresh(); }
     }, 1000);
     root.querySelector('time')!.textContent = gameTime(store.state.computer!.minute);
     if (initial) this.open(initial);
