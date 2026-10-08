@@ -11,6 +11,7 @@ import { hydratePopulation, recordGradedCopy } from './population';
 import { emptyRareEventStats, recordRareEvents } from './rare-events';
 import { disposalProtection, valuableCard } from './card-disposal';
 import { samplePortfolio } from './computer';
+import { arrivePackages, deliveryDue } from './delivery';
 export class GameStore {
   state: Save;
   warning?: string;
@@ -165,12 +166,44 @@ export class GameStore {
     this.state.stats.spent += cost; this.log('grading', -cost, `${grader} · ${CARD_BY_ID.get(c.cardId)!.name}`); this.changed(); return true;
   }
   receive(uid: string, now = Date.now()): OwnedCard | null {
-    const o = this.state.orders.find(o => o.uid === uid); if (!o || now < o.dueAt) return null;
-    const c = this.state.cards.find(c => c.uid === o.cardUid); if (!c) return null;
-    (c.gradingHistory ??= []).push({ grader: o.grader, grade: o.result, at: now, orderUid: o.uid });
-    c.status = 'graded'; c.grader = o.grader; c.grade = o.result; if (o.grader === 'BGS') c.subgrades = o.subgrades;
-    recordGradedCopy(this.state.gradingPopulation ??= [], { cardUid: c.uid, cardId: c.cardId, grader: o.grader, grade: o.result });
-    this.state.orders = this.state.orders.filter(o => o.uid !== uid); this.changed(); return c;
+    const o = this.state.orders.find(o => o.uid === uid);
+    const p = this.state.shippingPackages?.find(p => p.source === 'grading' && p.orderUids.includes(uid) && p.stage === 'open');
+    return o && p && this.claimPackage(p.uid, now) ? this.state.cards.find(c => c.uid === o.cardUid)! : null;
+  }
+  arriveDeliveries(now = Date.now()) {
+    if (!deliveryDue(this.state, now)) return true;
+    const next = structuredClone(this.state); arrivePackages(next, now); return this.commit(next);
+  }
+  packageStage(uid: string, stage: 'untaped' | 'open') {
+    const p = this.state.shippingPackages?.find(p => p.uid === uid);
+    if (!p || (stage === 'untaped' ? p.stage !== 'sealed' : p.stage !== 'untaped')) return false;
+    const next = structuredClone(this.state); next.shippingPackages!.find(p => p.uid === uid)!.stage = stage; return this.commit(next);
+  }
+  /** One durable claim releases the exact order instances, never replacement copies. */
+  claimPackage(uid: string, now = Date.now()) {
+    const current = this.state.shippingPackages?.find(p => p.uid === uid);
+    if (!current || current.stage !== 'open') return false;
+    const next = structuredClone(this.state), p = next.shippingPackages!.find(p => p.uid === uid)!;
+    if (p.source === 'store') {
+      const orders = p.orderUids.map(uid => next.computer?.orders.find(o => o.uid === uid && o.status === 'DELIVERED'));
+      if (orders.some(o => !o)) return false;
+      const items = orders.flatMap(o => o!.items);
+      if (items.length !== p.itemUids.length || items.some(i => !p.itemUids.includes(i.uid) || [...next.packs, ...next.sealedProducts].some(owned => owned.uid === i.uid))) return false;
+      for (const item of items) { if ('generationVersion' in item) next.packs.push(item); else next.sealedProducts.push(item); }
+    } else {
+      const orders = p.orderUids.map(uid => next.orders.find(o => o.uid === uid && o.dueAt <= now));
+      if (orders.some(o => !o) || orders.length !== p.itemUids.length) return false;
+      for (const o of orders) {
+        const c = next.cards.find(c => c.uid === o!.cardUid && c.status === 'grading');
+        if (!c || !p.itemUids.includes(c.uid)) return false;
+        (c.gradingHistory ??= []).push({ grader: o!.grader, grade: o!.result, at: now, orderUid: o!.uid });
+        c.status = 'graded'; c.grader = o!.grader; c.grade = o!.result;
+        if (o!.grader === 'BGS') c.subgrades = [...o!.subgrades]; else delete c.subgrades;
+        recordGradedCopy(next.gradingPopulation ??= [], { cardUid: c.uid, cardId: c.cardId, grader: o!.grader, grade: o!.result });
+      }
+      next.orders = next.orders.filter(o => !p.orderUids.includes(o.uid));
+    }
+    p.stage = 'claimed'; p.claimedAt = now; samplePortfolio(next); return this.commit(next);
   }
   settings(patch: Partial<Settings>) { Object.assign(this.state.settings, patch); this.changed(); }
   resetProgress() {

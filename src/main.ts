@@ -12,6 +12,7 @@ import { softShadowTexture } from './game/materials';
 import { buildWorld, type World, type Interactable } from './game/world';
 import { GameUI } from './ui/game-ui';
 import { createTestPack } from './dev/test-packs';
+import { DeliveryPile } from './game/delivery-pile';
 
 const app = document.querySelector<HTMLElement>('#app')!;
 async function start() {
@@ -25,6 +26,7 @@ async function start() {
   // Two small locations, loaded on first visit. Inactive groups are detached:
   // no rendering, interaction queries, physics or animation work continues.
   const worlds = new Map<'home' | 'shop', World>([['home', world]]);
+  const deliveries = new DeliveryPile(world, renderer.invalidate); store.arriveDeliveries(); deliveries.sync(store.state.shippingPackages ?? []);
   scene.add(world.group, player.group); player.reset(world.spawn); world.group.updateMatrixWorld(true);
   app.querySelector('.loading')?.remove(); const overlay = document.createElement('div'); overlay.className = 'game-overlay'; app.append(overlay);
   const ui = new GameUI(overlay, store, audio, () => { input.pause(); audio.unlock(); }, () => { input.resume(); renderer.renderer.domElement.focus({ preventScroll: true }); }, () => renderer.activePreset);
@@ -35,12 +37,20 @@ async function start() {
     else if (i.action === 'desk') ui.packs();
     else if (i.action === 'binder') ui.binder();
     else if (i.action === 'computer') ui.computer();
+    else if (i.action === 'package') ui.shippingPackage(i.id);
     else if (i.action === 'display') ui.displays();
     else if (i.action === 'buy') ui.buy(i.product?.code);
     else if (i.action === 'shop') ui.buy();
   }, () => { if (switching) return; if (ui.isOpen) ui.close(); else if (!document.pointerLockElement) ui.settings(); }, () => audio.unlock(), () => store.grantCurrencyBonus(), slot => {
     if (store.addUnopenedPack(createTestPack(slot))) ui.toast(slot === 1 ? 'Dev: 151 test pack added' : 'Dev: Ascended Heroes test pack added');
   });
+  let deliveryPointer: THREE.Vector2 | undefined;
+  const pointDelivery = (e: PointerEvent) => {
+    if (document.pointerLockElement || e.buttons) { deliveryPointer = undefined; return; }
+    const rect = renderer.renderer.domElement.getBoundingClientRect(); deliveryPointer = new THREE.Vector2((e.clientX - rect.left) / rect.width * 2 - 1, 1 - (e.clientY - rect.top) / rect.height * 2);
+  };
+  const leaveDelivery = () => { deliveryPointer = undefined; };
+  renderer.renderer.domElement.addEventListener('pointermove', pointDelivery); renderer.renderer.domElement.addEventListener('pointerleave', leaveDelivery);
   if (import.meta.env.DEV) Object.defineProperty(window, '__ripifyDebug', { configurable: true, get: () => ({ position: player.group.position.toArray(), camera: camera.camera.position.toArray(), velocity: player.velocity.toArray(), keys: [...input.keys], grounded: player.grounded, drawCalls: renderer.renderer.info.render.calls, triangles: renderer.renderer.info.render.triangles, geometries: renderer.renderer.info.memory.geometries, textures: renderer.renderer.info.memory.textures, preset: renderer.activePreset, focus: ui.openingActive, displays: world.displaySlots.map(slot => slot.children.map(item => ({ ...item.userData, kind: item.name, parts: item.children.map(p => p.name) }))) }) });
   renderer.apply(store.state.settings, scene); camera.update(0, player.group.position, input, store.state.settings.sensitivity, world.cameraMeshes, true);
   ui.setLocation(world.name);
@@ -52,7 +62,7 @@ async function start() {
     displayResources.sync(world.displaySlots, store.state.displays.map(uid => store.state.cards.find(c => c.uid === uid)));
   };
   updateDisplays();
-  const unsubscribe = store.subscribe(() => { renderer.apply(store.state.settings, scene); audio.update(); updateDisplays(); if (store.warning) ui.toast(store.warning); });
+  const unsubscribe = store.subscribe(() => { renderer.apply(store.state.settings, scene); audio.update(); updateDisplays(); deliveries.sync(store.state.shippingPackages ?? []); if (store.warning) ui.toast(store.warning); });
   async function switchWorld() {
     if (switching) return; switching = true; input.pause(); ui.setPrompt(); ui.pointAt();
     app.classList.add('world-transition');
@@ -75,6 +85,7 @@ async function start() {
     if (document.hidden) return;
     frameId = requestAnimationFrame(tick); const elapsed = Math.max(0, time - last); const dt = Math.min(.15, elapsed / 1000); last = time;
     ui.tickComputer(elapsed / 1000);
+    if (location === 'home' && !ui.isOpen) deliveries.update(dt);
     frames++; // Include responsive UI frames while the unchanged world is frozen.
     if (switching) return;
     if (ui.isOpen !== wasOpen || ui.openingActive !== wasOpening) { renderer.invalidate(); wasOpen = ui.isOpen; wasOpening = ui.openingActive; }
@@ -89,6 +100,7 @@ async function start() {
     if (!ui.isOpen && !switching) {
       camera.update(dt, player.group.position, input, store.state.settings.sensitivity, world.cameraMeshes);
       nearest = interactions.find(player.group.position, player.grounded, world);
+      if (location === 'home' && player.grounded) nearest = deliveries.aimedAt(camera.camera, player.group.position, document.pointerLockElement ? undefined : deliveryPointer) ?? nearest;
       ui.setPrompt(nearest);
       if (nearest) { const anchor = interactions.screenAnchor(nearest, camera.camera); ui.pointAt(anchor.x, anchor.y, anchor.z); } else ui.pointAt();
     }
@@ -104,11 +116,13 @@ async function start() {
     if (redraw && !throttled) {
       lastRender = time; renderer.renderer.render(scene, camera.camera); renderer.needsRender = false;
       renderedPosition.copy(camera.camera.position); renderedRotation.copy(camera.camera.quaternion);
+      renderer.renderer.domElement.dataset.deliveryCount = String((deliveries.group.userData.packages ?? []).length);
+      renderer.renderer.domElement.dataset.deliveryQueued = String(deliveries.group.userData.queued ?? 0);
     }
     if (time - fpsTime > 1000) {
       ui.fps(Math.round(frames * 1000 / (time - fpsTime))); frames = 0; fpsTime = time;
-      const delivered = store.state.orders.find(o => o.dueAt <= Date.now());
-      if (delivered && delivered.uid !== notifiedOrder) { notifiedOrder = delivered.uid; ui.updateHUD(); ui.toast('A graded card has returned. Check your computer.'); }
+      const delivered = store.state.shippingPackages?.filter(p => p.stage !== 'claimed').at(-1);
+      if (delivered && delivered.uid !== notifiedOrder) { notifiedOrder = delivered.uid; ui.updateHUD(); const queued = deliveries.group.userData.queued ?? 0; ui.toast(queued ? `Packages are waiting by the bedroom door. ${queued} more will be placed as space clears.` : 'A shipping package is waiting by the bedroom door.'); }
     }
   };
   frameId = requestAnimationFrame(tick);
@@ -118,7 +132,7 @@ async function start() {
   renderer.renderer.domElement.addEventListener('webglcontextrestored', () => locationReload());
   const locationReload = () => window.location.reload();
   const saveOnExit = () => store.persist(); window.addEventListener('pagehide', saveOnExit);
-  if (import.meta.hot) import.meta.hot.dispose(() => { cancelAnimationFrame(frameId); unsubscribe(); ui.dispose(); input.dispose(); audio.dispose(); clearDisplays(); worlds.forEach(room => room.dispose()); worlds.clear(); player.dispose(); contactShadow.geometry.dispose(); contactShadow.material.dispose(); contactTexture.dispose(); renderer.dispose(); window.removeEventListener('resize', resize); window.removeEventListener('pagehide', saveOnExit); document.removeEventListener('visibilitychange', visibility); overlay.remove(); });
+  if (import.meta.hot) import.meta.hot.dispose(() => { cancelAnimationFrame(frameId); unsubscribe(); ui.dispose(); input.dispose(); audio.dispose(); clearDisplays(); deliveries.dispose(); renderer.renderer.domElement.removeEventListener('pointermove', pointDelivery); renderer.renderer.domElement.removeEventListener('pointerleave', leaveDelivery); worlds.forEach(room => room.dispose()); worlds.clear(); player.dispose(); contactShadow.geometry.dispose(); contactShadow.material.dispose(); contactTexture.dispose(); renderer.dispose(); window.removeEventListener('resize', resize); window.removeEventListener('pagehide', saveOnExit); document.removeEventListener('visibilitychange', visibility); overlay.remove(); });
 }
 start().catch(error => {
   console.error(error); app.replaceChildren(); const panel = document.createElement('section'); panel.className = 'graphics-error'; panel.innerHTML = '<b>RIPIFY</b><h1>Couldn’t start the game</h1><p>Enable hardware acceleration and use a desktop browser with WebGL2 support.</p><button>Try again</button>'; panel.querySelector('button')!.onclick = () => window.location.reload(); app.append(panel);

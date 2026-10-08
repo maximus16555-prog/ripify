@@ -1,3 +1,4 @@
+import { receiveReturn } from './fixtures/receive-return';
 import { describe, it, expect } from 'vitest';
 import { CARDS, CARD_BY_ID, PRODUCTS } from '../src/data/cards';
 import { calculateGrade, GRADERS, ownedValue } from '../src/core/economy';
@@ -66,7 +67,7 @@ describe('grading and selling', () => {
   it('locks submitted cards and prevents early or duplicate returns', () => {
     const s = withCards(); const c = s.state.cards[0]; s.display(c.uid, 0); const before = s.state.currency;
     expect(s.submit(c.uid, 'BGS', 'Standard')).toBe(true); expect(s.state.currency).toBe(before - 16); expect(s.state.displays[0]).toBeNull(); expect(s.sell(c.uid)).toBe(false); expect(s.display(c.uid, 1)).toBe(false); expect(s.submit(c.uid, 'PSA', 'Standard')).toBe(false);
-    const o = s.state.orders[0]; expect(s.receive(o.uid, o.dueAt - 1)).toBeNull(); const result = s.receive(o.uid, o.dueAt); expect(result!.status).toBe('graded'); expect(result!.subgrades).toHaveLength(4); expect(s.receive(o.uid, o.dueAt)).toBeNull(); expect(result!.gradingHistory).toEqual([{ grader: 'BGS', grade: o.result, at: o.dueAt, orderUid: o.uid }]);
+    const o = s.state.orders[0]; expect(receiveReturn(s, o.uid, o.dueAt - 1)).toBeNull(); const result = receiveReturn(s, o.uid, o.dueAt); expect(result!.status).toBe('graded'); expect(result!.subgrades).toHaveLength(4); expect(receiveReturn(s, o.uid, o.dueAt)).toBeNull(); expect(result!.gradingHistory).toEqual([{ grader: 'BGS', grade: o.result, at: o.dueAt, orderUid: o.uid }]);
   });
   it('sells exactly once and removes display references', () => { const s = withCards(); const c = s.state.cards[0]; const value = ownedValue(c, s.state.marketSeed); const before = s.state.currency; s.display(c.uid, 0); expect(s.sell(c.uid)).toBe(true); expect(s.sell(c.uid)).toBe(false); expect(s.state.cards).toHaveLength(10); expect(s.state.currency).toBe(Math.round((before + value) * 100) / 100); expect(s.state.displays[0]).toBeNull(); });
   it('reports short shipping states', () => { expect(orderStatus(0, 100, 10)).toBe('Shipped'); expect(orderStatus(0, 100, 50)).toBe('Grading'); expect(orderStatus(0, 100, 90)).toBe('Returning'); expect(orderStatus(0, 100, 101)).toBe('Delivered'); });
@@ -95,7 +96,7 @@ describe('verified catalog and sealed containers', () => {
   it('keeps exact printing IDs paired to the source image and full metadata', () => {
     expect(CARDS.filter(c => c.setCode === 'sv03.5')).toHaveLength(207);
     for (const c of CARDS.filter(c => c.setCode === 'sv03.5' || c.setCode === 'svp')) {
-      expect(c.image).toContain('/' + c.setCode + '/' + c.id.split('-').at(-1) + '/');
+      expect(c.image).toMatch(new RegExp(`(?:/${c.setCode}/${c.id.split('-').at(-1)}/|/artwork/cards/${c.id.replace('.', '\\.') }\\.webp$)`));
       expect(c.sourceUrl).toContain(c.id); expect(c.verified).toBe(true);
     }
     const card = CARD_BY_ID.get('sv03.5-006')!;

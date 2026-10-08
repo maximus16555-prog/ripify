@@ -8,6 +8,7 @@ import { emptyRareEventStats } from './rare-events';
 import { validCardMisprint, validPackEvents, validOpeningEvents } from './rare-event-validation';
 import { validSlabHistory } from './slab-validation';
 import { hydratePopulation } from './population';
+import { validatePackages } from './delivery';
 export const SAVE_KEY = 'ripify.save.v1';
 export const DEFAULT_SETTINGS: Settings = { graphics: 'Auto', renderScale: 1, sensitivity: 1, master: .65, music: .25, sfx: .6, fps: false, controlsLearned: false };
 export function newSave(): Save {
@@ -92,6 +93,7 @@ export function parseSave(raw: string): Save {
   if (finite(v.marketSeed)) result.marketSeed = v.marketSeed;
   if (Array.isArray(v.history)) result.history = v.history.filter(h => record(h) && typeof h.uid === 'string' && ['purchase', 'sale', 'grading'].includes(String(h.type)) && finite(h.amount) && typeof h.label === 'string' && finite(h.at)).slice(-100) as Save['history'];
   if (v.computer !== undefined) result.computer = validateComputer(v.computer, result, validPack, validSealed);
+  if (v.shippingPackages !== undefined) result.shippingPackages = validatePackages(v.shippingPackages, result);
   return result;
 }
 export interface SaveStorage { read(): string | null; write(data: string): void; backup(data: string): void; clearRecovery?(): void }

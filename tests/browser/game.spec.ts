@@ -3,6 +3,8 @@ import { newSave } from '../../src/core/save';
 import { createSealed } from '../../src/core/inventory';
 import { PRODUCTS } from '../../src/data/products';
 import { generatePack } from '../../src/core/packs';
+import { approachPackages, takePackage } from '../fixtures/shipping-gameplay';
+import { CARD_BY_ID } from '../../src/data/cards';
 
 type Debug = { position: number[]; camera: number[]; grounded: boolean; focus: boolean; preset: string };
 const debug = (page: Page) => page.evaluate(() => (window as unknown as { __ripifyDebug: Debug }).__ripifyDebug);
@@ -58,9 +60,9 @@ test('old computer grading, settings and saved preferences remain usable', async
   test.setTimeout(90000); const seed = newSave(); seed.settings.graphics = 'Low'; seed.cards = generatePack(seed.packs[0]);
   await page.addInitScript(s => { if (!localStorage.getItem('ripify.save.v1')) localStorage.setItem('ripify.save.v1', JSON.stringify(s)); }, seed);
   await ready(page); await coordinate(page, 'w', 2, -1.3); await walkToPrompt(page, 'd', 'Open Binder'); await page.keyboard.press('e'); await page.locator('[data-inspect]').first().click(); await page.locator('[data-grade]').click(); await page.locator('[data-grader="BGS"]').click(); await page.locator('[data-service="Express"]').click(); await page.locator('[data-submit]').click();
-  const order = (await save(page)).orders[0]; await page.clock.setFixedTime(order.dueAt + 1); await page.locator('[data-receive]').click(); const stored = await save(page);
+  const order = (await save(page)).orders[0]; await page.clock.setFixedTime(order.dueAt + 1); await page.keyboard.press('Escape'); await page.reload(); await approachPackages(page); await takePackage(page); const stored = await save(page);
   expect(stored.orders).toHaveLength(0); expect(stored.cards[0].status).toBe('graded'); expect(stored.cards[0].subgrades).toHaveLength(4);
-  await page.keyboard.press('Escape'); await page.setViewportSize({ width: 1024, height: 640 }); await page.getByRole('button', { name: 'Settings', exact: true }).click(); await expect(page.locator('[data-graphics]')).toHaveCount(4); await page.locator('[data-fps]').check();
+  await page.setViewportSize({ width: 1024, height: 640 }); await page.getByRole('button', { name: 'Settings', exact: true }).click(); await expect(page.locator('[data-graphics]')).toHaveCount(4); await page.locator('[data-fps]').check();
   const download = page.waitForEvent('download'); await page.locator('[data-export]').click(); expect((await download).suggestedFilename()).toBe('ripify-save.json'); await page.locator('[data-resume]').click(); await page.reload(); expect((await save(page)).settings.fps).toBe(true); expect((await save(page)).cards[0].status).toBe('graded');
 });
 
@@ -101,7 +103,7 @@ test('real ETB keeps sealed, manually opens, and leaves all contained packs unop
   const image = page.locator('[data-card] .exact-card-image'); await expect(image).toBeVisible();
   await expect.poll(async () => image.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
   const printing = (await save(page)).opening.cards[1].cardId;
-  await expect(image).toHaveAttribute('src', new RegExp('/sv03\\.5/' + printing.split('-').at(-1) + '/'));
+  await expect(image).toHaveAttribute('src', CARD_BY_ID.get(printing)!.image!);
   await image.evaluate((img: HTMLImageElement) => img.decode()); await expect(image).not.toHaveClass(/image-loading/);
   await page.waitForTimeout(600); await page.screenshot({ path: 'artifacts/real-card-reveal.png' });
   await page.waitForTimeout(600); expect((await save(page)).opening.index).toBe(1);
@@ -112,6 +114,7 @@ test('missing card image is explicit and never replaced with invented artwork', 
   const seed = newSave(); seed.settings.graphics = 'Low'; const pack = seed.packs.pop()!;
   seed.opening = { pack, cards: generatePack(pack), stage: 'cards', index: 1 };
   await page.route('https://assets.tcgdex.net/**', route => route.abort());
+  await page.route('**/artwork/cards/**', route => route.abort());
   await page.addInitScript(s => localStorage.setItem('ripify.save.v1', JSON.stringify(s)), seed);
   await ready(page); await desk(page);
   await expect(page.locator('[data-card] .missing-card-image')).toBeVisible();

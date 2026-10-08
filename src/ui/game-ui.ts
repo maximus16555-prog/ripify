@@ -1,4 +1,5 @@
 import { CardCleanup } from './card-cleanup';
+import { ShippingOpening } from './shipping-opening';
 import { ComputerDesktop } from './computer-desktop';
 import { ComputerServices } from '../core/computer';
 import './catalog.css';
@@ -27,6 +28,7 @@ export class GameUI {
   tickComputer(dt: number) { this.computerServices.tick(dt); }
   private opener?: PackOpening;
   private containerOpener?: ContainerOpening;
+  private shippingOpener?: ShippingOpening;
   private inspector?: CardInspector;
   private crackingUid?: string;
   private hud: HTMLElement;
@@ -77,13 +79,14 @@ export class GameUI {
   setPrompt(i?: Interactable) {
     const id = i?.id ?? ''; if (id === this.currentPrompt) return; this.currentPrompt = id;
     this.prompt.hidden = !i;
+    this.prompt.dataset.packageUid = i?.action === 'package' ? i.id : '';
     if (i) this.prompt.innerHTML = `<kbd>E</kbd><span>${i.label}</span>${i.product ? `<small>${money(i.product.price)} coins</small>` : ''}`;
   }
   fps(value: number) { this.hud.querySelector('.fps-counter')!.textContent = `${value} FPS · ${this.getPreset()}`; }
   toast(text: string) { clearTimeout(this.toastTimer); this.toastEl.innerHTML = `<span>✓</span>${escapeHtml(text)}`; this.toastEl.hidden = false; this.toastTimer = window.setTimeout(() => { this.toastEl.hidden = true; }, 3800); }
   private open(html: string, wide = false, title = 'Game menu') {
     this.finishCrack(); this.desktop?.dispose(); this.desktop = undefined;
-    this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = true; this.pause(); this.hud.classList.add('menu-open');
+    this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; this.shippingOpener?.dispose(); this.shippingOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = true; this.pause(); this.hud.classList.add('menu-open');
     this.modal.hidden = false; this.modal.className = `modal-root ${wide ? 'wide' : ''}`;
     this.modal.innerHTML = `<section class="game-panel" role="dialog" aria-modal="true" aria-label="${title}">${html}</section>`;
     this.modal.querySelector<HTMLButtonElement>('[data-close]')?.addEventListener('click', () => this.close());
@@ -94,7 +97,7 @@ export class GameUI {
     const trap = (e: KeyboardEvent) => { if (e.key !== 'Tab' || !this.isOpen) return; const focusable = Array.from(this.modal.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([hidden]), select, [tabindex="0"]')); if (!focusable.length) return; const a = focusable[0]; const b = focusable[focusable.length - 1]; if (e.shiftKey && (document.activeElement === a || !this.modal.contains(document.activeElement))) { e.preventDefault(); b.focus(); } else if (!e.shiftKey && document.activeElement === b) { e.preventDefault(); a.focus(); } };
     document.addEventListener('keydown', trap); this.focusCleanup = () => document.removeEventListener('keydown', trap);
   }
-  close() { if (!this.isOpen) return; this.desktop?.dispose(); this.desktop = undefined; this.finishCrack(); this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = false; this.modal.hidden = true; this.modal.replaceChildren(); this.hud.classList.remove('menu-open'); this.resume(); }
+  close() { if (!this.isOpen) return; this.desktop?.dispose(); this.desktop = undefined; this.finishCrack(); this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; this.shippingOpener?.dispose(); this.shippingOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = false; this.modal.hidden = true; this.modal.replaceChildren(); this.hud.classList.remove('menu-open'); this.resume(); }
   private header(eyebrow: string, title: string, suffix = '') { return `<header class="panel-header"><div><span class="eyebrow">${eyebrow}</span><h1>${title}${suffix}</h1></div><button class="close-button" data-close aria-label="Close">✕</button></header>`; }
   packs() {
     const s = this.store.state;
@@ -112,6 +115,11 @@ export class GameUI {
   private openContainer() {
     this.close(); this.isOpen = true; this.pause(); this.hud.classList.add('menu-open'); this.modal.hidden = false;
     this.containerOpener = new ContainerOpening(this.modal, this.store, this.audio, () => this.close(), text => this.toast(text)); this.trapFocus();
+  }
+  shippingPackage(uid: string) {
+    if (!this.store.state.shippingPackages?.some(p => p.uid === uid && p.stage !== 'claimed')) return;
+    this.close(); this.isOpen = true; this.pause(); this.hud.classList.add('menu-open'); this.modal.hidden = false;
+    this.shippingOpener = new ShippingOpening(this.modal, this.store, this.audio, uid, () => this.close(), text => this.toast(text)); this.trapFocus();
   }
   buy(productCode?: string) {
     const products = productCode ? PRODUCTS.filter(p => p.code === productCode) : PRODUCTS;
@@ -194,7 +202,7 @@ export class GameUI {
   private renderOrders() {
     const target = this.modal.querySelector<HTMLElement>('[data-orders]'); if (!target) return;
     const orders = this.store.state.orders;
-    target.innerHTML = orders.length ? `<div class="orders-list">${orders.map(o => { const c = this.store.state.cards.find(c => c.uid === o.cardUid)!; const d = CARD_BY_ID.get(c.cardId)!; const status = orderStatus(o.sentAt, o.dueAt); return `<article class="order-row"><span class="shipping-icon">▣</span><div><b>${d.name}</b><small>${o.grader} · ${o.service}</small><div class="shipping-progress"><i style="width:${Math.min(100, (Date.now() - o.sentAt) / (o.dueAt - o.sentAt) * 100)}%"></i></div></div><span class="order-status">${status}<small>${status === 'Delivered' ? 'Ready to open' : `${Math.max(0, Math.ceil((o.dueAt - Date.now()) / 1000))}s`}</small></span>${status === 'Delivered' ? `<button class="primary-button" data-receive="${o.uid}">Open return</button>` : ''}</article>`; }).join('')}</div>` : '<div class="empty-state"><span>▣</span><h2>No orders in progress</h2><p>Choose a raw card in your binder to submit.</p></div>';
+    target.innerHTML = orders.length ? `<div class="orders-list">${orders.map(o => { const c = this.store.state.cards.find(c => c.uid === o.cardUid)!; const d = CARD_BY_ID.get(c.cardId)!; const status = orderStatus(o.sentAt, o.dueAt); return `<article class="order-row"><span class="shipping-icon">▣</span><div><b>${d.name}</b><small>${o.grader} · ${o.service}</small><div class="shipping-progress"><i style="width:${Math.min(100, (Date.now() - o.sentAt) / (o.dueAt - o.sentAt) * 100)}%"></i></div></div><span class="order-status">${status}<small>${status === 'Delivered' ? 'Ready to open' : `${Math.max(0, Math.ceil((o.dueAt - Date.now()) / 1000))}s`}</small></span>${status === 'Delivered' ? '<small>Shipping box waiting by the bedroom door</small>' : ''}</article>`; }).join('')}</div>` : '<div class="empty-state"><span>▣</span><h2>No orders in progress</h2><p>Choose a raw card in your binder to submit.</p></div>';
     target.querySelectorAll<HTMLButtonElement>('[data-receive]').forEach(b => { b.onclick = () => { const c = this.store.receive(b.dataset.receive!); if (c) this.gradeReveal(c); }; });
   }
   private gradeReveal(c: OwnedCard) {

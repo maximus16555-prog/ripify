@@ -33,7 +33,7 @@ export class PhysicalContainer {
   private textureByUrl = new Map<string, THREE.Texture>();
   private cancelLoads = new Set<()=>void>();
 
-  constructor(readonly product: Product, private cardFactory: (owned:OwnedCard)=>PhysicalCard = createPhysicalCard) {
+  constructor(readonly product: Product, private cardFactory: (owned:OwnedCard)=>PhysicalCard = createPhysicalCard, private includeContents = true) {
     const profile = CONTAINER_PROFILES[product.code];
     if (!profile) throw new Error('Physical construction is not available for this product');
     this.profile = profile;
@@ -78,7 +78,7 @@ export class PhysicalContainer {
       this.addPacks(trayHeight-.15);
       this.contents.add(this.promos);
       const firstPack=this.packs.children[0];
-      this.addPromos(firstPack.position.y+firstPack.userData.height/2-.016, false);
+      if (firstPack) this.addPromos(firstPack.position.y+firstPack.userData.height/2-.016, false);
     } else {
       // 151 UPC: rear hinge, not a drawer and not a lift-off ETB lid.
       this.sleeve.visible = false;
@@ -148,6 +148,7 @@ export class PhysicalContainer {
     mesh.userData.artwork=url; mesh.userData.verifiedSurface=true; parent.add(mesh);
   }
   private addPacks(y:number) {
+    if (!this.includeContents) return;
     const upc=this.profile.construction==='hinged-case';
     const packWidth=.79;
     const foil=this.material('#c9cecc',.3);
@@ -176,6 +177,7 @@ export class PhysicalContainer {
     }
   }
   private addPromos(y:number,inLid:boolean) {
+    if (!this.includeContents) return;
     let index=0;
     for(const entry of this.product.manifest.cards) for(let i=0;i<entry.quantity;i++,index++) {
       // A definition preview, not an awarded owned copy. Actual instances and

@@ -1,3 +1,4 @@
+import { receiveReturn } from './fixtures/receive-return';
 import { describe, it, expect } from 'vitest';
 import { GameStore } from '../src/core/store';
 import { ComputerServices, stock, portfolioValue, searchCards, marketHistory } from '../src/core/computer';
@@ -28,6 +29,8 @@ describe('shared computer commerce', () => {
     const order = f.store.state.computer!.orders[0], ids = order.items.map(i => i.uid);
     expect(f.store.state.packs).toHaveLength(original); expect(f.store.state.sealedProducts).toHaveLength(0); expect(f.store.state.cards).toHaveLength(0);
     const reloaded = new GameStore(f.storage), services = new ComputerServices(reloaded); reloaded.state.computer!.minute = order.due; services.advance(); services.advance();
+    expect(reloaded.state.packs).toHaveLength(original);
+    const box = reloaded.state.shippingPackages![0]; reloaded.packageStage(box.uid, 'untaped'); reloaded.packageStage(box.uid, 'open'); expect(reloaded.claimPackage(box.uid)).toBe(true);
     expect(reloaded.state.packs).toHaveLength(original + 1); expect(reloaded.state.sealedProducts).toHaveLength(2);
     expect([...reloaded.state.packs, ...reloaded.state.sealedProducts].filter(i => ids.includes(i.uid))).toHaveLength(3);
     expect(reloaded.state.cards).toHaveLength(0); expect(reloaded.state.opening).toBeNull(); expect(parseSave(f.read()).computer!.orders[0].status).toBe('DELIVERED');
@@ -48,10 +51,10 @@ describe('shared computer commerce', () => {
     expect(f.store.startOpening(pack.uid)).toBe(false); expect(f.store.startContainer(box.uid)).toBe(false); expect(parseSave(f.read()).computer!.listings).toHaveLength(2);
   });
   it('sale settlement atomically transfers the item, keeps population, and pays once', () => {
-    const f = fixture(), card = createCard('me02.5-284', 'test', seeded(3), 'holo', 'pack'); f.store.state.cards.push(card); f.store.submit(card.uid, 'PSA', 'Standard'); const o = f.store.state.orders[0]; f.store.receive(o.uid, o.dueAt);
+    const f = fixture(), card = createCard('me02.5-284', 'test', seeded(3), 'holo', 'pack'); f.store.state.cards.push(card); f.store.submit(card.uid, 'PSA', 'Standard'); const o = f.store.state.orders[0]; receiveReturn(f.store, o.uid, o.dueAt);
     expect(f.services.list('card', card.uid, 100)).toBe(true); const l = f.store.state.computer!.listings[0]; l.outcome = 'sale'; const money = f.store.state.currency; f.store.state.computer!.minute = l.due; f.services.advance(); f.services.advance();
     expect(f.store.state.currency).toBe(money + 100); expect(f.store.state.cards).toHaveLength(0); expect(f.store.state.computer!.listings[0].status).toBe('SOLD');
-    expect(gradedPopulation(f.store.state, card.cardId, card.grader!, card.grade!).allTime).toBe(1); expect(parseSave(f.read()).computer!.listings[0].paid).toBe(100); expect(parseSave(f.read()).stats.totalSales).toBe(100);
+    expect(gradedPopulation(f.store.state, card.cardId, 'PSA', f.store.state.gradingPopulation![0].grade).allTime).toBe(1); expect(parseSave(f.read()).computer!.listings[0].paid).toBe(100); expect(parseSave(f.read()).stats.totalSales).toBe(100);
   });
   it('offers and unsold listings are persistent and cannot pay twice', () => {
     const f = fixture(), pack = f.store.state.packs[0]; f.services.list('pack', pack.uid, 12); const l = f.store.state.computer!.listings[0]; l.outcome = 'offer'; f.store.state.computer!.minute = l.started + 65; f.services.advance();

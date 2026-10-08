@@ -21,7 +21,7 @@ export class InteractionSystem {
       const length = this.direction.length(); this.direction.normalize();
       this.ray.set(this.origin, this.direction); this.ray.far = Math.max(0, length - .15);
       this.hits.length = 0; this.ray.intersectObjects(world.cameraMeshes, false, this.hits);
-      if (this.hits.length) continue;
+      if (this.hits.some(hit => !(item.action === 'package' && hit.object.userData.deliveryPile))) continue;
       const candidate = distance - (this.current?.id === item.id ? .18 : 0);
       if (candidate < score) { score = candidate; best = item; }
     }

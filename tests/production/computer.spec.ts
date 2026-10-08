@@ -1,3 +1,5 @@
+import { approachPackages, takePackage } from '../fixtures/shipping-gameplay';
+import { receiveReturn } from '../fixtures/receive-return';
 import { test, expect, type Page } from '@playwright/test';
 import { GameStore } from '../../src/core/store';
 import { ComputerServices } from '../../src/core/computer';
@@ -17,7 +19,7 @@ test('physical computer: five connected apps, purchases, locks, grading, search,
   const store = new GameStore({ read: () => null, write: () => {}, backup: () => {} }); new ComputerServices(store);
   store.state.currency = 1000; store.state.settings.controlsLearned = true; store.state.computer!.minute = 570; store.state.computer!.speed = 120;
   const raw = createCard('me02.5-276', 'test-source', seeded(21), 'holo', 'pack'), sale = createCard('sv03.5-001', 'test-source', seeded(22), 'normal', 'pack'), slab = createCard('svp-051', 'test-upc', seeded(23), 'holo', 'promo');
-  store.state.cards = [raw, sale, slab]; store.submit(slab.uid, 'BGS', 'Standard'); const o = store.state.orders[0]; store.receive(o.uid, o.dueAt); store.state.sealedProducts.push(createSealed(PRODUCT_BY_ID.get('151-etb')!, 50));
+  store.state.cards = [raw, sale, slab]; store.submit(slab.uid, 'BGS', 'Standard'); const o = store.state.orders[0]; receiveReturn(store, o.uid, o.dueAt); store.state.sealedProducts.push(createSealed(PRODUCT_BY_ID.get('151-etb')!, 50));
   const state = store.state, errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
   await page.addInitScript(({ state, key }) => { if (!localStorage.getItem(key)) localStorage.setItem(key, JSON.stringify(state)); }, { state, key: SAVE_KEY });
   await page.goto('/'); await computer(page); await page.waitForTimeout(900);
@@ -64,7 +66,12 @@ test('physical computer: five connected apps, purchases, locks, grading, search,
   await expect.poll(async () => (await saved(page)).computer!.orders[0].status, { timeout: 45000 }).toBe('DELIVERED');
   await expect.poll(async () => (await saved(page)).computer!.listings[0].status, { timeout: 80000 }).toBe('SOLD');
   await page.getByRole('button', { name: 'Minimize RIPIFY Profile', exact: true }).click(); await page.getByRole('button', { name: 'Restore Grading', exact: true }).click();
-  await expect(page.locator('[data-action="receive"]')).toBeEnabled({ timeout: 70000 }); await page.locator('[data-action="receive"]').click();
+  await expect.poll(async () => (await saved(page)).shippingPackages!.filter(p => p.stage !== 'claimed').length, { timeout: 70000 }).toBe(2);
+  await expect(page.locator('[data-action="receive"]')).toHaveCount(0);
+  await page.keyboard.press('Escape'); await page.reload(); await approachPackages(page);
+  await takePackage(page); await takePackage(page);
+  await page.reload(); await computer(page); await page.locator('[data-app="grading"]').click();
+  await page.locator('[data-action="route"][data-value="returns"]').click(); await page.locator(`[data-action="item"][data-value="${raw.uid}"]`).click();
   await expect(page.locator('.physical-card-canvas')).toHaveAttribute('data-kind', 'slab'); await expect(page.locator('.physical-card-canvas')).toHaveAttribute('data-front-image', 'ready'); await page.screenshot({ path: 'artifacts/computer-returned-slab.png' });
   const finished = await saved(page); expect(finished.cards.find(c => c.uid === raw.uid)!.status).toBe('graded'); expect(finished.cards.some(c => c.uid === sale.uid)).toBe(false); expect(finished.packs.filter(p => p.uid === orderPack)).toHaveLength(1);
   await page.keyboard.press('Escape'); await expect(page.locator('.pc-monitor')).toHaveCount(0); await page.reload(); await computer(page);

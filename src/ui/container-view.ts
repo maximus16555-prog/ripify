@@ -7,6 +7,11 @@ let parkedRenderer: THREE.WebGLRenderer | undefined;
 export function disposeContainerResources() {
   parkedRenderer?.dispose(); parkedRenderer?.forceContextLoss(); parkedRenderer=undefined;
 }
+export function acquireContainerRenderer() {
+  if (parkedRenderer?.getContext().isContextLost()) disposeContainerResources();
+  const renderer = parkedRenderer ?? new THREE.WebGLRenderer({ antialias: true, alpha: true }); parkedRenderer = undefined; return renderer;
+}
+export function releaseContainerRenderer(renderer: THREE.WebGLRenderer) { disposeContainerResources(); renderer.renderLists.dispose(); parkedRenderer = renderer; }
 
 /** One reusable context, no idle animation loop, no retained product textures.
  * Dragging raycasts the real active component; camera orbit uses right-drag.
@@ -38,8 +43,7 @@ export class ContainerView {
     private changed:(phase:ContainerPhase)=>void,
     private commit:(phase:ContainerPhase)=>boolean,
     private sound:()=>void,private warning:(text:string)=>void) {
-    if(parkedRenderer?.getContext().isContextLost())disposeContainerResources();
-    this.renderer=parkedRenderer??new THREE.WebGLRenderer({antialias:true,alpha:true}); parkedRenderer=undefined;
+    this.renderer=acquireContainerRenderer();
     this.renderer.outputColorSpace=THREE.SRGBColorSpace;
     this.renderer.toneMapping=THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure=1.2;
     this.renderer.setPixelRatio(Math.min(devicePixelRatio,settings.graphics==='Low'?1:1.5)*settings.renderScale);
@@ -174,6 +178,6 @@ export class ContainerView {
     if(this.disposed)return;this.disposed=true;this.abort.abort();this.observer.disconnect();cancelAnimationFrame(this.frame);this.release();
     this.model.dispose();this.table.geometry.dispose();(this.table.material as THREE.Material).dispose();this.mat.geometry.dispose();(this.mat.material as THREE.Material).dispose();this.shadowLight.shadow.map?.dispose();this.shadowLight.shadow.mapPass?.dispose();
     this.renderer.renderLists.dispose();this.canvas.remove();
-    disposeContainerResources();parkedRenderer=this.renderer;
+    releaseContainerRenderer(this.renderer);
   }
 }

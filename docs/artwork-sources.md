@@ -37,4 +37,6 @@ The normal booster packaging scan is cached unchanged from [TCGplayer product 67
 
 ## Shared card back
 
+Exact pinned TCGdex card scans also have an unchanged, SHA-256-verified same-origin cache in [artwork.json](../src/data/verified/artwork.json). This avoids duplicate CORS headers that prevented WebGL slab fronts from loading. Refresh explicitly with [cache-renderable-cards.py](../scripts/cache-renderable-cards.py); existing checksums require review if the upstream image changes. Runtime loading remains limited to visible cards and the generated current pack, rather than preloading all cached files.
+
 The physical renderer uses the [official English Pokemon TCG card-back asset](https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg), cached unchanged at [pokemon-card-back.jpg](../public/artwork/pokemon-card-back.jpg). Its separate [source manifest](../src/data/verified/card-back.json) records dimensions and SHA-256; refreshing the product/Energy cache does not overwrite it. Copyright remains with the respective owners; no redistribution license is claimed. Metal product cards retain an explicit unavailable image state rather than substituting a paper card back.

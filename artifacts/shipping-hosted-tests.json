@@ -1,0 +1,354 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\Maxim\\Downloads\\Ripify\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.production.config.ts",
+      "tests/production/shipping.spec.ts",
+      "tests/production/shipping-targeting.spec.ts",
+      "tests/production/computer.spec.ts",
+      "tests/production/playable.spec.ts",
+      "--output",
+      ".freebuff/shipping-hosted",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\Maxim\\Downloads\\Ripify\\playwright.production.config.ts",
+    "rootDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/Maxim/Downloads/Ripify/.freebuff/shipping-hosted",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "computer.spec.ts",
+      "file": "computer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "physical computer: five connected apps, purchases, locks, grading, search, profile and reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 87278,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T13:43:21.971Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computer-report",
+                      "contentType": "application/json",
+                      "body": "ewogICJ1cmwiOiAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwLyIsCiAgImVycm9ycyI6IFtdLAogICJkZWxpdmVyZWRQYWNrVWlkIjogIjJkNjg1ZjIwLWNlNzktNGYyZi04MDc1LWMxMmU3MGQyMGU1MiIsCiAgImNhcmRVaWRzIjogWwogICAgImUwYzcxN2VjLTQzYTAtNDk5ZS05OWVmLWRmNjVlMjliNzllMSIsCiAgICAiODRlODJmMmYtNWU4OS00YjRmLThjZGEtY2IwMDkyZmRmOGRhIgogIF0sCiAgImFwcHMiOiBbCiAgICAic3RvcmUiLAogICAgImViYXkiLAogICAgImdyYWRpbmciLAogICAgImNvbGxlY3RyIiwKICAgICJwcm9maWxlIgogIF0sCiAgInByb2ZpbGUiOiB7CiAgICAibmFtZSI6ICJNYXgiLAogICAgImF2YXRhciI6ICJtaW50IgogIH0KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "63b54f864c251470a409-4920920754da367da552",
+          "file": "computer.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "computer windows release hidden content and reuse the bounded physical preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11998,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T13:44:49.317Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computer-performance",
+                      "contentType": "application/json",
+                      "body": "eyJjeWNsZXMiOjgsImNvbnRleHRzQ3JlYXRlZCI6MiwiaWRsZVdvcmxkRHJhd3NQZXJTZWNvbmQiOjAsImhpZGRlbkltYWdlcyI6MCwiaGlkZGVuUHJldmlld3MiOjB9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "63b54f864c251470a409-5a7498b29577b0d914c9",
+          "file": "computer.spec.ts",
+          "line": 82,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "playable.spec.ts",
+      "file": "playable.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "production gameplay: room, shop, purchase, manual rip/swipes, collection and persistent refresh",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21036,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T13:45:01.337Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "production-report",
+                      "contentType": "application/json",
+                      "body": "ewogICJ1cmwiOiAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwLyIsCiAgImVycm9ycyI6IFtdLAogICJmYWlsZWQiOiBbXSwKICAidW5pcXVlUmVxdWVzdHMiOiBbCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwLyIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2Fzc2V0cy9pbmRleC1DTXUyTjFUTy5qcyIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2Fzc2V0cy9pbmRleC1xSkJ6UFI2Mi5jc3MiLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hc3NldHMvbWFucm9wZS1sYXRpbi13Z2h0LW5vcm1hbC1ESEljQUpSZy53b2ZmMiIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2Fzc2V0cy9kbS1zYW5zLWxhdGluLXdnaHQtbm9ybWFsLVh6MUlaWkEwLndvZmYyIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXNzZXRzL21haW4tRDRlTXFESUMuanMiLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hc3NldHMvZW5naW5lLUQtWXVrcl9LLmpzIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXNzZXRzL21haW4tRHlWOU9keVouY3NzIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXJ0d29yay8xNTEtYm9vc3Rlci5qcGciLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hcnR3b3JrL2FzY2VuZGVkLWhlcm9lcy1ib29zdGVyLmpwZyIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2FydHdvcmsvMTUxLWV0Yi5qcGciLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hcnR3b3JrLzE1MS11cGMuanBnIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXJ0d29yay9zdmUtNC5qcGciLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hcnR3b3JrL2NhcmRzL3N2MDMuNS0wODMud2VicCIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2FydHdvcmsvY2FyZHMvc3YwMy41LTAxOS53ZWJwIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXJ0d29yay9jYXJkcy9zdjAzLjUtMDY5LndlYnAiLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hcnR3b3JrL2NhcmRzL3N2MDMuNS0xMjYud2VicCIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2FydHdvcmsvY2FyZHMvc3YwMy41LTA0Mi53ZWJwIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXJ0d29yay9jYXJkcy9zdjAzLjUtMTU4LndlYnAiLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hcnR3b3JrL2NhcmRzL3N2MDMuNS0wNzUud2VicCIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2FydHdvcmsvY2FyZHMvc3YwMy41LTE1OS53ZWJwIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXJ0d29yay9jYXJkcy9zdjAzLjUtMDMzLndlYnAiLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hcnR3b3JrL2NhcmRzL3N2MDMuNS0xNDYud2VicCIKICBdLAogICJhdWRpbyI6IHsKICAgICJzdGFydHMiOiAxNiwKICAgICJzdGF0ZSI6ICJydW5uaW5nIgogIH0sCiAgInBhY2tVaWQiOiAiYmYxZjA0OGYtNDFjOC00OGM1LTk1NmYtODI4YzI1ZTU4ZWQ4IiwKICAiY2FyZENvdW50IjogMTEKfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7106448f066158a1526c-52085ac7b9a3737e226f",
+          "file": "playable.spec.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "shipping-targeting.spec.ts",
+      "file": "shipping-targeting.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "point at exact top, middle and bottom boxes; pile settles, render context is reused and reload preserves contents",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25259,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T13:45:22.392Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "shipping-targeting",
+                      "contentType": "application/json",
+                      "body": "eyJvcGVuZWQiOlt7InVpZCI6ImRlbGl2ZXJ5LThkYmZkNDk4LWQxMjAtNGM2YS1iNjgzLWU2YTg1YWI1NDAyOCIsImxldmVsIjozfSx7InVpZCI6ImRlbGl2ZXJ5LWZhNjg2MWMyLWU5NTktNDczMS1hNDEzLTk3YWJlMjJlZDNjZiIsImxldmVsIjoxfSx7InVpZCI6ImRlbGl2ZXJ5LWYyMzc4NjE3LTVmODQtNGE4Ni1hMWY5LTk2MzMyMzAwYTYwZCIsImxldmVsIjowfV0sImNvbnRleHRzQ3JlYXRlZCI6MiwiaWRsZURyYXdzIjowLCJwZXJzaXN0ZW50UmVtYWluaW5nIjoxfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf1d5ec9a6b414caa210-437f94467d9619544814",
+          "file": "shipping-targeting.spec.ts",
+          "line": 17,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "shipping.spec.ts",
+      "file": "shipping.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "one order: real cardboard, cancelled drag, physical flaps, exact sealed items, interrupted opening and reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12166,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T13:45:47.667Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "shipping-one-order",
+                      "contentType": "application/json",
+                      "body": "eyJ1aWQiOiJkZWxpdmVyeS1kYjFjMzYzOS1hNmJlLTQzMzYtYmE1YS0yYzVkZGI4NTliMDkiLCJleGFjdEl0ZW1zIjpbImVhNDk2NmVmLWMyMjctNGEzZC05NWI0LTYzNDE0YWFhOTU3MCIsImZiOGMyMzI4LTVhYzYtNGUzMS05NDk3LTk5MzZhOGFlMzBmYyIsImIyNDE2Nzc1LTlhZTMtNDRjOC04ZTI1LTk0ZGNiYTI1NjdjZiIsIjZjNWU2Y2U5LTI2MDMtNDlmNi1iZDUzLWUxMTZhNTc1NGZmNyJdLCJyZXRhaW5lZFNlYWxlZCI6dHJ1ZSwicmVsb2FkIjp0cnVlLCJlcnJvcnMiOltdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1b75307d9f1aa3513b09-6aedbe5a2dc7f7995a74",
+          "file": "shipping.spec.ts",
+          "line": 11,
+          "column": 1
+        },
+        {
+          "title": "mixed sizes and grading returns: multiple neat stacks, real slabs, exact fulfillment, no duplicates after refresh",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 47448,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T13:45:59.839Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "shipping-mixed",
+                      "contentType": "application/json",
+                      "body": "eyJwYWNrYWdlcyI6WyJkZWxpdmVyeS05YjA5YzQ5Zi1iYTNhLTQ2YzctYjg4MC0wMTEzMzRlYzI0NGUiLCJkZWxpdmVyeS02YjNlZTI4NS1jNDM0LTQ2MmMtYThlZi1jZWNjZjMzOWVlNzMiLCJkZWxpdmVyeS00NThlMzk0Zi04MGU1LTRjNTEtYTk5Mi0zMzc0ZTA4NjUzNWQiLCJkZWxpdmVyeS03OTk1Zjk4Zi04N2QwLTQ4NWUtYjRjNy1lOThiYjg2OWQwMmQiLCJkZWxpdmVyeS0wYjUwMDQzZS04NzkyLTQ3OWUtODE5Ny01MDQ1NjQ4MGU3OTIiLCJkZWxpdmVyeS0yYWY3ZGMyNi1kNGUxLTQxNzktYmI4Yy1jZTliNGEwZmFiY2YiLCJkZWxpdmVyeS1kZGUzMWMyYi03M2E4LTQ5MjgtYjVlOC05MTQwZWQ4NjhlOGQiLCJkZWxpdmVyeS04MDkwMjU2YS03MGRmLTRkNDYtYjE0Zi05MDI5MDMwZjJmMTgiLCJkZWxpdmVyeS0xYzJkOTlhOC1iY2FhLTQ3NGEtYjZlMC00YjRkYmEwYzlhMTciLCJkZWxpdmVyeS03Mzg1MDYyNS1iMWU5LTRhYWQtOTA0NC1iYWRkYWIzZDk5YWIiLCJkZWxpdmVyeS1jNTAwMGY4ZS1mYmZmLTRjMzEtOTNhNC1jZDllNjlmYmE3NzkiLCJkZWxpdmVyeS1jZTkxYjg2Yi05MTEzLTQ2ZTUtYmZlZi01OTkzOGFiOGVlMDQiXSwibGV2ZWxzT3BlbmVkIjpbMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDBdLCJleGFjdENhcmRzIjpbeyJ1aWQiOiI0OGNmM2M2NS1iNTg5LTQ4YzgtYTUzMC00ZjRjYzgwNWE3ODQiLCJjYXJkSWQiOiJtZTAyLjUtMjc2IiwiYmFzZVJhd1ZhbHVlIjo0NTgyLCJjb25kaXRpb24iOnsiY2VudGVyaW5nIjo4NiwiY29ybmVycyI6OTEsImVkZ2VzIjo4OSwic3VyZmFjZSI6OTgsInByaW50Ijo5Nn0sImFjcXVpcmVkQXQiOjE3OTE0NjcxNTk4NzgsInNvdXJjZSI6InJlYWwtcHVsbCIsImZhdm9yaXRlIjpmYWxzZSwic3RhdHVzIjoiZ3JhZGVkIiwib3duZXIiOiJsb2NhbC1wbGF5ZXIiLCJmaW5pc2giOiJob2xvIiwib3JpZ2luIjoicGFjayIsImdyYWRpbmdIaXN0b3J5IjpbeyJncmFkZXIiOiJCR1MiLCJncmFkZSI6OCwiYXQiOjE3OTE0NjczMzk4NzksIm9yZGVyVWlkIjoiMWMyZDk5YTgtYmNhYS00NzRhLWI2ZTAtNGI0ZGJhMGM5YTE3In1dLCJtaXNwcmludCI6eyJ2ZXJzaW9uIjoxLCJtb2RpZmllciI6MzAsIm9yaWdpbiI6ImluZGl2aWR1YWwiLCJwYWNrVWlkIjoicmVhbC1wdWxsIiwiZGVmZWN0Ijp7InR5cGUiOiJvZmYtY2VudGVyIiwic2lkZSI6ImJvdGgiLCJzZXZlcml0eSI6MC40OTc0NTAzOTc1MTI4NzU1LCJvZmZzZXRYIjowLjA4OTc0NTAzOTc1MTI4NzU2LCJvZmZzZXRZIjotMC4wNjQ3OTYwMzE4MDEwMzAwNSwiY3V0VGlsdCI6LTAuMDI3NDEwNzYzOTEyOTUwNjQzLCJyZWdpc3RyYXRpb25YIjotMC4wMDY0NzcwNTM1Nzc2MTU4OCwicmVnaXN0cmF0aW9uWSI6LTAuMDAzOTg0NzAyMzg1MDc3MjUzLCJpbmtCYW5kWSI6MC43Njk3ODg1ODUzOTM2ODk2LCJpbmtCYW5kV2lkdGgiOjAuMDMxODk4MDE1OTAwNTE1MDI1fX0sImdyYWRlciI6IkJHUyIsImdyYWRlIjo4LCJzdWJncmFkZXMiOls2LjUsOS41LDksMTBdfSx7InVpZCI6IjIwZWU5ODlkLTgwMjEtNDFiOC04M2JlLWE2YmM3YzM4OWZmOSIsImNhcmRJZCI6InN2MDMuNS0wMjYiLCJiYXNlUmF3VmFsdWUiOjEuNTgsImNvbmRpdGlvbiI6eyJjZW50ZXJpbmciOjg4LCJjb3JuZXJzIjo5MSwiZWRnZXMiOjU4LCJzdXJmYWNlIjo5NywicHJpbnQiOjk3fSwiYWNxdWlyZWRBdCI6MTc5MTQ2NzE1OTg3OCwic291cmNlIjoicmVhbC1wdWxsIiwiZmF2b3JpdGUiOmZhbHNlLCJzdGF0dXMiOiJncmFkZWQiLCJvd25lciI6ImxvY2FsLXBsYXllciIsImZpbmlzaCI6ImhvbG8iLCJvcmlnaW4iOiJwYWNrIiwiZ3JhZGluZ0hpc3RvcnkiOlt7ImdyYWRlciI6IlBTQSIsImdyYWRlIjo4LCJhdCI6MTc5MTQ2NzMzOTg3OSwib3JkZXJVaWQiOiI3Mzg1MDYyNS1iMWU5LTRhYWQtOTA0NC1iYWRkYWIzZDk5YWIifV0sImdyYWRlciI6IlBTQSIsImdyYWRlIjo4fV0sIml0ZW1zIjpbImVkMTU1ZmYwLTdkMzUtNDI0Yy05NDkwLTdjZTQyYmQ5N2IyYSIsIjU3NmQ5YTA0LWE0NTMtNGQ4Ni1iZGQ2LTc1ZDU4NDY2MjNkMyIsIjQyZjI0MmIxLTI5ZjItNDkzMC1hMjc1LWE0NmVlOTQwYzdiNCIsImJhNDM1ODg2LTBhYmEtNGM4ZS05NmIxLWZhNjNmMDRkYWRjYyIsIjU1ODhmYmIzLWRkNTctNGFmNy05M2NlLTlhOGRmMTBmOWEzOSIsIjM5YzBjYTNiLTAyMTgtNGRlNC1hZGMzLWZjNWE2M2EwZWEwYSIsIjA3YTdjYjQ4LWYzMjYtNGU4NS04OTE0LWM2OGU4N2NjOGI1YiIsIjFlM2RjMzMyLWIwNGItNDhjZC04YTYzLWJlNjlhODEyYzRjYyIsImIyMDVkNzU0LTc3ODQtNGM2OS04ZjQzLTFjNTI2MGY3NjYyNyIsIjQ1YzFlZDFkLTVmYjQtNDQ0Ny1iYTNhLWI1N2IzYjQ2YTNhMiJdLCJlcnJvcnMiOltdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1b75307d9f1aa3513b09-6f42fa43dc1390bc6632",
+          "file": "shipping.spec.ts",
+          "line": 37,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-08T13:43:21.599Z",
+    "duration": 205794.192,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

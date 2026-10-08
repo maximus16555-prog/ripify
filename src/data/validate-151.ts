@@ -1,4 +1,5 @@
 import { CARDS } from './cards';
+import artwork from './verified/artwork.json' with { type: 'json' };
 import { packPullPaths } from '../core/pack-pools';
 import type { CardDefinition } from '../core/types';
 
@@ -28,7 +29,9 @@ export function validate151(definitions: readonly CardDefinition[] = CARDS) {
     if (!card.image || !card.imageSmall) missingImages.push(card.id);
     const number = card.id.split('-').at(-1);
     const base = `https://assets.tcgdex.net/en/sv/sv03.5/${number}`;
-    if (card.number !== `${number}/165` || card.set !== 'Scarlet & Violet—151' || card.sourceUrl !== `https://api.tcgdex.net/v2/en/cards/${card.id}` || ![`${base}/high.webp`, `${base}/high.png`, `${base}/low.webp`].includes(card.image ?? '') || card.imageSmall !== `${base}/low.webp`) invalidMappings.push(card.id);
+    const asset = artwork.assets.find(a => a.kind === 'card' && a.id === card.id);
+    const exactImage = asset ? [`${base}/high.webp`, `${base}/high.png`].includes(asset.sourceUrl) && card.image === asset.path && card.imageSmall === asset.path : [`${base}/high.webp`, `${base}/high.png`, `${base}/low.webp`].includes(card.image ?? '') && card.imageSmall === `${base}/low.webp`;
+    if (card.number !== `${number}/165` || card.set !== 'Scarlet & Violet—151' || card.sourceUrl !== `https://api.tcgdex.net/v2/en/cards/${card.id}` || !exactImage) invalidMappings.push(card.id);
   }
   const unobtainable = cards.filter(c => !obtainable.has(c.id)).map(c => c.id);
   const exhaustedPools = paths.filter(p => p.chance > 0 && p.cards.length < p.count).map(p => p.slot);

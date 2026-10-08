@@ -1,0 +1,24 @@
+{
+  "unitTestsPassed": 167,
+  "localProductionFlowsPassed": 6,
+  "publicUrl": "https://ripify.freebuff.app",
+  "deployment": "kn7cb33k",
+  "pileDrawCalls": 5,
+  "shippingTestContextsCreated": 2,
+  "shippingIdleDraws": 0,
+  "packagesInMixedGameplayTest": 12,
+  "originalCardImagesCachedUnchanged": 505,
+  "runtimePreload": "generated pack / visible cards only",
+  "packGenerationRareEventsPricingAndPhysicalCardRendererUnchanged": true,
+  "hostedProductionFlowsPassed": 6,
+  "hostedUnexpectedFailures": 0,
+  "visuallyInspected": [
+    "mixed stacks",
+    "sealed package",
+    "open flaps",
+    "purchased products from multiple angles",
+    "PSA return",
+    "BGS misprint return",
+    "remaining grounded stack"
+  ]
+}

@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { CARDS, CARD_BY_ID } from '../src/data/cards';
 import snapshot from '../src/data/verified/151.json' with { type: 'json' };
+import artwork from '../src/data/verified/artwork.json' with { type: 'json' };
 import { validate151 } from '../src/data/validate-151';
 import { selectUniqueCard } from '../src/core/pack-pools';
 import { generatePack } from '../src/core/packs';
@@ -19,8 +20,10 @@ describe('complete verified English 151', () => {
       expect(definition.name).toBe(source.name);
       expect(definition.number).toBe(`${source.localId}/165`);
       expect(definition.rarity).toBe(source.rarity);
-      expect(definition.image).toBe(source.image);
-      expect(definition.imageSmall).toBe(source.imageSmall);
+      const asset = artwork.assets.find(a => a.kind === 'card' && a.id === source.id);
+      if (asset) expect(asset.sourceUrl).toBe(source.image);
+      expect(definition.image).toBe(asset?.path ?? source.image);
+      expect(definition.imageSmall).toBe(asset?.path ?? source.imageSmall);
       for (const [runtime, field] of Object.entries({ hp: 'hp', types: 'types', category: 'category', attacks: 'attacks', abilities: 'abilities', weaknesses: 'weaknesses', resistances: 'resistances', retreat: 'retreat', artist: 'illustrator', stage: 'stage', suffix: 'suffix', evolvesFrom: 'evolveFrom', effect: 'effect', description: 'description', regulationMark: 'regulationMark', variants: 'variants' })) {
         expect(definition[runtime as keyof typeof definition], `${source.id}: ${field}`).toEqual(printed[field]);
       }

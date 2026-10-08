@@ -5,6 +5,7 @@ import { ownedValue, rawValue } from './economy';
 import { newComputerState, activeListing, type ItemKind, type Listing } from './computer-state';
 import type { GameStore } from './store';
 import type { Save } from './types';
+import { arrivePackages, deliveryDue } from './delivery';
 export const COMMERCE = { deliveryMinutes: 60, listingMinutes: 120, stock: { '151-booster': 35, '151-etb': 12, '151-upc': 6, 'ascended-heroes-booster': 24 } as Record<string, number>, demandPerMinute: { '151-booster': .13, '151-etb': .055, '151-upc': .033, 'ascended-heroes-booster': .2 } as Record<string, number> };
 export function collectionItems(s: Save) {
   return [...s.cards.map(c => { const d = CARD_BY_ID.get(c.cardId)!; return { uid: c.uid, kind: 'card' as const, name: d.name, set: d.set, number: d.number, rarity: d.rarity, cardId: d.id, image: d.imageSmall ?? d.image, value: ownedValue(c, s.marketSeed), at: c.acquiredAt, grade: c.grade ?? 0, status: c.status, misprint: !!c.misprint }; }), ...[...s.packs, ...s.sealedProducts].map(p => { const d = PRODUCT_BY_ID.get(p.productId)!; return { uid: p.uid, kind: ('generationVersion' in p ? 'pack' : 'sealed') as ItemKind, name: d.name, set: d.subtitle, number: '', rarity: d.type, cardId: '', image: d.artwork, value: d.physicalStorePrice, at: p.purchasedAt, grade: 0, status: 'sealed', misprint: false }; })];
@@ -34,7 +35,7 @@ export class ComputerServices {
     const s = this.store.state, c = s.computer ??= newComputerState();
     c.minute += Math.min(dt, 1) * c.speed / 60; this.seconds += dt; this.savedSeconds += dt;
     if (this.seconds < 1) return; this.seconds %= 1;
-    if (c.orders.some(o => o.status === 'SHIPPING' && o.due <= c.minute) || c.listings.some(l => ['LISTED', 'WATCHING', 'OFFER'].includes(l.status) && (c.minute >= l.due || (l.status === 'LISTED' && c.minute >= l.started + 15) || (l.status === 'WATCHING' && l.outcome === 'offer' && c.minute >= l.started + 60)))) this.advance();
+    if (deliveryDue(s) || c.listings.some(l => ['LISTED', 'WATCHING', 'OFFER'].includes(l.status) && (c.minute >= l.due || (l.status === 'LISTED' && c.minute >= l.started + 15) || (l.status === 'WATCHING' && l.outcome === 'offer' && c.minute >= l.started + 60)))) this.advance();
     if (this.savedSeconds >= 15) { samplePortfolio(this.store.state); this.store.persist(); this.savedSeconds = 0; }
   }
   checkout(cart: Record<string, number>): string | null {
@@ -81,7 +82,7 @@ export class ComputerServices {
   }
   advance() {
     const s = structuredClone(this.store.state), c = s.computer!;
-    for (const o of c.orders) if (o.status === 'SHIPPING' && o.due <= c.minute) { for (const item of o.items) { if ('generationVersion' in item) s.packs.push(structuredClone(item)); else s.sealedProducts.push(structuredClone(item)); } o.status = 'DELIVERED'; }
+    arrivePackages(s);
     for (const l of c.listings) if (['LISTED', 'WATCHING', 'OFFER'].includes(l.status)) {
       if (c.minute >= l.due) {
         if (l.outcome === 'sale') this.settle(s, l, l.asking);

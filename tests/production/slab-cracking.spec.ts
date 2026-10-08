@@ -1,3 +1,4 @@
+import { receiveReturn } from '../fixtures/receive-return';
 import { test, expect, type Page } from '@playwright/test';
 import { newSave, SAVE_KEY } from '../../src/core/save';
 import { GameStore } from '../../src/core/store';
@@ -18,7 +19,7 @@ function initial() {
   const store = new GameStore({ read: () => JSON.stringify(newSave()), write: () => {}, backup: () => {} });
   store.state.cards = [createCard('svp-051', 'fixture-upc', seeded(156), 'holo', 'promo')];
   store.state.currency = 1000; store.submit(store.state.cards[0].uid, 'PSA', 'Standard');
-  const order = store.state.orders[0]; store.receive(order.uid, order.dueAt); store.display(store.state.cards[0].uid, 0);
+  const order = store.state.orders[0]; receiveReturn(store, order.uid, order.dueAt); store.display(store.state.cards[0].uid, 0);
   return store.state;
 }
 async function fixSeed(page: Page, seed: number) {

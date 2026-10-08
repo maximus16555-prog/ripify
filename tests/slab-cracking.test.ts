@@ -1,3 +1,4 @@
+import { receiveReturn } from './fixtures/receive-return';
 import { describe, expect, it } from 'vitest';
 import * as THREE from 'three';
 import { GameStore } from '../src/core/store';
@@ -20,7 +21,7 @@ function fixture(misprint = false) {
   const store = new GameStore(storage), card = slabCopy();
   if (misprint) card.misprint = { version: 1, modifier: 30, origin: 'individual', packUid: card.source, defect: makeDefect(seeded(15)) };
   store.state.cards = [card]; store.state.currency = 1000; store.persist();
-  return { store, card, storage, saved: () => saved, writes: () => writes, fail: () => { failing = true; } };
+  return { store, get card() { return store.state.cards.find(c => c.uid === card.uid) ?? card; }, storage, saved: () => saved, writes: () => writes, fail: () => { failing = true; } };
 }
 const textures = { face: () => new THREE.Texture(), label: () => new THREE.Texture() };
 
@@ -43,7 +44,7 @@ describe('transactional slab cracking', () => {
     for (let i = 0; i < 4; i++) expect(new GameStore(f.storage).state.cards[0].condition).toEqual(first.conditionAfter);
     f.store.finishCrack(f.card.uid);
     for (let i = 0; i < 12; i++) {
-      const before = { ...f.card.condition }; f.store.submit(f.card.uid, 'BGS', 'Standard'); const order = f.store.state.orders[0]; f.store.receive(order.uid, order.dueAt);
+      const before = { ...f.card.condition }; f.store.submit(f.card.uid, 'BGS', 'Standard'); const order = f.store.state.orders[0]; receiveReturn(f.store, order.uid, order.dueAt);
       const event = f.store.crackSlab(f.card.uid, 0)!; expect(event.conditionBefore).toEqual(before); f.store.finishCrack(f.card.uid);
     }
     expect(f.card.condition).toEqual({ centering: 91, corners: 98, edges: 98, surface: 98, print: 95 });
@@ -57,7 +58,7 @@ describe('transactional slab cracking', () => {
     const f = fixture(); f.store.crackSlab(f.card.uid, 1000); f.store.finishCrack(f.card.uid);
     const damage = structuredClone(f.card.crackHistory![0].damage);
     for (let i = 0; i < 16; i++) {
-      f.store.submit(f.card.uid, 'PSA', 'Standard'); const order = f.store.state.orders[0]; f.store.receive(order.uid, order.dueAt);
+      f.store.submit(f.card.uid, 'PSA', 'Standard'); const order = f.store.state.orders[0]; receiveReturn(f.store, order.uid, order.dueAt);
       f.store.crackSlab(f.card.uid, 0); f.store.finishCrack(f.card.uid);
     }
     expect(f.card.condition.corners).toBeLessThan(98); expect(f.card.condition.edges).toBeLessThan(98);
@@ -115,7 +116,7 @@ describe('transactional slab cracking', () => {
     f.store.crackSlab(f.card.uid, seed); expect(f.card.misprint).toEqual(misprint);
     expect(ownedRawMarketValue(f.card, 0)).toBe(4582 * 30 * (seed === 0 ? 1 : .5));
     f.store.finishCrack(f.card.uid); expect(f.store.submit(f.card.uid, 'BGS', 'Standard')).toBe(true);
-    const order = f.store.state.orders[0]; f.store.receive(order.uid, order.dueAt);
+    const order = f.store.state.orders[0]; receiveReturn(f.store, order.uid, order.dueAt);
     expect(f.card.misprint).toEqual(misprint); expect(f.card.gradingHistory).toHaveLength(2);
     expect(f.card.crackHistory).toHaveLength(1);
     expect(ownedValue(f.card, 0)).toBeCloseTo(Math.round(ownedRawMarketValue(f.card, 0) * gradeMultiplier(f.card.grade!) * GRADERS.BGS.premium * 100) / 100);
@@ -124,7 +125,7 @@ describe('transactional slab cracking', () => {
     const f = fixture(); expect(gradedPopulation(f.store.state, f.card.cardId, 'PSA', 9)).toEqual({ current: 1, allTime: 1 });
     f.store.crackSlab(f.card.uid, 0); expect(gradedPopulation(f.store.state, f.card.cardId, 'PSA', 9)).toEqual({ current: 0, allTime: 1 });
     f.store.finishCrack(f.card.uid); f.store.submit(f.card.uid, 'PSA', 'Standard');
-    const order = f.store.state.orders[0]; order.result = 9; f.store.receive(order.uid, order.dueAt);
+    const order = f.store.state.orders[0]; order.result = 9; receiveReturn(f.store, order.uid, order.dueAt);
     expect(gradedPopulation(f.store.state, f.card.cardId, 'PSA', 9)).toEqual({ current: 1, allTime: 1 });
     f.store.sell(f.card.uid); const reloaded = new GameStore(f.storage);
     expect(gradedPopulation(reloaded.state, f.card.cardId, 'PSA', 9)).toEqual({ current: 0, allTime: 1 });
@@ -140,7 +141,7 @@ describe('transactional slab cracking', () => {
   });
   it('independent failed attempts apply once each, while inspection/reload never reapplies damage', () => {
     const f = fixture(); f.store.crackSlab(f.card.uid, 1000); f.store.finishCrack(f.card.uid);
-    f.store.submit(f.card.uid, 'PSA', 'Standard'); f.store.receive(f.store.state.orders[0].uid, f.store.state.orders[0].dueAt);
+    f.store.submit(f.card.uid, 'PSA', 'Standard'); receiveReturn(f.store, f.store.state.orders[0].uid, f.store.state.orders[0].dueAt);
     f.store.crackSlab(f.card.uid, 1000); expect(crackDamageFactor(f.card)).toBe(.25);
     expect(new GameStore(f.storage).state.cards[0]).toEqual(f.card);
   });

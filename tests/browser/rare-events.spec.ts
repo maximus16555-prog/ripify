@@ -3,6 +3,7 @@ import { newSave } from '../../src/core/save';
 import { generatePack } from '../../src/core/packs';
 import { CARD_BY_ID } from '../../src/data/cards';
 import { ownedRawMarketValue } from '../../src/core/economy';
+import { approachPackages, takePackage } from '../fixtures/shipping-gameplay';
 
 const saved = (page: Page) => page.evaluate(() => JSON.parse(localStorage.getItem('ripify.save.v1')!));
 async function exactImages(page: Page) {
@@ -13,12 +14,14 @@ async function exactImages(page: Page) {
   });
 }
 async function desk(page: Page) {
+  await expect.poll(() => page.evaluate(() => !!(window as any).__ripifyDebug)).toBe(true);
   await page.keyboard.down('w');
   try { await expect(page.locator('.interaction-prompt')).toContainText('Open Pack', { timeout: 15000 }); }
   finally { await page.keyboard.up('w'); }
   await page.keyboard.press('e');
 }
 async function binder(page: Page) {
+  await expect.poll(() => page.evaluate(() => !!(window as any).__ripifyDebug)).toBe(true);
   await page.keyboard.down('w');
   try { await expect.poll(() => page.evaluate(() => (window as any).__ripifyDebug.position[2]), { timeout: 15000 }).toBeLessThan(-1.85); }
   finally { await page.keyboard.up('w'); }
@@ -77,8 +80,8 @@ test('the same miscut survives raw front/back inspection, grading, slab rotation
   await page.locator('.inspection-card').screenshot({ path: 'artifacts/misprint-raw-back.png' });
   expect((await saved(page)).cards[0]).toEqual(c);
   await page.locator('[data-grade]').click(); await page.locator('[data-grader="BGS"]').click(); await page.locator('[data-service="Express"]').click(); await page.locator('[data-submit]').click();
-  const order = (await saved(page)).orders[0]; await page.clock.setFixedTime(order.dueAt + 1); await page.locator('[data-receive]').click();
-  await page.keyboard.press('Escape'); await page.keyboard.press('e'); await page.locator(`[data-inspect="${c.uid}"]`).click();
+  const order = (await saved(page)).orders[0]; await page.clock.setFixedTime(order.dueAt + 1); await page.keyboard.press('Escape'); await page.reload(); await approachPackages(page); await takePackage(page);
+  await page.reload(); await binder(page); await page.locator(`[data-inspect="${c.uid}"]`).click();
   await expect(canvas).toHaveAttribute('data-kind', 'slab'); await expect(canvas).toHaveAttribute('data-front-image', 'ready');
   await page.locator('.inspection-card').screenshot({ path: 'artifacts/misprint-slab-front.png' });
   await page.locator('[data-flip]').click(); await page.locator('.inspection-card').screenshot({ path: 'artifacts/misprint-slab-back.png' });

@@ -8,6 +8,7 @@ import { packPullPaths } from '../src/core/pack-pools';
 import { RARE_EVENT_ODDS, rollPackEvents, SPECIAL_LINES } from '../src/core/rare-events';
 import { PRODUCT_BY_ID } from '../src/data/products';
 import { parseSave } from '../src/core/save';
+import artwork from '../src/data/verified/artwork.json' with { type: 'json' };
 
 describe('shop and per-instance development integration', () => {
   it('pins the complete Ascended Heroes pool, exact scans and every pullable rarity', () => {
@@ -18,7 +19,9 @@ describe('shop and per-instance development integration', () => {
       const number = String(i + 1).padStart(3, '0');
       expect(c.id).toBe(`me02.5-${number}`);
       expect(c.number).toBe(`${number}/217`);
-      expect(c.image).toBe(`https://assets.tcgdex.net/en/me/me02.5/${number}/high.webp`);
+      const source = `https://assets.tcgdex.net/en/me/me02.5/${number}/high.webp`, asset = artwork.assets.find(a => a.kind === 'card' && a.id === c.id);
+      if (asset) expect(asset.sourceUrl).toBe(source);
+      expect(c.image).toBe(asset?.path ?? source);
       expect(c.year).toBe(2026);
       expect(paths.some(path => path.chance > 0 && path.cards.some(d => d.id === c.id))).toBe(true);
     }

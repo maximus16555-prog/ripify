@@ -113,7 +113,7 @@ test('only active pack images preload and slow images block reveal input until s
   test.setTimeout(90000); const state = fixture(); const urls = new Set(state.opening!.cards.map(c => CARD_BY_ID.get(c.cardId)!.image).filter(Boolean).map(url => new URL(url!, 'http://127.0.0.1:5173').href));
   const requested = new Set<string>(); let release!: () => void; const slow = new Promise<void>(resolve => { release = resolve; });
   const late = [...urls].at(-1)!;
-  await page.route(/assets\.tcgdex\.net|\/artwork\/sve-\d+\.jpg/, async route => {
+  await page.route(/assets\.tcgdex\.net|\/artwork\/sve-\d+\.jpg|\/artwork\/cards\//, async route => {
     const url = route.request().url(); requested.add(url); if (url === late) await slow;
     // Replay the exact audited scan when the development source cache exists.
     // The intentional delay still applies; a remote host outage should not turn

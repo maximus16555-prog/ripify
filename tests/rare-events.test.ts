@@ -1,3 +1,4 @@
+import { receiveReturn } from './fixtures/receive-return';
 import { describe, it, expect } from 'vitest';
 import * as THREE from 'three';
 import { createPack } from '../src/core/inventory';
@@ -113,7 +114,7 @@ describe('single raw modifier, grading and persistence', () => {
     expect(reloaded.collect()).toBe(false); expect(reloaded.state.cards).toHaveLength(11); expect(reloaded.state.packReceipts).toHaveLength(1);
     const c = reloaded.state.cards[0], defect = structuredClone(c.misprint), condition = structuredClone(c.condition);
     expect(reloaded.submit(c.uid, 'BGS', 'Standard')).toBe(true);
-    const order = reloaded.state.orders[0]; expect(reloaded.receive(order.uid, order.dueAt)).toBe(c);
+    const order = reloaded.state.orders[0]; expect(receiveReturn(reloaded, order.uid, order.dueAt)!.uid).toBe(c.uid);
     expect(c.misprint).toEqual(defect); expect(c.condition).toEqual(condition);
     reloaded.display(c.uid, 0); const again = new GameStore(storage); expect(again.state.displays[0]).toBe(c.uid);
     expect(again.state.cards[0].misprint).toEqual(defect); again.clearDisplay(0); again.sell(c.uid);
