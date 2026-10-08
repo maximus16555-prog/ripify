@@ -1,0 +1,364 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\Maxim\\Downloads\\Ripify\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.production.config.ts",
+      "store-restock.spec.ts",
+      "grading-images.spec.ts",
+      "computer.spec.ts",
+      "--grep",
+      "^(?!.*four connected apps)",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\Maxim\\Downloads\\Ripify\\playwright.production.config.ts",
+    "rootDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/Maxim/Downloads/Ripify/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\Maxim\\Downloads\\Ripify\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production",
+        "snapshotDir": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "https://ripify.freebuff.app",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "screenshot": "only-on-failure",
+          "launchOptions": {
+            "args": [
+              "--enable-webgl",
+              "--use-angle=d3d11",
+              "--ignore-gpu-blocklist"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "computer.spec.ts",
+      "file": "computer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "computer windows release hidden content and reuse the bounded physical preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15697,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T15:17:09.600Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computer-performance",
+                      "contentType": "application/json",
+                      "body": "eyJjeWNsZXMiOjgsImNvbnRleHRzQ3JlYXRlZCI6MiwiaWRsZVdvcmxkRHJhd3NQZXJTZWNvbmQiOjAsImhpZGRlbkltYWdlcyI6MCwiaGlkZGVuUHJldmlld3MiOjB9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "63b54f864c251470a409-5a7498b29577b0d914c9",
+          "file": "computer.spec.ts",
+          "line": 82,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "grading-images.spec.ts",
+      "file": "grading-images.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "grading previews survive timers, scrolling, selection and unrelated save updates",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 67160,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.interaction-prompt')\nExpected substring: \u001b[32m\"Use Computer\"\u001b[39m\nReceived string:    \u001b[31m\"EOpen Pack\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('.interaction-prompt') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('.interaction-prompt')\u001b[22m\n\u001b[2m    6 × locator resolved to <div aria-live=\"polite\" data-package-uid=\"\" class=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"EOpen Pack\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.interaction-prompt')\nExpected substring: \u001b[32m\"Use Computer\"\u001b[39m\nReceived string:    \u001b[31m\"EOpen Pack\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('.interaction-prompt') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('.interaction-prompt')\u001b[22m\n\u001b[2m    6 × locator resolved to <div aria-live=\"polite\" data-package-uid=\"\" class=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"EOpen Pack\"\u001b[22m\n\n    at computer (C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\grading-images.spec.ts:15:59)\n    at C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\grading-images.spec.ts:34:25",
+                    "location": {
+                      "file": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\grading-images.spec.ts",
+                      "column": 59,
+                      "line": 15
+                    },
+                    "snippet": "  13 |   finally { await page.keyboard.up('w'); }\n  14 |   await page.keyboard.down('a');\n> 15 |   try { await expect(page.locator('.interaction-prompt')).toContainText('Use Computer', { timeout: 15000 }); }\n     |                                                           ^\n  16 |   finally { await page.keyboard.up('a'); }\n  17 |   await page.keyboard.press('e');\n  18 |   await expect(page.locator('.pc-monitor')).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\grading-images.spec.ts",
+                        "column": 59,
+                        "line": 15
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.interaction-prompt')\nExpected substring: \u001b[32m\"Use Computer\"\u001b[39m\nReceived string:    \u001b[31m\"EOpen Pack\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('.interaction-prompt') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('.interaction-prompt')\u001b[22m\n\u001b[2m    6 × locator resolved to <div aria-live=\"polite\" data-package-uid=\"\" class=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"EOpen Pack\"\u001b[22m\n\n\n  13 |   finally { await page.keyboard.up('w'); }\n  14 |   await page.keyboard.down('a');\n> 15 |   try { await expect(page.locator('.interaction-prompt')).toContainText('Use Computer', { timeout: 15000 }); }\n     |                                                           ^\n  16 |   finally { await page.keyboard.up('a'); }\n  17 |   await page.keyboard.press('e');\n  18 |   await expect(page.locator('.pc-monitor')).toBeVisible();\n    at computer (C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\grading-images.spec.ts:15:59)\n    at C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\grading-images.spec.ts:34:25"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T15:17:25.376Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\Maxim\\Downloads\\Ripify\\test-results\\grading-images-grading-pre-94a9a--and-unrelated-save-updates\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\Maxim\\Downloads\\Ripify\\test-results\\grading-images-grading-pre-94a9a--and-unrelated-save-updates\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\grading-images.spec.ts",
+                    "column": 59,
+                    "line": 15
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d9465791b87940b064b6-0599fe46fc88d7568ad1",
+          "file": "grading-images.spec.ts",
+          "line": 21,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "store-restock.spec.ts",
+      "file": "store-restock.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sold-out saved store restocks in an open product view, accepts checkout, and retains stock/orders after reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 22658,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T15:18:32.916Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "restock-gameplay",
+                      "contentType": "application/json",
+                      "body": "eyJ1cmwiOiJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvIiwic3RvY2tBdERyb3AiOnsiMTUxLWJvb3N0ZXIiOjY0LCIxNTEtZXRiIjoxOCwiMTUxLXVwYyI6MTAsImFzY2VuZGVkLWhlcm9lcy1ib29zdGVyIjo0OH0sIm9yZGVyVWlkIjoiMzFlYWRhY2QtYmIxMS00YmMxLTgyMjMtMDgyNDBmZDI0NDQ1IiwicmVsb2FkUHJlc2VydmVkIjp0cnVlLCJlcnJvcnMiOltdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2a9aa69f216ad81996f4-e6cbeb23e93bcb092eac",
+          "file": "store-restock.spec.ts",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "store remains purchasable across midnight without a premature reset or morning closure",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10580,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T15:18:55.638Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "midnight-purchase",
+                      "contentType": "application/json",
+                      "body": "eyJtaW51dGUiOjE0NDAuNDMyNTM2MDAwMDI3LCJyZW1haW5pbmciOjMxLCJsZWRnZXIiOnsiMDoxNTEtYm9vc3RlciI6MX19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2a9aa69f216ad81996f4-e02b86e4ac85832ce2f9",
+          "file": "store-restock.spec.ts",
+          "line": 71,
+          "column": 1
+        },
+        {
+          "title": "an open cart responds to demand sellout and the next scheduled restock without reserving or overselling stock",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25916,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T15:19:06.224Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2a9aa69f216ad81996f4-ceccc91353b7f42fbf7e",
+          "file": "store-restock.spec.ts",
+          "line": 92,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-08T15:17:09.172Z",
+    "duration": 143085.70500000002,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

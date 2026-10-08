@@ -1,0 +1,48 @@
+{
+  "url": "https://ripify.freebuff.app/",
+  "deployment": "kn79vw3p",
+  "sourceCommit": "3f4f7bb",
+  "assets": [
+    {
+      "asset": "index-HzpNsUVx.js",
+      "contentType": "application/javascript; charset=utf-8",
+      "sha256": "3df22de965099f05f142f71894ecd42c409908a4d7053d19fa0cd58532ed0d40",
+      "matchesLocal": true
+    },
+    {
+      "asset": "main-C1jk1tBr.js",
+      "contentType": "application/javascript; charset=utf-8",
+      "sha256": "0eeeaff2094fd58c223bd271add650d716b8a98300d9ef64430d7353069866a9",
+      "matchesLocal": true
+    },
+    {
+      "asset": "main-DDDQbNMg.css",
+      "contentType": "text/css; charset=utf-8",
+      "sha256": "59f15068c15d4b62c1b1bedac9642f2837d91769e862b630e6a7481b06568bfb",
+      "matchesLocal": true
+    },
+    {
+      "asset": "index-qJBzPR62.css",
+      "contentType": "text/css; charset=utf-8",
+      "sha256": "f9f38db149c1ce1609c507981f5368228bab1a9c165a58887d987eaa90f12685",
+      "matchesLocal": true
+    }
+  ],
+  "logicTestsPassed": 173,
+  "localBrowserTestsPassed": 6,
+  "finalLocalBrowserTestsPassed": 4,
+  "broaderHostedCheck": {
+    "passed": 5,
+    "failed": 1,
+    "failure": "Full computer/delivery regression timed out waiting for Open Pack while walking after reload; reproduced in isolated runs. Restock, cart, midnight, grading-image and window-lifecycle checks passed. No movement or delivery runtime changes made.",
+    "recheckPassed": true,
+    "resolution": "All scenarios passed across final combined/isolated checks with other live game previews paused in Settings. Initial navigation timeouts are retained in reports; no movement/delivery runtime changes were made."
+  },
+  "finalHostedRestockTestsPassed": 3,
+  "finalHostedWindowLifecycleTestsPassed": 1,
+  "finalHostedGradingImageTestsPassed": 1,
+  "gradingNavigationRecheck": "Passed in isolation with other live game previews paused; original combined run timed out before reaching the app.",
+  "finalHostedScenariosPassed": 6,
+  "finalHostedFullComputerRecheckPassed": true,
+  "browserErrorsInPassingRuns": []
+}

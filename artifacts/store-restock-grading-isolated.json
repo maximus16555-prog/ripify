@@ -1,0 +1,166 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\Maxim\\Downloads\\Ripify\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.production.config.ts",
+      "grading-images.spec.ts",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\Maxim\\Downloads\\Ripify\\playwright.production.config.ts",
+    "rootDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/Maxim/Downloads/Ripify/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\Maxim\\Downloads\\Ripify\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production",
+        "snapshotDir": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 120000,
+        "use": {
+          "baseURL": "https://ripify.freebuff.app",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "screenshot": "only-on-failure",
+          "launchOptions": {
+            "args": [
+              "--enable-webgl",
+              "--use-angle=d3d11",
+              "--ignore-gpu-blocklist"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "grading-images.spec.ts",
+      "file": "grading-images.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "grading previews survive timers, scrolling, selection and unrelated save updates",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8643,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T15:20:35.240Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "grading-idle-images",
+                      "contentType": "application/json",
+                      "body": "eyJhZGRlZEltYWdlcyI6MCwicmVtb3ZlZEltYWdlcyI6MCwibG9hZHMiOjEyLCJzdGFibGVOb2RlcyI6dHJ1ZSwic2Nyb2xsVG9wIjoyMDAsInJlcXVlc3RzRHVyaW5nSWRsZSI6MH0="
+                    },
+                    {
+                      "name": "grading-image-summary",
+                      "contentType": "application/json",
+                      "body": "eyJpZGxlIjp7ImFkZGVkSW1hZ2VzIjowLCJyZW1vdmVkSW1hZ2VzIjowLCJsb2FkcyI6MTIsInN0YWJsZU5vZGVzIjp0cnVlLCJzY3JvbGxUb3AiOjIwMH0sInJldGFpbmVkQWNyb3NzU2VsZWN0aW9uIjp0cnVlLCJsb2Fkc0FmdGVyU2VsZWN0aW9uIjoxMiwiZXJyb3JzIjpbXSwicmVxdWVzdHMiOjQ4LCJ1bmlxdWVJbWFnZVVybHMiOjQ4fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d9465791b87940b064b6-0599fe46fc88d7568ad1",
+          "file": "grading-images.spec.ts",
+          "line": 21,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-08T15:20:34.919Z",
+    "duration": 9110.277,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

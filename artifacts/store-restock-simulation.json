@@ -1,0 +1,149 @@
+{
+  "seeds": 1000,
+  "minutesPerCycle": 1440,
+  "schedule": "Daily 9:30 AM game time",
+  "playerPurchases": 0,
+  "defaultGameSecondsPerRealSecond": 30,
+  "products": [
+    {
+      "productId": "151-booster",
+      "batchBefore": 35,
+      "batchAfter": 64,
+      "availableCyclePercent": {
+        "before": 19.01,
+        "after": 95.03
+      },
+      "averageRealMinutesAvailableAtDefaultClock": {
+        "before": 9.12,
+        "after": 45.62
+      },
+      "meanStockByMinutesSinceDrop": {
+        "0": {
+          "before": 35,
+          "after": 64
+        },
+        "240": {
+          "before": 4.47,
+          "after": 53.73
+        },
+        "720": {
+          "before": 0,
+          "after": 32.14
+        },
+        "1080": {
+          "before": 0,
+          "after": 15.94
+        },
+        "1439": {
+          "before": 0,
+          "after": 3.14
+        }
+      }
+    },
+    {
+      "productId": "151-etb",
+      "batchBefore": 12,
+      "batchAfter": 18,
+      "availableCyclePercent": {
+        "before": 15.37,
+        "after": 93.58
+      },
+      "averageRealMinutesAvailableAtDefaultClock": {
+        "before": 7.38,
+        "after": 44.92
+      },
+      "meanStockByMinutesSinceDrop": {
+        "0": {
+          "before": 12,
+          "after": 18
+        },
+        "240": {
+          "before": 0.35,
+          "after": 15.4
+        },
+        "720": {
+          "before": 0,
+          "after": 9.14
+        },
+        "1080": {
+          "before": 0,
+          "after": 4.44
+        },
+        "1439": {
+          "before": 0,
+          "after": 0.81
+        }
+      }
+    },
+    {
+      "productId": "151-upc",
+      "batchBefore": 6,
+      "batchAfter": 10,
+      "availableCyclePercent": {
+        "before": 12.83,
+        "after": 87.3
+      },
+      "averageRealMinutesAvailableAtDefaultClock": {
+        "before": 6.16,
+        "after": 41.91
+      },
+      "meanStockByMinutesSinceDrop": {
+        "0": {
+          "before": 6,
+          "after": 10
+        },
+        "240": {
+          "before": 0,
+          "after": 8.6
+        },
+        "720": {
+          "before": 0,
+          "after": 4.77
+        },
+        "1080": {
+          "before": 0,
+          "after": 1.84
+        },
+        "1439": {
+          "before": 0,
+          "after": 0.17
+        }
+      }
+    },
+    {
+      "productId": "ascended-heroes-booster",
+      "batchBefore": 24,
+      "batchAfter": 48,
+      "availableCyclePercent": {
+        "before": 8.48,
+        "after": 84.32
+      },
+      "averageRealMinutesAvailableAtDefaultClock": {
+        "before": 4.07,
+        "after": 40.47
+      },
+      "meanStockByMinutesSinceDrop": {
+        "0": {
+          "before": 24,
+          "after": 48
+        },
+        "240": {
+          "before": 0,
+          "after": 38.9
+        },
+        "720": {
+          "before": 0,
+          "after": 19.69
+        },
+        "1080": {
+          "before": 0,
+          "after": 5.61
+        },
+        "1439": {
+          "before": 0,
+          "after": 0.13
+        }
+      }
+    }
+  ]
+}
