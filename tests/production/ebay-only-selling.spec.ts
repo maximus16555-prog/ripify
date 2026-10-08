@@ -34,6 +34,7 @@ test('eBay is the only sale path; existing listings, ownership and single/bulk d
   expect(services.list('card', offered.uid, 10)).toBe(true);
   const offer = store.state.computer!.listings.at(-1)!;
   offer.outcome = 'offer'; offer.status = 'OFFER'; offer.started -= 61; offer.due += 10000;
+  offer.watchAt = store.state.computer!.minute - 2; offer.offerAt = store.state.computer!.minute - 1;
   expect(services.list('card', pending.uid, 100)).toBe(true);
   const existing = store.state.computer!.listings.at(-1)!; existing.started -= 30; existing.due += 10000;
   const before = structuredClone(store.state), errors: string[] = [];

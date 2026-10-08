@@ -1,3 +1,4 @@
+import { cardBuyerDemand, EBAY_BUYERS, rollBuyer } from './ebay-buyers';
 import { CARDS, CARD_BY_ID } from '../data/cards';
 import { PRODUCTS, PRODUCT_BY_ID } from '../data/products';
 import { createPack, createSealed, newSeed, seeded, uuid, canOpenProduct } from './inventory';
@@ -7,7 +8,7 @@ import type { GameStore } from './store';
 import type { Save } from './types';
 import { arrivePackages, deliveryDue } from './delivery';
 export const COMMERCE = {
-  deliveryMinutes: 60, listingMinutes: 120,
+  deliveryMinutes: 60, listingMinutes: EBAY_BUYERS.baseMinutes,
   maxOrderItems: 100, maxProductQuantity: 50,
   restockMinute: 9 * 60 + 30, restockInterval: 1440,
   stock: { '151-booster': 64, '151-etb': 18, '151-upc': 10, 'ascended-heroes-booster': 48 } as Record<string, number>,
@@ -49,7 +50,7 @@ export class ComputerServices {
     c.minute += dt * c.speed / 60; this.seconds += dt; this.savedSeconds += dt;
     if (restockDay(c.minute) !== previousDrop) { this.store.persist(); this.savedSeconds = 0; }
     if (this.seconds < 1) return; this.seconds %= 1;
-    if (deliveryDue(s) || c.listings.some(l => ['LISTED', 'WATCHING', 'OFFER'].includes(l.status) && (c.minute >= l.due || (l.status === 'LISTED' && c.minute >= l.started + 15) || (l.status === 'WATCHING' && l.outcome === 'offer' && c.minute >= l.started + 60)))) this.advance();
+    if (deliveryDue(s) || c.listings.some(l => ['LISTED', 'WATCHING', 'OFFER'].includes(l.status) && (c.minute >= l.due || (l.status === 'LISTED' && c.minute >= (l.watchAt ?? l.started + 15)) || (l.status === 'WATCHING' && l.outcome === 'offer' && c.minute >= (l.offerAt ?? l.started + 60))))) this.advance();
     if (this.savedSeconds >= 15) { samplePortfolio(this.store.state); this.store.persist(); this.savedSeconds = 0; }
   }
   checkout(cart: Record<string, number>): string | null {
@@ -67,11 +68,15 @@ export class ComputerServices {
   }
   list(kind: ItemKind, uid: string, asking: number): boolean {
     const current = this.store.state, item = collectionItems(current).find(i => i.uid === uid && i.kind === kind);
-    if (!item || !Number.isFinite(asking) || asking <= 0 || asking > 1e9 || activeListing(current, uid) || (kind === 'card' && (this.store.isCardLocked(uid) || current.displays.includes(uid))) || current.containerOpening?.productUid === uid) return false;
-    const s = structuredClone(current), c = s.computer!, random = seeded(newSeed()), ratio = asking / Math.max(.01, item.value);
-    // Desirability/pricing drives outcomes; never invent real-world buyers or sales.
-    const hit = random(), outcome = hit < Math.min(.93, .8 / Math.max(.5, ratio * ratio)) ? 'sale' : ratio < 2 && hit < .97 ? 'offer' : 'unsold';
-    const listing: Listing = { uid: uuid(), itemUid: uid, kind, name: item.name, image: item.image, cardId: item.cardId || undefined, productId: kind === 'card' ? undefined : [...s.packs, ...s.sealedProducts].find(p => p.uid === uid)!.productId, asking: Math.round(asking * 100) / 100, market: item.value, started: c.minute, due: c.minute + COMMERCE.listingMinutes * (.8 + random() * .4), status: 'LISTED', outcome, offer: Math.round(Math.min(asking * .9, item.value * (.82 + random() * .1)) * 100) / 100 };
+    const price = Math.round(asking * 100) / 100;
+    if (!item || !Number.isFinite(asking) || price <= 0 || asking > 1e9 || activeListing(current, uid) || (kind === 'card' && (this.store.isCardLocked(uid) || current.displays.includes(uid))) || current.containerOpening?.productUid === uid) return false;
+    const s = structuredClone(current), c = s.computer!, random = seeded(newSeed());
+    const demand = item.cardId ? cardBuyerDemand(CARD_BY_ID.get(item.cardId)!) : 1;
+    const buyer = rollBuyer(price, item.value, demand, random);
+    const listing: Listing = { uid: uuid(), itemUid: uid, kind, name: item.name, image: item.image, cardId: item.cardId || undefined, productId: kind === 'card' ? undefined : [...s.packs, ...s.sealedProducts].find(p => p.uid === uid)!.productId,
+      asking: price, market: item.value, started: c.minute, due: c.minute + buyer.minutes,
+      watchAt: c.minute + buyer.minutes * EBAY_BUYERS.watchFraction, offerAt: c.minute + buyer.minutes * EBAY_BUYERS.offerFraction,
+      status: 'LISTED', outcome: buyer.outcome, offer: buyer.offer };
     c.listings.push(listing);
     if (kind === 'card') s.cards.find(c => c.uid === uid)!.ownershipLock = { kind: 'ebay', uid: listing.uid };
     return this.store.commit(s);
@@ -101,8 +106,8 @@ export class ComputerServices {
       if (c.minute >= l.due) {
         if (l.outcome === 'sale') this.settle(s, l, l.asking);
         else { l.status = 'UNSOLD'; l.completed = c.minute; const card = s.cards.find(c => c.uid === l.itemUid); if (card?.ownershipLock?.uid === l.uid) delete card.ownershipLock; }
-      } else if (c.minute >= l.started + 60) l.status = l.outcome === 'offer' ? 'OFFER' : 'WATCHING';
-      else if (c.minute >= l.started + 15) l.status = 'WATCHING';
+      } else if (c.minute >= (l.offerAt ?? l.started + 60)) l.status = l.outcome === 'offer' ? 'OFFER' : 'WATCHING';
+      else if (c.minute >= (l.watchAt ?? l.started + 15)) l.status = 'WATCHING';
     }
     samplePortfolio(s); return this.store.commit(s);
   }

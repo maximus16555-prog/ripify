@@ -1,0 +1,83 @@
+{
+  "basis": "RIPIFY simulated buyers; neutral demand; in-game minutes",
+  "results": [
+    {
+      "asking": 11,
+      "market": 22,
+      "simulatedListings": 100000,
+      "previousSaleChance": 0.93,
+      "previousAverageMinutes": 120,
+      "salePercent": 95.95,
+      "offerPercent": 3.27,
+      "unsoldPercent": 0.78,
+      "averageMinutes": 24,
+      "medianMinutes": 24,
+      "configuredSaleChance": 0.96
+    },
+    {
+      "asking": 19.5,
+      "market": 22,
+      "simulatedListings": 100000,
+      "previousSaleChance": 0.93,
+      "previousAverageMinutes": 120,
+      "salePercent": 93.43,
+      "offerPercent": 5.27,
+      "unsoldPercent": 1.3,
+      "averageMinutes": 87.75,
+      "medianMinutes": 87.75,
+      "configuredSaleChance": 0.9347096079970781
+    },
+    {
+      "asking": 22,
+      "market": 22,
+      "simulatedListings": 100000,
+      "previousSaleChance": 0.8,
+      "previousAverageMinutes": 120,
+      "salePercent": 78.08,
+      "offerPercent": 15.91,
+      "unsoldPercent": 6.01,
+      "averageMinutes": 120.08,
+      "medianMinutes": 120.08,
+      "configuredSaleChance": 0.78
+    },
+    {
+      "asking": 25,
+      "market": 22,
+      "simulatedListings": 100000,
+      "previousSaleChance": 0.6195199999999998,
+      "previousAverageMinutes": 120,
+      "salePercent": 64.28,
+      "offerPercent": 16.16,
+      "unsoldPercent": 19.56,
+      "averageMinutes": 167.42,
+      "medianMinutes": 167.42,
+      "configuredSaleChance": 0.6439002755085603
+    },
+    {
+      "asking": 33,
+      "market": 22,
+      "simulatedListings": 100000,
+      "previousSaleChance": 0.35555555555555557,
+      "previousAverageMinutes": 120,
+      "salePercent": 42.46,
+      "offerPercent": 16.01,
+      "unsoldPercent": 41.53,
+      "averageMinutes": 344.59,
+      "medianMinutes": 344.59,
+      "configuredSaleChance": 0.4245782220824175
+    },
+    {
+      "asking": 44,
+      "market": 22,
+      "simulatedListings": 100000,
+      "previousSaleChance": 0.2,
+      "previousAverageMinutes": 120,
+      "salePercent": 27.51,
+      "offerPercent": 0,
+      "unsoldPercent": 72.49,
+      "averageMinutes": 480,
+      "medianMinutes": 480,
+      "configuredSaleChance": 0.2757716446627535
+    }
+  ]
+}

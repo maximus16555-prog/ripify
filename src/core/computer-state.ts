@@ -6,6 +6,7 @@ export interface Listing {
   uid: string; itemUid: string; kind: ItemKind; name: string; image?: string; cardId?: string; productId?: string;
   asking: number; market: number; started: number; due: number; status: ListingStatus;
   outcome: 'sale' | 'offer' | 'unsold'; offer: number; paid?: number; completed?: number;
+  watchAt?: number; offerAt?: number;
 }
 export interface OnlineOrder { uid: string; placed: number; due: number; total: number; status: 'SHIPPING' | 'DELIVERED'; items: (Pack | SealedProduct)[] }
 export interface ComputerState {
@@ -34,6 +35,7 @@ export function validateComputer(v: unknown, save: Save, validPack: (v: unknown)
   }
   for (const l of s.listings) {
     if (!id(l.uid) || listingIds.has(l.uid) || !id(l.itemUid) || !['card', 'pack', 'sealed'].includes(l.kind) || !['LISTED', 'WATCHING', 'OFFER', 'SOLD', 'UNSOLD'].includes(l.status) || !['sale', 'offer', 'unsold'].includes(l.outcome) || !number(l.asking) || l.asking === 0 || !number(l.market) || !number(l.started) || !number(l.due) || l.due <= l.started || !number(l.offer) || typeof l.name !== 'string' || (l.paid !== undefined && !number(l.paid)) || (l.completed !== undefined && !number(l.completed)) || (l.productId && !PRODUCT_BY_ID.has(l.productId))) throw new Error('Invalid listing');
+    if ((l.watchAt !== undefined || l.offerAt !== undefined) && (!number(l.watchAt) || !number(l.offerAt) || l.watchAt! <= l.started || l.offerAt! <= l.watchAt! || l.offerAt! >= l.due)) throw new Error('Invalid buyer timing');
     listingIds.add(l.uid);
     if (['LISTED', 'WATCHING', 'OFFER'].includes(l.status)) {
       const item = (l.kind === 'card' ? save.cards : l.kind === 'pack' ? save.packs : save.sealedProducts).find(i => i.uid === l.itemUid);

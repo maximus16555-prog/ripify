@@ -57,7 +57,7 @@ describe('shared computer commerce', () => {
     expect(gradedPopulation(f.store.state, card.cardId, 'PSA', f.store.state.gradingPopulation![0].grade).allTime).toBe(1); expect(parseSave(f.read()).computer!.listings[0].paid).toBe(100); expect(parseSave(f.read()).stats.totalSales).toBe(100);
   });
   it('offers and unsold listings are persistent and cannot pay twice', () => {
-    const f = fixture(), pack = f.store.state.packs[0]; f.services.list('pack', pack.uid, 12); const l = f.store.state.computer!.listings[0]; l.outcome = 'offer'; f.store.state.computer!.minute = l.started + 65; f.services.advance();
+    const f = fixture(), pack = f.store.state.packs[0]; f.services.list('pack', pack.uid, 12); const l = f.store.state.computer!.listings[0]; l.outcome = 'offer'; f.store.state.computer!.minute = l.offerAt!; f.services.advance();
     const offer = f.store.state.computer!.listings[0]; expect(offer.status).toBe('OFFER'); const before = f.store.state.currency; expect(f.services.resolve(l.uid, true)).toBe(true); expect(f.store.state.currency).toBeCloseTo(before + offer.offer, 2); expect(f.services.resolve(l.uid, true)).toBe(false);
   });
   it('views use authoritative values and exact printings without creating copies', () => {
