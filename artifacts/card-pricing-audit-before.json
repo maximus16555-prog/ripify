@@ -1,0 +1,5511 @@
+{
+  "definitions": 513,
+  "nonIndividualDefaults": 506,
+  "groups": {
+    "Common": {
+      "cards": 158,
+      "distinctPrices": 1,
+      "min": 0.22,
+      "max": 0.22,
+      "mean": 0.21999999999999953,
+      "largestSamePriceGroup": 158,
+      "duplicateGroups": [
+        [
+          0.22,
+          158
+        ]
+      ]
+    },
+    "Uncommon": {
+      "cards": 131,
+      "distinctPrices": 1,
+      "min": 0.41,
+      "max": 0.41,
+      "mean": 0.4099999999999987,
+      "largestSamePriceGroup": 131,
+      "duplicateGroups": [
+        [
+          0.41,
+          131
+        ]
+      ]
+    },
+    "Double rare": {
+      "cards": 51,
+      "distinctPrices": 1,
+      "min": 5.1,
+      "max": 5.1,
+      "mean": 5.099999999999996,
+      "largestSamePriceGroup": 51,
+      "duplicateGroups": [
+        [
+          5.1,
+          51
+        ]
+      ]
+    },
+    "Rare": {
+      "cards": 50,
+      "distinctPrices": 1,
+      "min": 1.05,
+      "max": 1.05,
+      "mean": 1.0499999999999992,
+      "largestSamePriceGroup": 50,
+      "duplicateGroups": [
+        [
+          1.05,
+          50
+        ]
+      ]
+    },
+    "Illustration rare": {
+      "cards": 49,
+      "distinctPrices": 1,
+      "min": 18.1,
+      "max": 18.1,
+      "mean": 18.100000000000012,
+      "largestSamePriceGroup": 49,
+      "duplicateGroups": [
+        [
+          18.1,
+          49
+        ]
+      ]
+    },
+    "Ultra Rare": {
+      "cards": 30,
+      "distinctPrices": 1,
+      "min": 12.1,
+      "max": 12.1,
+      "mean": 12.100000000000003,
+      "largestSamePriceGroup": 30,
+      "duplicateGroups": [
+        [
+          12.1,
+          30
+        ]
+      ]
+    },
+    "Special illustration rare": {
+      "cards": 29,
+      "distinctPrices": 6,
+      "min": 65,
+      "max": 4582,
+      "mean": 465.8965517241379,
+      "largestSamePriceGroup": 24,
+      "duplicateGroups": [
+        [
+          65,
+          24
+        ]
+      ]
+    },
+    "Hyper rare": {
+      "cards": 3,
+      "distinctPrices": 1,
+      "min": 30,
+      "max": 30,
+      "mean": 30,
+      "largestSamePriceGroup": 3,
+      "duplicateGroups": [
+        [
+          30,
+          3
+        ]
+      ]
+    },
+    "Promo": {
+      "cards": 3,
+      "distinctPrices": 1,
+      "min": 0.15,
+      "max": 0.15,
+      "mean": 0.15,
+      "largestSamePriceGroup": 3,
+      "duplicateGroups": [
+        [
+          0.15,
+          3
+        ]
+      ]
+    },
+    "Mega attack rare": {
+      "cards": 7,
+      "distinctPrices": 1,
+      "min": 25,
+      "max": 25,
+      "mean": 25,
+      "largestSamePriceGroup": 7,
+      "duplicateGroups": [
+        [
+          25,
+          7
+        ]
+      ]
+    },
+    "Mega Hyper Rare": {
+      "cards": 2,
+      "distinctPrices": 2,
+      "min": 586,
+      "max": 768,
+      "mean": 677,
+      "largestSamePriceGroup": 1,
+      "duplicateGroups": []
+    }
+  },
+  "samples": {
+    "Common": [
+      {
+        "id": "sv03.5-001",
+        "name": "Bulbasaur",
+        "set": "sv03.5",
+        "number": "001/165",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-001",
+        "name": "Erika's Oddish",
+        "set": "me02.5",
+        "number": "001/217",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-014",
+        "name": "Kakuna",
+        "set": "sv03.5",
+        "number": "014/165",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-017",
+        "name": "Grubbin",
+        "set": "me02.5",
+        "number": "017/217",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-027",
+        "name": "Sandshrew",
+        "set": "sv03.5",
+        "number": "027/165",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-036",
+        "name": "Scorbunny",
+        "set": "me02.5",
+        "number": "036/217",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-041",
+        "name": "Zubat",
+        "set": "sv03.5",
+        "number": "041/165",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-055",
+        "name": "Pikachu",
+        "set": "me02.5",
+        "number": "055/217",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-056",
+        "name": "Mankey",
+        "set": "sv03.5",
+        "number": "056/165",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-077",
+        "name": "Team Rocket's Exeggcute",
+        "set": "me02.5",
+        "number": "077/217",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-070",
+        "name": "Weepinbell",
+        "set": "sv03.5",
+        "number": "070/165",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-093",
+        "name": "Swirlix",
+        "set": "me02.5",
+        "number": "093/217",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-083",
+        "name": "Farfetch'd",
+        "set": "sv03.5",
+        "number": "083/165",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-115",
+        "name": "Pancham",
+        "set": "me02.5",
+        "number": "115/217",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-098",
+        "name": "Krabby",
+        "set": "sv03.5",
+        "number": "098/165",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-134",
+        "name": "Scraggy",
+        "set": "me02.5",
+        "number": "134/217",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-111",
+        "name": "Rhyhorn",
+        "set": "sv03.5",
+        "number": "111/165",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-161",
+        "name": "Team Rocket's Meowth",
+        "set": "me02.5",
+        "number": "161/217",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-129",
+        "name": "Magikarp",
+        "set": "sv03.5",
+        "number": "129/165",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-186",
+        "name": "Counter Gain",
+        "set": "me02.5",
+        "number": "186/217",
+        "rarity": "Common",
+        "value": 0.22,
+        "source": "rarity-default"
+      }
+    ],
+    "Uncommon": [
+      {
+        "id": "sv03.5-002",
+        "name": "Ivysaur",
+        "set": "sv03.5",
+        "number": "002/165",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-002",
+        "name": "Erika's Gloom",
+        "set": "me02.5",
+        "number": "002/217",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-022",
+        "name": "Fearow",
+        "set": "sv03.5",
+        "number": "022/165",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-028",
+        "name": "Camerupt",
+        "set": "me02.5",
+        "number": "028/217",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-042",
+        "name": "Golbat",
+        "set": "sv03.5",
+        "number": "042/165",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-051",
+        "name": "N's Vanilluxe",
+        "set": "me02.5",
+        "number": "051/217",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-055",
+        "name": "Golduck",
+        "set": "sv03.5",
+        "number": "055/165",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-075",
+        "name": "Clefable",
+        "set": "me02.5",
+        "number": "075/217",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-071",
+        "name": "Victreebel",
+        "set": "sv03.5",
+        "number": "071/165",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-117",
+        "name": "Carbink",
+        "set": "me02.5",
+        "number": "117/217",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-089",
+        "name": "Muk",
+        "set": "sv03.5",
+        "number": "089/165",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-151",
+        "name": "Dragonair",
+        "set": "me02.5",
+        "number": "151/217",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-103",
+        "name": "Exeggutor",
+        "set": "sv03.5",
+        "number": "103/165",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-180",
+        "name": "Acerola's Mischief",
+        "set": "me02.5",
+        "number": "180/217",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-123",
+        "name": "Scyther",
+        "set": "sv03.5",
+        "number": "123/165",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-190",
+        "name": "Iris's Fighting Spirit",
+        "set": "me02.5",
+        "number": "190/217",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-143",
+        "name": "Snorlax",
+        "set": "sv03.5",
+        "number": "143/165",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-201",
+        "name": "Team Rocket's Archer",
+        "set": "me02.5",
+        "number": "201/217",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-159",
+        "name": "Energy Sticker",
+        "set": "sv03.5",
+        "number": "159/165",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-208",
+        "name": "Team Rocket's Proton",
+        "set": "me02.5",
+        "number": "208/217",
+        "rarity": "Uncommon",
+        "value": 0.41,
+        "source": "rarity-default"
+      }
+    ],
+    "Rare": [
+      {
+        "id": "sv03.5-015",
+        "name": "Beedrill",
+        "set": "sv03.5",
+        "number": "015/165",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-006",
+        "name": "Erika's Victreebel",
+        "set": "me02.5",
+        "number": "006/217",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-034",
+        "name": "Nidoking",
+        "set": "sv03.5",
+        "number": "034/165",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-024",
+        "name": "Ethan's Magcargo",
+        "set": "me02.5",
+        "number": "024/217",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-085",
+        "name": "Dodrio",
+        "set": "sv03.5",
+        "number": "085/165",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-072",
+        "name": "Iono's Kilowattrel",
+        "set": "me02.5",
+        "number": "072/217",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-101",
+        "name": "Electrode",
+        "set": "sv03.5",
+        "number": "101/165",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-082",
+        "name": "Togekiss",
+        "set": "me02.5",
+        "number": "082/217",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-113",
+        "name": "Chansey",
+        "set": "sv03.5",
+        "number": "113/165",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-098",
+        "name": "Spectrier",
+        "set": "me02.5",
+        "number": "098/217",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-122",
+        "name": "Mr. Mime",
+        "set": "sv03.5",
+        "number": "122/165",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-105",
+        "name": "Lunatone",
+        "set": "me02.5",
+        "number": "105/217",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-134",
+        "name": "Vaporeon",
+        "set": "sv03.5",
+        "number": "134/165",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-122",
+        "name": "Okidogi",
+        "set": "me02.5",
+        "number": "122/217",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-136",
+        "name": "Flareon",
+        "set": "sv03.5",
+        "number": "136/165",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-141",
+        "name": "Hoopa",
+        "set": "me02.5",
+        "number": "141/217",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-142",
+        "name": "Aerodactyl",
+        "set": "sv03.5",
+        "number": "142/165",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-153",
+        "name": "Rayquaza",
+        "set": "me02.5",
+        "number": "153/217",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-146",
+        "name": "Moltres",
+        "set": "sv03.5",
+        "number": "146/165",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-155",
+        "name": "N's Zekrom",
+        "set": "me02.5",
+        "number": "155/217",
+        "rarity": "Rare",
+        "value": 1.05,
+        "source": "rarity-default"
+      }
+    ],
+    "Higher rarities": [
+      {
+        "id": "sv03.5-003",
+        "name": "Venusaur ex",
+        "set": "sv03.5",
+        "number": "003/165",
+        "rarity": "Double rare",
+        "value": 5.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-003",
+        "name": "Erika's Vileplume ex",
+        "set": "me02.5",
+        "number": "003/217",
+        "rarity": "Double rare",
+        "value": 5.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-040",
+        "name": "Wigglytuff ex",
+        "set": "sv03.5",
+        "number": "040/165",
+        "rarity": "Double rare",
+        "value": 5.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-061",
+        "name": "Mega Eelektross ex",
+        "set": "me02.5",
+        "number": "061/217",
+        "rarity": "Double rare",
+        "value": 5.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-145",
+        "name": "Zapdos ex",
+        "set": "sv03.5",
+        "number": "145/165",
+        "rarity": "Double rare",
+        "value": 5.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-116",
+        "name": "Mega Hawlucha ex",
+        "set": "me02.5",
+        "number": "116/217",
+        "rarity": "Double rare",
+        "value": 5.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-170",
+        "name": "Squirtle",
+        "set": "sv03.5",
+        "number": "170/165",
+        "rarity": "Illustration rare",
+        "value": 18.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-164",
+        "name": "Larry's Dudunsparce ex",
+        "set": "me02.5",
+        "number": "164/217",
+        "rarity": "Double rare",
+        "value": 5.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-175",
+        "name": "Psyduck",
+        "set": "sv03.5",
+        "number": "175/165",
+        "rarity": "Illustration rare",
+        "value": 18.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-225",
+        "name": "Scorbunny",
+        "set": "me02.5",
+        "number": "225/217",
+        "rarity": "Illustration rare",
+        "value": 18.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-181",
+        "name": "Dragonair",
+        "set": "sv03.5",
+        "number": "181/165",
+        "rarity": "Illustration rare",
+        "value": 18.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-237",
+        "name": "Hop's Trevenant",
+        "set": "me02.5",
+        "number": "237/217",
+        "rarity": "Illustration rare",
+        "value": 18.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-186",
+        "name": "Ninetales ex",
+        "set": "sv03.5",
+        "number": "186/165",
+        "rarity": "Ultra Rare",
+        "value": 12.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-249",
+        "name": "Larry's Staraptor",
+        "set": "me02.5",
+        "number": "249/217",
+        "rarity": "Illustration rare",
+        "value": 18.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-191",
+        "name": "Jynx ex",
+        "set": "sv03.5",
+        "number": "191/165",
+        "rarity": "Ultra Rare",
+        "value": 12.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-260",
+        "name": "Glass Trumpet",
+        "set": "me02.5",
+        "number": "260/217",
+        "rarity": "Ultra Rare",
+        "value": 12.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-197",
+        "name": "Giovanni's Charisma",
+        "set": "sv03.5",
+        "number": "197/165",
+        "rarity": "Ultra Rare",
+        "value": 12.1,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-272",
+        "name": "Mega Meganium ex",
+        "set": "me02.5",
+        "number": "272/217",
+        "rarity": "Special illustration rare",
+        "value": 65,
+        "source": "rarity-default"
+      },
+      {
+        "id": "sv03.5-202",
+        "name": "Zapdos ex",
+        "set": "sv03.5",
+        "number": "202/165",
+        "rarity": "Special illustration rare",
+        "value": 65,
+        "source": "rarity-default"
+      },
+      {
+        "id": "me02.5-284",
+        "name": "Mega Gengar ex",
+        "set": "me02.5",
+        "number": "284/217",
+        "rarity": "Special illustration rare",
+        "value": 4317,
+        "source": "manual"
+      }
+    ]
+  },
+  "cards": [
+    {
+      "id": "sv03.5-001",
+      "name": "Bulbasaur",
+      "set": "sv03.5",
+      "number": "001/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-002",
+      "name": "Ivysaur",
+      "set": "sv03.5",
+      "number": "002/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-003",
+      "name": "Venusaur ex",
+      "set": "sv03.5",
+      "number": "003/165",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-004",
+      "name": "Charmander",
+      "set": "sv03.5",
+      "number": "004/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-005",
+      "name": "Charmeleon",
+      "set": "sv03.5",
+      "number": "005/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-006",
+      "name": "Charizard ex",
+      "set": "sv03.5",
+      "number": "006/165",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-007",
+      "name": "Squirtle",
+      "set": "sv03.5",
+      "number": "007/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-008",
+      "name": "Wartortle",
+      "set": "sv03.5",
+      "number": "008/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-009",
+      "name": "Blastoise ex",
+      "set": "sv03.5",
+      "number": "009/165",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-010",
+      "name": "Caterpie",
+      "set": "sv03.5",
+      "number": "010/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-011",
+      "name": "Metapod",
+      "set": "sv03.5",
+      "number": "011/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-012",
+      "name": "Butterfree",
+      "set": "sv03.5",
+      "number": "012/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-013",
+      "name": "Weedle",
+      "set": "sv03.5",
+      "number": "013/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-014",
+      "name": "Kakuna",
+      "set": "sv03.5",
+      "number": "014/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-015",
+      "name": "Beedrill",
+      "set": "sv03.5",
+      "number": "015/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-016",
+      "name": "Pidgey",
+      "set": "sv03.5",
+      "number": "016/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-017",
+      "name": "Pidgeotto",
+      "set": "sv03.5",
+      "number": "017/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-018",
+      "name": "Pidgeot",
+      "set": "sv03.5",
+      "number": "018/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-019",
+      "name": "Rattata",
+      "set": "sv03.5",
+      "number": "019/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-020",
+      "name": "Raticate",
+      "set": "sv03.5",
+      "number": "020/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-021",
+      "name": "Spearow",
+      "set": "sv03.5",
+      "number": "021/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-022",
+      "name": "Fearow",
+      "set": "sv03.5",
+      "number": "022/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-023",
+      "name": "Ekans",
+      "set": "sv03.5",
+      "number": "023/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-024",
+      "name": "Arbok ex",
+      "set": "sv03.5",
+      "number": "024/165",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-025",
+      "name": "Pikachu",
+      "set": "sv03.5",
+      "number": "025/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-026",
+      "name": "Raichu",
+      "set": "sv03.5",
+      "number": "026/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-027",
+      "name": "Sandshrew",
+      "set": "sv03.5",
+      "number": "027/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-028",
+      "name": "Sandslash",
+      "set": "sv03.5",
+      "number": "028/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-029",
+      "name": "Nidoran♀",
+      "set": "sv03.5",
+      "number": "029/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-030",
+      "name": "Nidorina",
+      "set": "sv03.5",
+      "number": "030/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-031",
+      "name": "Nidoqueen",
+      "set": "sv03.5",
+      "number": "031/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-032",
+      "name": "Nidoran♂",
+      "set": "sv03.5",
+      "number": "032/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-033",
+      "name": "Nidorino",
+      "set": "sv03.5",
+      "number": "033/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-034",
+      "name": "Nidoking",
+      "set": "sv03.5",
+      "number": "034/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-035",
+      "name": "Clefairy",
+      "set": "sv03.5",
+      "number": "035/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-036",
+      "name": "Clefable",
+      "set": "sv03.5",
+      "number": "036/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-037",
+      "name": "Vulpix",
+      "set": "sv03.5",
+      "number": "037/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-038",
+      "name": "Ninetales ex",
+      "set": "sv03.5",
+      "number": "038/165",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-039",
+      "name": "Jigglypuff",
+      "set": "sv03.5",
+      "number": "039/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-040",
+      "name": "Wigglytuff ex",
+      "set": "sv03.5",
+      "number": "040/165",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-041",
+      "name": "Zubat",
+      "set": "sv03.5",
+      "number": "041/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-042",
+      "name": "Golbat",
+      "set": "sv03.5",
+      "number": "042/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-043",
+      "name": "Oddish",
+      "set": "sv03.5",
+      "number": "043/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-044",
+      "name": "Gloom",
+      "set": "sv03.5",
+      "number": "044/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-045",
+      "name": "Vileplume",
+      "set": "sv03.5",
+      "number": "045/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-046",
+      "name": "Paras",
+      "set": "sv03.5",
+      "number": "046/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-047",
+      "name": "Parasect",
+      "set": "sv03.5",
+      "number": "047/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-048",
+      "name": "Venonat",
+      "set": "sv03.5",
+      "number": "048/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-049",
+      "name": "Venomoth",
+      "set": "sv03.5",
+      "number": "049/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-050",
+      "name": "Diglett",
+      "set": "sv03.5",
+      "number": "050/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-051",
+      "name": "Dugtrio",
+      "set": "sv03.5",
+      "number": "051/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-052",
+      "name": "Meowth",
+      "set": "sv03.5",
+      "number": "052/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-053",
+      "name": "Persian",
+      "set": "sv03.5",
+      "number": "053/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-054",
+      "name": "Psyduck",
+      "set": "sv03.5",
+      "number": "054/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-055",
+      "name": "Golduck",
+      "set": "sv03.5",
+      "number": "055/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-056",
+      "name": "Mankey",
+      "set": "sv03.5",
+      "number": "056/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-057",
+      "name": "Primeape",
+      "set": "sv03.5",
+      "number": "057/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-058",
+      "name": "Growlithe",
+      "set": "sv03.5",
+      "number": "058/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-059",
+      "name": "Arcanine",
+      "set": "sv03.5",
+      "number": "059/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-060",
+      "name": "Poliwag",
+      "set": "sv03.5",
+      "number": "060/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-061",
+      "name": "Poliwhirl",
+      "set": "sv03.5",
+      "number": "061/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-062",
+      "name": "Poliwrath",
+      "set": "sv03.5",
+      "number": "062/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-063",
+      "name": "Abra",
+      "set": "sv03.5",
+      "number": "063/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-064",
+      "name": "Kadabra",
+      "set": "sv03.5",
+      "number": "064/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-065",
+      "name": "Alakazam ex",
+      "set": "sv03.5",
+      "number": "065/165",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-066",
+      "name": "Machop",
+      "set": "sv03.5",
+      "number": "066/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-067",
+      "name": "Machoke",
+      "set": "sv03.5",
+      "number": "067/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-068",
+      "name": "Machamp",
+      "set": "sv03.5",
+      "number": "068/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-069",
+      "name": "Bellsprout",
+      "set": "sv03.5",
+      "number": "069/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-070",
+      "name": "Weepinbell",
+      "set": "sv03.5",
+      "number": "070/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-071",
+      "name": "Victreebel",
+      "set": "sv03.5",
+      "number": "071/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-072",
+      "name": "Tentacool",
+      "set": "sv03.5",
+      "number": "072/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-073",
+      "name": "Tentacruel",
+      "set": "sv03.5",
+      "number": "073/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-074",
+      "name": "Geodude",
+      "set": "sv03.5",
+      "number": "074/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-075",
+      "name": "Graveler",
+      "set": "sv03.5",
+      "number": "075/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-076",
+      "name": "Golem ex",
+      "set": "sv03.5",
+      "number": "076/165",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-077",
+      "name": "Ponyta",
+      "set": "sv03.5",
+      "number": "077/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-078",
+      "name": "Rapidash",
+      "set": "sv03.5",
+      "number": "078/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-079",
+      "name": "Slowpoke",
+      "set": "sv03.5",
+      "number": "079/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-080",
+      "name": "Slowbro",
+      "set": "sv03.5",
+      "number": "080/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-081",
+      "name": "Magnemite",
+      "set": "sv03.5",
+      "number": "081/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-082",
+      "name": "Magneton",
+      "set": "sv03.5",
+      "number": "082/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-083",
+      "name": "Farfetch'd",
+      "set": "sv03.5",
+      "number": "083/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-084",
+      "name": "Doduo",
+      "set": "sv03.5",
+      "number": "084/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-085",
+      "name": "Dodrio",
+      "set": "sv03.5",
+      "number": "085/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-086",
+      "name": "Seel",
+      "set": "sv03.5",
+      "number": "086/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-087",
+      "name": "Dewgong",
+      "set": "sv03.5",
+      "number": "087/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-088",
+      "name": "Grimer",
+      "set": "sv03.5",
+      "number": "088/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-089",
+      "name": "Muk",
+      "set": "sv03.5",
+      "number": "089/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-090",
+      "name": "Shellder",
+      "set": "sv03.5",
+      "number": "090/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-091",
+      "name": "Cloyster",
+      "set": "sv03.5",
+      "number": "091/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-092",
+      "name": "Gastly",
+      "set": "sv03.5",
+      "number": "092/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-093",
+      "name": "Haunter",
+      "set": "sv03.5",
+      "number": "093/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-094",
+      "name": "Gengar",
+      "set": "sv03.5",
+      "number": "094/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-095",
+      "name": "Onix",
+      "set": "sv03.5",
+      "number": "095/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-096",
+      "name": "Drowzee",
+      "set": "sv03.5",
+      "number": "096/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-097",
+      "name": "Hypno",
+      "set": "sv03.5",
+      "number": "097/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-098",
+      "name": "Krabby",
+      "set": "sv03.5",
+      "number": "098/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-099",
+      "name": "Kingler",
+      "set": "sv03.5",
+      "number": "099/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-100",
+      "name": "Voltorb",
+      "set": "sv03.5",
+      "number": "100/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-101",
+      "name": "Electrode",
+      "set": "sv03.5",
+      "number": "101/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-102",
+      "name": "Exeggcute",
+      "set": "sv03.5",
+      "number": "102/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-103",
+      "name": "Exeggutor",
+      "set": "sv03.5",
+      "number": "103/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-104",
+      "name": "Cubone",
+      "set": "sv03.5",
+      "number": "104/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-105",
+      "name": "Marowak",
+      "set": "sv03.5",
+      "number": "105/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-106",
+      "name": "Hitmonlee",
+      "set": "sv03.5",
+      "number": "106/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-107",
+      "name": "Hitmonchan",
+      "set": "sv03.5",
+      "number": "107/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-108",
+      "name": "Lickitung",
+      "set": "sv03.5",
+      "number": "108/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-109",
+      "name": "Koffing",
+      "set": "sv03.5",
+      "number": "109/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-110",
+      "name": "Weezing",
+      "set": "sv03.5",
+      "number": "110/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-111",
+      "name": "Rhyhorn",
+      "set": "sv03.5",
+      "number": "111/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-112",
+      "name": "Rhydon",
+      "set": "sv03.5",
+      "number": "112/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-113",
+      "name": "Chansey",
+      "set": "sv03.5",
+      "number": "113/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-114",
+      "name": "Tangela",
+      "set": "sv03.5",
+      "number": "114/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-115",
+      "name": "Kangaskhan ex",
+      "set": "sv03.5",
+      "number": "115/165",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-116",
+      "name": "Horsea",
+      "set": "sv03.5",
+      "number": "116/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-117",
+      "name": "Seadra",
+      "set": "sv03.5",
+      "number": "117/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-118",
+      "name": "Goldeen",
+      "set": "sv03.5",
+      "number": "118/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-119",
+      "name": "Seaking",
+      "set": "sv03.5",
+      "number": "119/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-120",
+      "name": "Staryu",
+      "set": "sv03.5",
+      "number": "120/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-121",
+      "name": "Starmie",
+      "set": "sv03.5",
+      "number": "121/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-122",
+      "name": "Mr. Mime",
+      "set": "sv03.5",
+      "number": "122/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-123",
+      "name": "Scyther",
+      "set": "sv03.5",
+      "number": "123/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-124",
+      "name": "Jynx ex",
+      "set": "sv03.5",
+      "number": "124/165",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-125",
+      "name": "Electabuzz",
+      "set": "sv03.5",
+      "number": "125/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-126",
+      "name": "Magmar",
+      "set": "sv03.5",
+      "number": "126/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-127",
+      "name": "Pinsir",
+      "set": "sv03.5",
+      "number": "127/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-128",
+      "name": "Tauros",
+      "set": "sv03.5",
+      "number": "128/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-129",
+      "name": "Magikarp",
+      "set": "sv03.5",
+      "number": "129/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-130",
+      "name": "Gyarados",
+      "set": "sv03.5",
+      "number": "130/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-131",
+      "name": "Lapras",
+      "set": "sv03.5",
+      "number": "131/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-132",
+      "name": "Ditto",
+      "set": "sv03.5",
+      "number": "132/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-133",
+      "name": "Eevee",
+      "set": "sv03.5",
+      "number": "133/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-134",
+      "name": "Vaporeon",
+      "set": "sv03.5",
+      "number": "134/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-135",
+      "name": "Jolteon",
+      "set": "sv03.5",
+      "number": "135/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-136",
+      "name": "Flareon",
+      "set": "sv03.5",
+      "number": "136/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-137",
+      "name": "Porygon",
+      "set": "sv03.5",
+      "number": "137/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-138",
+      "name": "Omanyte",
+      "set": "sv03.5",
+      "number": "138/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-139",
+      "name": "Omastar",
+      "set": "sv03.5",
+      "number": "139/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-140",
+      "name": "Kabuto",
+      "set": "sv03.5",
+      "number": "140/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-141",
+      "name": "Kabutops",
+      "set": "sv03.5",
+      "number": "141/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-142",
+      "name": "Aerodactyl",
+      "set": "sv03.5",
+      "number": "142/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-143",
+      "name": "Snorlax",
+      "set": "sv03.5",
+      "number": "143/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-144",
+      "name": "Articuno",
+      "set": "sv03.5",
+      "number": "144/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-145",
+      "name": "Zapdos ex",
+      "set": "sv03.5",
+      "number": "145/165",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-146",
+      "name": "Moltres",
+      "set": "sv03.5",
+      "number": "146/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-147",
+      "name": "Dratini",
+      "set": "sv03.5",
+      "number": "147/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-148",
+      "name": "Dragonair",
+      "set": "sv03.5",
+      "number": "148/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-149",
+      "name": "Dragonite",
+      "set": "sv03.5",
+      "number": "149/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-150",
+      "name": "Mewtwo",
+      "set": "sv03.5",
+      "number": "150/165",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-151",
+      "name": "Mew ex",
+      "set": "sv03.5",
+      "number": "151/165",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-152",
+      "name": "Antique Dome Fossil",
+      "set": "sv03.5",
+      "number": "152/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-153",
+      "name": "Antique Helix Fossil",
+      "set": "sv03.5",
+      "number": "153/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-154",
+      "name": "Antique Old Amber",
+      "set": "sv03.5",
+      "number": "154/165",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-155",
+      "name": "Big Air Balloon",
+      "set": "sv03.5",
+      "number": "155/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-156",
+      "name": "Bill's Transfer",
+      "set": "sv03.5",
+      "number": "156/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-157",
+      "name": "Cycling Road",
+      "set": "sv03.5",
+      "number": "157/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-158",
+      "name": "Daisy's Help",
+      "set": "sv03.5",
+      "number": "158/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-159",
+      "name": "Energy Sticker",
+      "set": "sv03.5",
+      "number": "159/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-160",
+      "name": "Erika's Invitation",
+      "set": "sv03.5",
+      "number": "160/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-161",
+      "name": "Giovanni's Charisma",
+      "set": "sv03.5",
+      "number": "161/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-162",
+      "name": "Grabber",
+      "set": "sv03.5",
+      "number": "162/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-163",
+      "name": "Leftovers",
+      "set": "sv03.5",
+      "number": "163/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-164",
+      "name": "Protective Goggles",
+      "set": "sv03.5",
+      "number": "164/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-165",
+      "name": "Rigid Band",
+      "set": "sv03.5",
+      "number": "165/165",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-166",
+      "name": "Bulbasaur",
+      "set": "sv03.5",
+      "number": "166/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-167",
+      "name": "Ivysaur",
+      "set": "sv03.5",
+      "number": "167/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-168",
+      "name": "Charmander",
+      "set": "sv03.5",
+      "number": "168/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-169",
+      "name": "Charmeleon",
+      "set": "sv03.5",
+      "number": "169/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-170",
+      "name": "Squirtle",
+      "set": "sv03.5",
+      "number": "170/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-171",
+      "name": "Wartortle",
+      "set": "sv03.5",
+      "number": "171/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-172",
+      "name": "Caterpie",
+      "set": "sv03.5",
+      "number": "172/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-173",
+      "name": "Pikachu",
+      "set": "sv03.5",
+      "number": "173/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-174",
+      "name": "Nidoking",
+      "set": "sv03.5",
+      "number": "174/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-175",
+      "name": "Psyduck",
+      "set": "sv03.5",
+      "number": "175/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-176",
+      "name": "Poliwhirl",
+      "set": "sv03.5",
+      "number": "176/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-177",
+      "name": "Machoke",
+      "set": "sv03.5",
+      "number": "177/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-178",
+      "name": "Tangela",
+      "set": "sv03.5",
+      "number": "178/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-179",
+      "name": "Mr. Mime",
+      "set": "sv03.5",
+      "number": "179/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-180",
+      "name": "Omanyte",
+      "set": "sv03.5",
+      "number": "180/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-181",
+      "name": "Dragonair",
+      "set": "sv03.5",
+      "number": "181/165",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-182",
+      "name": "Venusaur ex",
+      "set": "sv03.5",
+      "number": "182/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-183",
+      "name": "Charizard ex",
+      "set": "sv03.5",
+      "number": "183/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-184",
+      "name": "Blastoise ex",
+      "set": "sv03.5",
+      "number": "184/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-185",
+      "name": "Arbok ex",
+      "set": "sv03.5",
+      "number": "185/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-186",
+      "name": "Ninetales ex",
+      "set": "sv03.5",
+      "number": "186/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-187",
+      "name": "Wigglytuff ex",
+      "set": "sv03.5",
+      "number": "187/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-188",
+      "name": "Alakazam ex",
+      "set": "sv03.5",
+      "number": "188/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-189",
+      "name": "Golem ex",
+      "set": "sv03.5",
+      "number": "189/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-190",
+      "name": "Kangaskhan ex",
+      "set": "sv03.5",
+      "number": "190/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-191",
+      "name": "Jynx ex",
+      "set": "sv03.5",
+      "number": "191/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-192",
+      "name": "Zapdos ex",
+      "set": "sv03.5",
+      "number": "192/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-193",
+      "name": "Mew ex",
+      "set": "sv03.5",
+      "number": "193/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-194",
+      "name": "Bill's Transfer",
+      "set": "sv03.5",
+      "number": "194/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-195",
+      "name": "Daisy's Help",
+      "set": "sv03.5",
+      "number": "195/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-196",
+      "name": "Erika's Invitation",
+      "set": "sv03.5",
+      "number": "196/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-197",
+      "name": "Giovanni's Charisma",
+      "set": "sv03.5",
+      "number": "197/165",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-198",
+      "name": "Venusaur ex",
+      "set": "sv03.5",
+      "number": "198/165",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-199",
+      "name": "Charizard ex",
+      "set": "sv03.5",
+      "number": "199/165",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-200",
+      "name": "Blastoise ex",
+      "set": "sv03.5",
+      "number": "200/165",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-201",
+      "name": "Alakazam ex",
+      "set": "sv03.5",
+      "number": "201/165",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-202",
+      "name": "Zapdos ex",
+      "set": "sv03.5",
+      "number": "202/165",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-203",
+      "name": "Erika's Invitation",
+      "set": "sv03.5",
+      "number": "203/165",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-204",
+      "name": "Giovanni's Charisma",
+      "set": "sv03.5",
+      "number": "204/165",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-205",
+      "name": "Mew ex",
+      "set": "sv03.5",
+      "number": "205/165",
+      "rarity": "Hyper rare",
+      "value": 30,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-206",
+      "name": "Switch",
+      "set": "sv03.5",
+      "number": "206/165",
+      "rarity": "Hyper rare",
+      "value": 30,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sv03.5-207",
+      "name": "Basic Psychic Energy",
+      "set": "sv03.5",
+      "number": "207/165",
+      "rarity": "Hyper rare",
+      "value": 30,
+      "source": "rarity-default"
+    },
+    {
+      "id": "svp-051",
+      "name": "Snorlax",
+      "set": "svp",
+      "number": "051",
+      "rarity": "Promo",
+      "value": 0.15,
+      "source": "rarity-default"
+    },
+    {
+      "id": "svp-052",
+      "name": "Mewtwo",
+      "set": "svp",
+      "number": "052",
+      "rarity": "Promo",
+      "value": 0.15,
+      "source": "rarity-default"
+    },
+    {
+      "id": "svp-053",
+      "name": "Mew ex",
+      "set": "svp",
+      "number": "053",
+      "rarity": "Promo",
+      "value": 0.15,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sve-1",
+      "name": "Basic Grass Energy",
+      "set": "sve",
+      "number": "001",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sve-2",
+      "name": "Basic Fire Energy",
+      "set": "sve",
+      "number": "002",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sve-3",
+      "name": "Basic Water Energy",
+      "set": "sve",
+      "number": "003",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sve-4",
+      "name": "Basic Lightning Energy",
+      "set": "sve",
+      "number": "004",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sve-5",
+      "name": "Basic Psychic Energy",
+      "set": "sve",
+      "number": "005",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sve-6",
+      "name": "Basic Fighting Energy",
+      "set": "sve",
+      "number": "006",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sve-7",
+      "name": "Basic Darkness Energy",
+      "set": "sve",
+      "number": "007",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "sve-8",
+      "name": "Basic Metal Energy",
+      "set": "sve",
+      "number": "008",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-001",
+      "name": "Erika's Oddish",
+      "set": "me02.5",
+      "number": "001/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-002",
+      "name": "Erika's Gloom",
+      "set": "me02.5",
+      "number": "002/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-003",
+      "name": "Erika's Vileplume ex",
+      "set": "me02.5",
+      "number": "003/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-004",
+      "name": "Erika's Bellsprout",
+      "set": "me02.5",
+      "number": "004/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-005",
+      "name": "Erika's Weepinbell",
+      "set": "me02.5",
+      "number": "005/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-006",
+      "name": "Erika's Victreebel",
+      "set": "me02.5",
+      "number": "006/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-007",
+      "name": "Erika's Tangela",
+      "set": "me02.5",
+      "number": "007/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-008",
+      "name": "Chikorita",
+      "set": "me02.5",
+      "number": "008/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-009",
+      "name": "Bayleef",
+      "set": "me02.5",
+      "number": "009/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-010",
+      "name": "Mega Meganium ex",
+      "set": "me02.5",
+      "number": "010/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-011",
+      "name": "Wurmple",
+      "set": "me02.5",
+      "number": "011/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-012",
+      "name": "Silcoon",
+      "set": "me02.5",
+      "number": "012/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-013",
+      "name": "Beautifly",
+      "set": "me02.5",
+      "number": "013/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-014",
+      "name": "Cascoon",
+      "set": "me02.5",
+      "number": "014/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-015",
+      "name": "Dustox",
+      "set": "me02.5",
+      "number": "015/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-016",
+      "name": "Budew",
+      "set": "me02.5",
+      "number": "016/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-017",
+      "name": "Grubbin",
+      "set": "me02.5",
+      "number": "017/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-018",
+      "name": "Team Rocket's Tarountula",
+      "set": "me02.5",
+      "number": "018/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-019",
+      "name": "Team Rocket's Spidops",
+      "set": "me02.5",
+      "number": "019/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-020",
+      "name": "Charmander",
+      "set": "me02.5",
+      "number": "020/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-021",
+      "name": "Charmeleon",
+      "set": "me02.5",
+      "number": "021/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-022",
+      "name": "Mega Charizard Y ex",
+      "set": "me02.5",
+      "number": "022/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-023",
+      "name": "Ethan's Slugma",
+      "set": "me02.5",
+      "number": "023/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-024",
+      "name": "Ethan's Magcargo",
+      "set": "me02.5",
+      "number": "024/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-025",
+      "name": "Entei",
+      "set": "me02.5",
+      "number": "025/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-026",
+      "name": "Ethan's Ho-Oh ex",
+      "set": "me02.5",
+      "number": "026/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-027",
+      "name": "Numel",
+      "set": "me02.5",
+      "number": "027/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-028",
+      "name": "Camerupt",
+      "set": "me02.5",
+      "number": "028/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-029",
+      "name": "Tepig",
+      "set": "me02.5",
+      "number": "029/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-030",
+      "name": "Pignite",
+      "set": "me02.5",
+      "number": "030/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-031",
+      "name": "Mega Emboar ex",
+      "set": "me02.5",
+      "number": "031/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-032",
+      "name": "N's Darumaka",
+      "set": "me02.5",
+      "number": "032/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-033",
+      "name": "N's Darmanitan",
+      "set": "me02.5",
+      "number": "033/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-034",
+      "name": "Salandit",
+      "set": "me02.5",
+      "number": "034/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-035",
+      "name": "Salazzle",
+      "set": "me02.5",
+      "number": "035/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-036",
+      "name": "Scorbunny",
+      "set": "me02.5",
+      "number": "036/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-037",
+      "name": "Raboot",
+      "set": "me02.5",
+      "number": "037/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-038",
+      "name": "Cinderace ex",
+      "set": "me02.5",
+      "number": "038/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-039",
+      "name": "Psyduck",
+      "set": "me02.5",
+      "number": "039/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-040",
+      "name": "Golduck",
+      "set": "me02.5",
+      "number": "040/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-041",
+      "name": "Totodile",
+      "set": "me02.5",
+      "number": "041/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-042",
+      "name": "Croconaw",
+      "set": "me02.5",
+      "number": "042/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-043",
+      "name": "Mega Feraligatr ex",
+      "set": "me02.5",
+      "number": "043/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-044",
+      "name": "Sneasel",
+      "set": "me02.5",
+      "number": "044/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-045",
+      "name": "Weavile",
+      "set": "me02.5",
+      "number": "045/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-046",
+      "name": "Snorunt",
+      "set": "me02.5",
+      "number": "046/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-047",
+      "name": "Mega Froslass ex",
+      "set": "me02.5",
+      "number": "047/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-048",
+      "name": "Regice ex",
+      "set": "me02.5",
+      "number": "048/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-049",
+      "name": "N's Vanillite",
+      "set": "me02.5",
+      "number": "049/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-050",
+      "name": "N's Vanillish",
+      "set": "me02.5",
+      "number": "050/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-051",
+      "name": "N's Vanilluxe",
+      "set": "me02.5",
+      "number": "051/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-052",
+      "name": "Snom",
+      "set": "me02.5",
+      "number": "052/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-053",
+      "name": "Frosmoth",
+      "set": "me02.5",
+      "number": "053/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-054",
+      "name": "Glastrier",
+      "set": "me02.5",
+      "number": "054/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-055",
+      "name": "Pikachu",
+      "set": "me02.5",
+      "number": "055/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-056",
+      "name": "Raichu",
+      "set": "me02.5",
+      "number": "056/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-057",
+      "name": "Pikachu ex",
+      "set": "me02.5",
+      "number": "057/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-058",
+      "name": "Voltorb ex",
+      "set": "me02.5",
+      "number": "058/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-059",
+      "name": "Tynamo",
+      "set": "me02.5",
+      "number": "059/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-060",
+      "name": "Eelektrik",
+      "set": "me02.5",
+      "number": "060/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-061",
+      "name": "Mega Eelektross ex",
+      "set": "me02.5",
+      "number": "061/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-062",
+      "name": "Stunfisk",
+      "set": "me02.5",
+      "number": "062/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-063",
+      "name": "Helioptile",
+      "set": "me02.5",
+      "number": "063/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-064",
+      "name": "Heliolisk",
+      "set": "me02.5",
+      "number": "064/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-065",
+      "name": "Charjabug",
+      "set": "me02.5",
+      "number": "065/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-066",
+      "name": "Vikavolt",
+      "set": "me02.5",
+      "number": "066/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-067",
+      "name": "Tapu Koko",
+      "set": "me02.5",
+      "number": "067/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-068",
+      "name": "Hop's Pincurchin ex",
+      "set": "me02.5",
+      "number": "068/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-069",
+      "name": "Iono's Tadbulb",
+      "set": "me02.5",
+      "number": "069/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-070",
+      "name": "Iono's Bellibolt ex",
+      "set": "me02.5",
+      "number": "070/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-071",
+      "name": "Iono's Wattrel",
+      "set": "me02.5",
+      "number": "071/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-072",
+      "name": "Iono's Kilowattrel",
+      "set": "me02.5",
+      "number": "072/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-073",
+      "name": "Miraidon ex",
+      "set": "me02.5",
+      "number": "073/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-074",
+      "name": "Clefairy",
+      "set": "me02.5",
+      "number": "074/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-075",
+      "name": "Clefable",
+      "set": "me02.5",
+      "number": "075/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-076",
+      "name": "Lillie's Clefairy ex",
+      "set": "me02.5",
+      "number": "076/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-077",
+      "name": "Team Rocket's Exeggcute",
+      "set": "me02.5",
+      "number": "077/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-078",
+      "name": "Team Rocket's Exeggutor",
+      "set": "me02.5",
+      "number": "078/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-079",
+      "name": "Team Rocket's Mewtwo ex",
+      "set": "me02.5",
+      "number": "079/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-080",
+      "name": "Togepi",
+      "set": "me02.5",
+      "number": "080/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-081",
+      "name": "Togetic",
+      "set": "me02.5",
+      "number": "081/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-082",
+      "name": "Togekiss",
+      "set": "me02.5",
+      "number": "082/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-083",
+      "name": "Marill",
+      "set": "me02.5",
+      "number": "083/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-084",
+      "name": "Azumarill ex",
+      "set": "me02.5",
+      "number": "084/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-085",
+      "name": "Misdreavus",
+      "set": "me02.5",
+      "number": "085/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-086",
+      "name": "Mismagius",
+      "set": "me02.5",
+      "number": "086/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-087",
+      "name": "Ralts",
+      "set": "me02.5",
+      "number": "087/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-088",
+      "name": "Kirlia",
+      "set": "me02.5",
+      "number": "088/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-089",
+      "name": "Mega Gardevoir ex",
+      "set": "me02.5",
+      "number": "089/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-090",
+      "name": "Shuppet",
+      "set": "me02.5",
+      "number": "090/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-091",
+      "name": "Banette",
+      "set": "me02.5",
+      "number": "091/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-092",
+      "name": "Rotom",
+      "set": "me02.5",
+      "number": "092/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-093",
+      "name": "Swirlix",
+      "set": "me02.5",
+      "number": "093/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-094",
+      "name": "Slurpuff",
+      "set": "me02.5",
+      "number": "094/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-095",
+      "name": "Hop's Phantump",
+      "set": "me02.5",
+      "number": "095/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-096",
+      "name": "Hop's Trevenant",
+      "set": "me02.5",
+      "number": "096/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-097",
+      "name": "Team Rocket's Mimikyu",
+      "set": "me02.5",
+      "number": "097/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-098",
+      "name": "Spectrier",
+      "set": "me02.5",
+      "number": "098/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-099",
+      "name": "Munkidori",
+      "set": "me02.5",
+      "number": "099/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-100",
+      "name": "Team Rocket's Diglett",
+      "set": "me02.5",
+      "number": "100/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-101",
+      "name": "Team Rocket's Dugtrio",
+      "set": "me02.5",
+      "number": "101/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-102",
+      "name": "Hitmontop",
+      "set": "me02.5",
+      "number": "102/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-103",
+      "name": "Meditite",
+      "set": "me02.5",
+      "number": "103/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-104",
+      "name": "Medicham",
+      "set": "me02.5",
+      "number": "104/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-105",
+      "name": "Lunatone",
+      "set": "me02.5",
+      "number": "105/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-106",
+      "name": "Solrock",
+      "set": "me02.5",
+      "number": "106/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-107",
+      "name": "Regirock ex",
+      "set": "me02.5",
+      "number": "107/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-108",
+      "name": "Groudon",
+      "set": "me02.5",
+      "number": "108/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-109",
+      "name": "Cynthia's Gible",
+      "set": "me02.5",
+      "number": "109/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-110",
+      "name": "Cynthia's Gabite",
+      "set": "me02.5",
+      "number": "110/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-111",
+      "name": "Cynthia's Garchomp ex",
+      "set": "me02.5",
+      "number": "111/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-112",
+      "name": "Riolu",
+      "set": "me02.5",
+      "number": "112/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-113",
+      "name": "Mega Lucario ex",
+      "set": "me02.5",
+      "number": "113/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-114",
+      "name": "Stunfisk ex",
+      "set": "me02.5",
+      "number": "114/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-115",
+      "name": "Pancham",
+      "set": "me02.5",
+      "number": "115/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-116",
+      "name": "Mega Hawlucha ex",
+      "set": "me02.5",
+      "number": "116/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-117",
+      "name": "Carbink",
+      "set": "me02.5",
+      "number": "117/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-118",
+      "name": "Rolycoly",
+      "set": "me02.5",
+      "number": "118/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-119",
+      "name": "Carkol",
+      "set": "me02.5",
+      "number": "119/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-120",
+      "name": "Coalossal",
+      "set": "me02.5",
+      "number": "120/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-121",
+      "name": "Koraidon ex",
+      "set": "me02.5",
+      "number": "121/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-122",
+      "name": "Okidogi",
+      "set": "me02.5",
+      "number": "122/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-123",
+      "name": "Gastly",
+      "set": "me02.5",
+      "number": "123/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-124",
+      "name": "Haunter",
+      "set": "me02.5",
+      "number": "124/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-125",
+      "name": "Mega Gengar ex",
+      "set": "me02.5",
+      "number": "125/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-126",
+      "name": "Team Rocket's Murkrow",
+      "set": "me02.5",
+      "number": "126/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-127",
+      "name": "Team Rocket's Honchkrow",
+      "set": "me02.5",
+      "number": "127/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-128",
+      "name": "Poochyena",
+      "set": "me02.5",
+      "number": "128/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-129",
+      "name": "Mightyena",
+      "set": "me02.5",
+      "number": "129/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-130",
+      "name": "Galarian Zigzagoon",
+      "set": "me02.5",
+      "number": "130/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-131",
+      "name": "Galarian Linoone",
+      "set": "me02.5",
+      "number": "131/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-132",
+      "name": "Galarian Obstagoon",
+      "set": "me02.5",
+      "number": "132/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-133",
+      "name": "Cynthia's Spiritomb",
+      "set": "me02.5",
+      "number": "133/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-134",
+      "name": "Scraggy",
+      "set": "me02.5",
+      "number": "134/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-135",
+      "name": "Mega Scrafty ex",
+      "set": "me02.5",
+      "number": "135/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-136",
+      "name": "N's Zorua",
+      "set": "me02.5",
+      "number": "136/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-137",
+      "name": "N's Zoroark ex",
+      "set": "me02.5",
+      "number": "137/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-138",
+      "name": "Vullaby",
+      "set": "me02.5",
+      "number": "138/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-139",
+      "name": "Mandibuzz ex",
+      "set": "me02.5",
+      "number": "139/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-140",
+      "name": "Pangoro",
+      "set": "me02.5",
+      "number": "140/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-141",
+      "name": "Hoopa",
+      "set": "me02.5",
+      "number": "141/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-142",
+      "name": "Fezandipiti ex",
+      "set": "me02.5",
+      "number": "142/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-143",
+      "name": "Pecharunt",
+      "set": "me02.5",
+      "number": "143/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-144",
+      "name": "Mawile",
+      "set": "me02.5",
+      "number": "144/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-145",
+      "name": "Registeel ex",
+      "set": "me02.5",
+      "number": "145/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-146",
+      "name": "Pawniard",
+      "set": "me02.5",
+      "number": "146/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-147",
+      "name": "Bisharp",
+      "set": "me02.5",
+      "number": "147/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-148",
+      "name": "Kingambit",
+      "set": "me02.5",
+      "number": "148/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-149",
+      "name": "Togedemaru ex",
+      "set": "me02.5",
+      "number": "149/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-150",
+      "name": "Dratini",
+      "set": "me02.5",
+      "number": "150/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-151",
+      "name": "Dragonair",
+      "set": "me02.5",
+      "number": "151/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-152",
+      "name": "Mega Dragonite ex",
+      "set": "me02.5",
+      "number": "152/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-153",
+      "name": "Rayquaza",
+      "set": "me02.5",
+      "number": "153/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-154",
+      "name": "N's Reshiram",
+      "set": "me02.5",
+      "number": "154/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-155",
+      "name": "N's Zekrom",
+      "set": "me02.5",
+      "number": "155/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-156",
+      "name": "Noibat",
+      "set": "me02.5",
+      "number": "156/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-157",
+      "name": "Noivern",
+      "set": "me02.5",
+      "number": "157/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-158",
+      "name": "Dreepy",
+      "set": "me02.5",
+      "number": "158/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-159",
+      "name": "Drakloak",
+      "set": "me02.5",
+      "number": "159/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-160",
+      "name": "Dragapult ex",
+      "set": "me02.5",
+      "number": "160/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-161",
+      "name": "Team Rocket's Meowth",
+      "set": "me02.5",
+      "number": "161/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-162",
+      "name": "Team Rocket's Kangaskhan ex",
+      "set": "me02.5",
+      "number": "162/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-163",
+      "name": "Larry's Dunsparce",
+      "set": "me02.5",
+      "number": "163/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-164",
+      "name": "Larry's Dudunsparce ex",
+      "set": "me02.5",
+      "number": "164/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-165",
+      "name": "Skitty",
+      "set": "me02.5",
+      "number": "165/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-166",
+      "name": "Delcatty",
+      "set": "me02.5",
+      "number": "166/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-167",
+      "name": "Zangoose ex",
+      "set": "me02.5",
+      "number": "167/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-168",
+      "name": "Larry's Starly",
+      "set": "me02.5",
+      "number": "168/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-169",
+      "name": "Larry's Staravia",
+      "set": "me02.5",
+      "number": "169/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-170",
+      "name": "Larry's Staraptor",
+      "set": "me02.5",
+      "number": "170/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-171",
+      "name": "Fan Rotom",
+      "set": "me02.5",
+      "number": "171/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-172",
+      "name": "Mega Audino ex",
+      "set": "me02.5",
+      "number": "172/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-173",
+      "name": "Larry's Rufflet",
+      "set": "me02.5",
+      "number": "173/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-174",
+      "name": "Larry's Braviary",
+      "set": "me02.5",
+      "number": "174/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-175",
+      "name": "Larry's Komala",
+      "set": "me02.5",
+      "number": "175/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-176",
+      "name": "Drampa",
+      "set": "me02.5",
+      "number": "176/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-177",
+      "name": "Hop's Cramorant",
+      "set": "me02.5",
+      "number": "177/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-178",
+      "name": "Terapagos",
+      "set": "me02.5",
+      "number": "178/217",
+      "rarity": "Rare",
+      "value": 1.05,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-179",
+      "name": "Terapagos ex",
+      "set": "me02.5",
+      "number": "179/217",
+      "rarity": "Double rare",
+      "value": 5.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-180",
+      "name": "Acerola's Mischief",
+      "set": "me02.5",
+      "number": "180/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-181",
+      "name": "Air Balloon",
+      "set": "me02.5",
+      "number": "181/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-182",
+      "name": "Anthea & Concordia",
+      "set": "me02.5",
+      "number": "182/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-183",
+      "name": "Boss's Orders",
+      "set": "me02.5",
+      "number": "183/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-184",
+      "name": "Buddy-Buddy Poffin",
+      "set": "me02.5",
+      "number": "184/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-185",
+      "name": "Canari",
+      "set": "me02.5",
+      "number": "185/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-186",
+      "name": "Counter Gain",
+      "set": "me02.5",
+      "number": "186/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-187",
+      "name": "Fighting Gong",
+      "set": "me02.5",
+      "number": "187/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-188",
+      "name": "Forest of Vitality",
+      "set": "me02.5",
+      "number": "188/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-189",
+      "name": "Glass Trumpet",
+      "set": "me02.5",
+      "number": "189/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-190",
+      "name": "Iris's Fighting Spirit",
+      "set": "me02.5",
+      "number": "190/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-191",
+      "name": "Light Ball",
+      "set": "me02.5",
+      "number": "191/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-192",
+      "name": "Lillie's Determination",
+      "set": "me02.5",
+      "number": "192/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-193",
+      "name": "Mega Signal",
+      "set": "me02.5",
+      "number": "193/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-194",
+      "name": "Mystery Garden",
+      "set": "me02.5",
+      "number": "194/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-195",
+      "name": "N's PP Up",
+      "set": "me02.5",
+      "number": "195/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-196",
+      "name": "Night Stretcher",
+      "set": "me02.5",
+      "number": "196/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-197",
+      "name": "Nighttime Mine",
+      "set": "me02.5",
+      "number": "197/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-198",
+      "name": "Poké Pad",
+      "set": "me02.5",
+      "number": "198/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-199",
+      "name": "Premium Power Pro",
+      "set": "me02.5",
+      "number": "199/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-200",
+      "name": "Surfer",
+      "set": "me02.5",
+      "number": "200/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-201",
+      "name": "Team Rocket's Archer",
+      "set": "me02.5",
+      "number": "201/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-202",
+      "name": "Team Rocket's Ariana",
+      "set": "me02.5",
+      "number": "202/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-203",
+      "name": "Team Rocket's Factory",
+      "set": "me02.5",
+      "number": "203/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-204",
+      "name": "Team Rocket's Giovanni",
+      "set": "me02.5",
+      "number": "204/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-205",
+      "name": "Team Rocket's Great Ball",
+      "set": "me02.5",
+      "number": "205/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-206",
+      "name": "Team Rocket's Hypnotizer",
+      "set": "me02.5",
+      "number": "206/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-207",
+      "name": "Team Rocket's Petrel",
+      "set": "me02.5",
+      "number": "207/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-208",
+      "name": "Team Rocket's Proton",
+      "set": "me02.5",
+      "number": "208/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-209",
+      "name": "Team Rocket's Transceiver",
+      "set": "me02.5",
+      "number": "209/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-210",
+      "name": "Team Rocket's Watchtower",
+      "set": "me02.5",
+      "number": "210/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-211",
+      "name": "Thick Scale",
+      "set": "me02.5",
+      "number": "211/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-212",
+      "name": "Tool Scrapper",
+      "set": "me02.5",
+      "number": "212/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-213",
+      "name": "Ultra Ball",
+      "set": "me02.5",
+      "number": "213/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-214",
+      "name": "Urbain",
+      "set": "me02.5",
+      "number": "214/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-215",
+      "name": "Waitress",
+      "set": "me02.5",
+      "number": "215/217",
+      "rarity": "Common",
+      "value": 0.22,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-216",
+      "name": "Prism Energy",
+      "set": "me02.5",
+      "number": "216/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-217",
+      "name": "Team Rocket's Energy",
+      "set": "me02.5",
+      "number": "217/217",
+      "rarity": "Uncommon",
+      "value": 0.41,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-218",
+      "name": "Erika's Tangela",
+      "set": "me02.5",
+      "number": "218/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-219",
+      "name": "Beautifly",
+      "set": "me02.5",
+      "number": "219/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-220",
+      "name": "Dustox",
+      "set": "me02.5",
+      "number": "220/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-221",
+      "name": "Budew",
+      "set": "me02.5",
+      "number": "221/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-222",
+      "name": "Ethan's Magcargo",
+      "set": "me02.5",
+      "number": "222/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-223",
+      "name": "Numel",
+      "set": "me02.5",
+      "number": "223/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-224",
+      "name": "Salazzle",
+      "set": "me02.5",
+      "number": "224/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-225",
+      "name": "Scorbunny",
+      "set": "me02.5",
+      "number": "225/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-226",
+      "name": "Psyduck",
+      "set": "me02.5",
+      "number": "226/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-227",
+      "name": "Snorunt",
+      "set": "me02.5",
+      "number": "227/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-228",
+      "name": "Weavile",
+      "set": "me02.5",
+      "number": "228/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-229",
+      "name": "Heliolisk",
+      "set": "me02.5",
+      "number": "229/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-230",
+      "name": "Vikavolt",
+      "set": "me02.5",
+      "number": "230/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-231",
+      "name": "Iono's Wattrel",
+      "set": "me02.5",
+      "number": "231/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-232",
+      "name": "Marill",
+      "set": "me02.5",
+      "number": "232/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-233",
+      "name": "Misdreavus",
+      "set": "me02.5",
+      "number": "233/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-234",
+      "name": "Banette",
+      "set": "me02.5",
+      "number": "234/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-235",
+      "name": "Togekiss",
+      "set": "me02.5",
+      "number": "235/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-236",
+      "name": "Slurpuff",
+      "set": "me02.5",
+      "number": "236/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-237",
+      "name": "Hop's Trevenant",
+      "set": "me02.5",
+      "number": "237/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-238",
+      "name": "Team Rocket's Mimikyu",
+      "set": "me02.5",
+      "number": "238/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-239",
+      "name": "Team Rocket's Dugtrio",
+      "set": "me02.5",
+      "number": "239/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-240",
+      "name": "Hitmontop",
+      "set": "me02.5",
+      "number": "240/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-241",
+      "name": "Medicham",
+      "set": "me02.5",
+      "number": "241/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-242",
+      "name": "Carbink",
+      "set": "me02.5",
+      "number": "242/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-243",
+      "name": "Mightyena",
+      "set": "me02.5",
+      "number": "243/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-244",
+      "name": "Cynthia's Spiritomb",
+      "set": "me02.5",
+      "number": "244/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-245",
+      "name": "Galarian Obstagoon",
+      "set": "me02.5",
+      "number": "245/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-246",
+      "name": "Mawile",
+      "set": "me02.5",
+      "number": "246/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-247",
+      "name": "Dreepy",
+      "set": "me02.5",
+      "number": "247/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-248",
+      "name": "Drakloak",
+      "set": "me02.5",
+      "number": "248/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-249",
+      "name": "Larry's Staraptor",
+      "set": "me02.5",
+      "number": "249/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-250",
+      "name": "Fan Rotom",
+      "set": "me02.5",
+      "number": "250/217",
+      "rarity": "Illustration rare",
+      "value": 18.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-251",
+      "name": "Sprigatito ex",
+      "set": "me02.5",
+      "number": "251/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-252",
+      "name": "Stunfisk ex",
+      "set": "me02.5",
+      "number": "252/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-253",
+      "name": "Mega Audino ex",
+      "set": "me02.5",
+      "number": "253/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-254",
+      "name": "Anthea & Concordia",
+      "set": "me02.5",
+      "number": "254/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-255",
+      "name": "Black Belt's Training",
+      "set": "me02.5",
+      "number": "255/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-256",
+      "name": "Boss's Orders",
+      "set": "me02.5",
+      "number": "256/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-257",
+      "name": "Canari",
+      "set": "me02.5",
+      "number": "257/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-258",
+      "name": "Cheren",
+      "set": "me02.5",
+      "number": "258/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-259",
+      "name": "Counter Gain",
+      "set": "me02.5",
+      "number": "259/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-260",
+      "name": "Glass Trumpet",
+      "set": "me02.5",
+      "number": "260/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-261",
+      "name": "Jamming Tower",
+      "set": "me02.5",
+      "number": "261/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-262",
+      "name": "N's PP Up",
+      "set": "me02.5",
+      "number": "262/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-263",
+      "name": "Team Rocket's Transceiver",
+      "set": "me02.5",
+      "number": "263/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-264",
+      "name": "Ultra Ball",
+      "set": "me02.5",
+      "number": "264/217",
+      "rarity": "Ultra Rare",
+      "value": 12.1,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-265",
+      "name": "Mega Froslass ex",
+      "set": "me02.5",
+      "number": "265/217",
+      "rarity": "Mega attack rare",
+      "value": 25,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-266",
+      "name": "Mega Eelektross ex",
+      "set": "me02.5",
+      "number": "266/217",
+      "rarity": "Mega attack rare",
+      "value": 25,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-267",
+      "name": "Mega Diancie ex",
+      "set": "me02.5",
+      "number": "267/217",
+      "rarity": "Mega attack rare",
+      "value": 25,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-268",
+      "name": "Mega Hawlucha ex",
+      "set": "me02.5",
+      "number": "268/217",
+      "rarity": "Mega attack rare",
+      "value": 25,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-269",
+      "name": "Mega Gengar ex",
+      "set": "me02.5",
+      "number": "269/217",
+      "rarity": "Mega attack rare",
+      "value": 25,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-270",
+      "name": "Mega Scrafty ex",
+      "set": "me02.5",
+      "number": "270/217",
+      "rarity": "Mega attack rare",
+      "value": 25,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-271",
+      "name": "Mega Dragonite ex",
+      "set": "me02.5",
+      "number": "271/217",
+      "rarity": "Mega attack rare",
+      "value": 25,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-272",
+      "name": "Mega Meganium ex",
+      "set": "me02.5",
+      "number": "272/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-273",
+      "name": "Mega Emboar ex",
+      "set": "me02.5",
+      "number": "273/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-274",
+      "name": "Mega Feraligatr ex",
+      "set": "me02.5",
+      "number": "274/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-275",
+      "name": "Mega Froslass ex",
+      "set": "me02.5",
+      "number": "275/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-276",
+      "name": "Pikachu ex",
+      "set": "me02.5",
+      "number": "276/217",
+      "rarity": "Special illustration rare",
+      "value": 4582,
+      "source": "manual"
+    },
+    {
+      "id": "me02.5-277",
+      "name": "Pikachu ex",
+      "set": "me02.5",
+      "number": "277/217",
+      "rarity": "Special illustration rare",
+      "value": 711,
+      "source": "manual"
+    },
+    {
+      "id": "me02.5-278",
+      "name": "Mega Eelektross ex",
+      "set": "me02.5",
+      "number": "278/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-279",
+      "name": "Iono's Bellibolt ex",
+      "set": "me02.5",
+      "number": "279/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-280",
+      "name": "Lillie's Clefairy ex",
+      "set": "me02.5",
+      "number": "280/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-281",
+      "name": "Team Rocket's Mewtwo ex",
+      "set": "me02.5",
+      "number": "281/217",
+      "rarity": "Special illustration rare",
+      "value": 657,
+      "source": "manual"
+    },
+    {
+      "id": "me02.5-282",
+      "name": "Mega Diancie ex",
+      "set": "me02.5",
+      "number": "282/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-283",
+      "name": "Mega Hawlucha ex",
+      "set": "me02.5",
+      "number": "283/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-284",
+      "name": "Mega Gengar ex",
+      "set": "me02.5",
+      "number": "284/217",
+      "rarity": "Special illustration rare",
+      "value": 4317,
+      "source": "manual"
+    },
+    {
+      "id": "me02.5-285",
+      "name": "Mega Scrafty ex",
+      "set": "me02.5",
+      "number": "285/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-286",
+      "name": "N's Zoroark ex",
+      "set": "me02.5",
+      "number": "286/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-287",
+      "name": "Marnie's Grimmsnarl ex",
+      "set": "me02.5",
+      "number": "287/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-288",
+      "name": "Fezandipiti ex",
+      "set": "me02.5",
+      "number": "288/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-289",
+      "name": "Steven's Metagross ex",
+      "set": "me02.5",
+      "number": "289/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-290",
+      "name": "Mega Dragonite ex",
+      "set": "me02.5",
+      "number": "290/217",
+      "rarity": "Special illustration rare",
+      "value": 1684,
+      "source": "manual"
+    },
+    {
+      "id": "me02.5-291",
+      "name": "Canari",
+      "set": "me02.5",
+      "number": "291/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-292",
+      "name": "Iris's Fighting Spirit",
+      "set": "me02.5",
+      "number": "292/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-293",
+      "name": "Surfer",
+      "set": "me02.5",
+      "number": "293/217",
+      "rarity": "Special illustration rare",
+      "value": 65,
+      "source": "rarity-default"
+    },
+    {
+      "id": "me02.5-294",
+      "name": "Mega Charizard Y ex",
+      "set": "me02.5",
+      "number": "294/217",
+      "rarity": "Mega Hyper Rare",
+      "value": 768,
+      "source": "manual"
+    },
+    {
+      "id": "me02.5-295",
+      "name": "Mega Dragonite ex",
+      "set": "me02.5",
+      "number": "295/217",
+      "rarity": "Mega Hyper Rare",
+      "value": 586,
+      "source": "manual"
+    }
+  ],
+  "generationFingerprintPacksPerSet": 10000,
+  "fingerprints": {
+    "151-booster": "db24a3378a82a31594dce92efbf14b39e91c578c6618c0ceac8c11f6a85ceb9b",
+    "ascended-heroes-booster": "35a0acb4fa8fb34dfcce3ac0104029b2cd10fc43c94d580df3e2221c6c431a8b"
+  },
+  "generationConfigurationHash": "83f5ac712c52e48b4d0b36c6c51dcbfca299c14c6769c3cc69bd7e1e31f03856",
+  "artworkAndIdentityHash": "0ecce2cc961e7f6fa0b0ba0ea90844f89a9549f7df8f764e247c2a194d59c696"
+}

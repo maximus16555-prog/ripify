@@ -1,0 +1,347 @@
+{
+  "seed": 1512026,
+  "marketTime": "2026-10-05T12:00:00.000Z",
+  "marketPhases": 256,
+  "money": "simulated coins",
+  "rawValueBasis": "Owned raw value, including existing saved-condition discount; no selling-channel fee applied",
+  "outcomeDefinitions": {
+    "loss": "<90% of pack price",
+    "breakEven": "90–110%",
+    "modestProfit": ">110% and <200%",
+    "strongProfit": ">=200%",
+    "strictLoss": "<100%",
+    "chase": "at least one SIR or Hyper Rare",
+    "majorHit": "at least one raw card worth >=50 coins"
+  },
+  "sets": [
+    {
+      "setCode": "sv03.5",
+      "productId": "151-booster",
+      "packs": 100000,
+      "averagePackCost": 8,
+      "averageRawValue": 8.1397,
+      "averageReferenceValue": 7.9027,
+      "rawRecoveryPercent": 101.7457,
+      "referenceRecoveryPercent": 98.7838,
+      "medianRawValue": 4.3,
+      "medianReferenceValue": 4.47,
+      "percentiles": {
+        "p10": 3.58,
+        "p25": 3.88,
+        "p75": 7.84,
+        "p90": 15.8,
+        "p99": 66.99
+      },
+      "mean95ConfidenceInterval": [
+        8.0237,
+        8.2556
+      ],
+      "strictLossPercent": 76.94,
+      "outcomePercent": {
+        "loss": 69.344,
+        "breakEven": 14.36,
+        "modestProfit": 6.513,
+        "strongProfit": 9.783
+      },
+      "rarityCardCounts": {
+        "Common": 581482,
+        "Uncommon": 377395,
+        "Rare": 108764,
+        "Ultra Rare": 4844,
+        "Double rare": 18731,
+        "Illustration rare": 6769,
+        "Hyper rare": 408,
+        "Special illustration rare": 1607
+      },
+      "rarityPackPercent": {
+        "Common": 100,
+        "Uncommon": 100,
+        "Rare": 83.21,
+        "Ultra Rare": 4.844,
+        "Double rare": 18.731,
+        "Illustration rare": 6.701,
+        "Hyper rare": 0.408,
+        "Special illustration rare": 1.607
+      },
+      "finalSlotPercent": {
+        "Rare": 75.949,
+        "Ultra Rare": 4.844,
+        "Double rare": 18.731,
+        "Hyper rare": 0.408,
+        "Special illustration rare": 0.068
+      },
+      "chasePackPercent": 2.011,
+      "majorHitPackPercent": 1.68,
+      "charizard199PackPercent": 0.242,
+      "meanConditionByRarity": {
+        "Common": 89.6817,
+        "Uncommon": 89.6855,
+        "Rare": 89.6864,
+        "Ultra Rare": 89.6341,
+        "Double rare": 89.7175,
+        "Illustration rare": 89.6521,
+        "Hyper rare": 89.6588,
+        "Special illustration rare": 89.7273
+      },
+      "marketEnvelope": {
+        "method": "Exact condition-sum expectation, real ownedValue, configured slot weights, 256 market phases",
+        "minimumExpectedRaw": 7.0752,
+        "maximumExpectedRaw": 7.9051,
+        "meanExpectedRaw": 7.4902,
+        "maximumPhysicalRecoveryPercent": 98.8139
+      },
+      "valuesByRarity": {
+        "Common": [
+          0.22
+        ],
+        "Uncommon": [
+          0.41
+        ],
+        "Double rare": [
+          5.1
+        ],
+        "Rare": [
+          1.05
+        ],
+        "Illustration rare": [
+          18.1
+        ],
+        "Ultra Rare": [
+          12.1
+        ],
+        "Special illustration rare": [
+          65,
+          4582,
+          711,
+          657,
+          4317,
+          1684
+        ],
+        "Hyper rare": [
+          30
+        ],
+        "Promo": [
+          0.15
+        ],
+        "Mega attack rare": [
+          25
+        ],
+        "Mega Hyper Rare": [
+          768,
+          586
+        ]
+      }
+    },
+    {
+      "setCode": "me02.5",
+      "productId": "ascended-heroes-booster",
+      "packs": 100000,
+      "averagePackCost": 9.5,
+      "averageRawValue": 22.0741,
+      "averageReferenceValue": 20.5114,
+      "rawRecoveryPercent": 232.3586,
+      "referenceRecoveryPercent": 215.9097,
+      "medianRawValue": 4.26,
+      "medianReferenceValue": 4.42,
+      "percentiles": {
+        "p10": 3.57,
+        "p25": 3.82,
+        "p75": 7.88,
+        "p90": 19.19,
+        "p99": 71.25
+      },
+      "mean95ConfidenceInterval": [
+        19.106,
+        25.0422
+      ],
+      "strictLossPercent": 83.954,
+      "outcomePercent": {
+        "loss": 81.869,
+        "breakEven": 2.448,
+        "modestProfit": 5.483,
+        "strongProfit": 10.2
+      },
+      "rarityCardCounts": {
+        "Common": 589456,
+        "Uncommon": 373933,
+        "Rare": 102824,
+        "Ultra Rare": 4789,
+        "Double rare": 18410,
+        "Illustration rare": 6633,
+        "Mega attack rare": 1744,
+        "Special illustration rare": 2015,
+        "Mega Hyper Rare": 196
+      },
+      "rarityPackPercent": {
+        "Common": 100,
+        "Uncommon": 99.932,
+        "Rare": 81.484,
+        "Ultra Rare": 4.789,
+        "Double rare": 18.41,
+        "Illustration rare": 6.633,
+        "Mega attack rare": 1.608,
+        "Special illustration rare": 1.607,
+        "Mega Hyper Rare": 0.196
+      },
+      "finalSlotPercent": {
+        "Rare": 74.997,
+        "Ultra Rare": 4.789,
+        "Double rare": 18.41,
+        "Mega attack rare": 1.54,
+        "Special illustration rare": 0.068,
+        "Mega Hyper Rare": 0.196
+      },
+      "chasePackPercent": 1.607,
+      "majorHitPackPercent": 1.874,
+      "charizard199PackPercent": 0,
+      "meanConditionByRarity": {
+        "Common": 89.6808,
+        "Uncommon": 89.6859,
+        "Rare": 89.6886,
+        "Ultra Rare": 89.6041,
+        "Double rare": 89.7209,
+        "Illustration rare": 89.6558,
+        "Mega attack rare": 89.7284,
+        "Special illustration rare": 89.737,
+        "Mega Hyper Rare": 90.1092
+      },
+      "marketEnvelope": {
+        "method": "Exact condition-sum expectation, real ownedValue, configured slot weights, 256 market phases",
+        "minimumExpectedRaw": 16.1107,
+        "maximumExpectedRaw": 17.0138,
+        "meanExpectedRaw": 16.5622,
+        "maximumPhysicalRecoveryPercent": 179.0923
+      },
+      "valuesByRarity": {
+        "Common": [
+          0.22
+        ],
+        "Uncommon": [
+          0.41
+        ],
+        "Double rare": [
+          5.1
+        ],
+        "Rare": [
+          1.05
+        ],
+        "Illustration rare": [
+          18.1
+        ],
+        "Ultra Rare": [
+          12.1
+        ],
+        "Special illustration rare": [
+          65,
+          4582,
+          711,
+          657,
+          4317,
+          1684
+        ],
+        "Hyper rare": [
+          30
+        ],
+        "Promo": [
+          0.15
+        ],
+        "Mega attack rare": [
+          25
+        ],
+        "Mega Hyper Rare": [
+          768,
+          586
+        ]
+      }
+    }
+  ],
+  "products": [
+    {
+      "productId": "151-booster",
+      "packCount": 1,
+      "physicalPrice": 8,
+      "onlinePrice": 7.95,
+      "expectedPackRawValue": 8.1397,
+      "expectedFixedRawValue": 0,
+      "expectedContentsRawValue": 8.1397,
+      "physicalRecoveryPercent": 101.7462,
+      "onlineRecoveryPercent": 102.3862
+    },
+    {
+      "productId": "151-etb",
+      "packCount": 9,
+      "physicalPrice": 78,
+      "onlinePrice": 74,
+      "expectedPackRawValue": 73.2573,
+      "expectedFixedRawValue": 0.1433,
+      "expectedContentsRawValue": 73.4006,
+      "physicalRecoveryPercent": 94.1033,
+      "onlineRecoveryPercent": 99.19
+    },
+    {
+      "productId": "151-upc",
+      "packCount": 16,
+      "physicalPrice": 170,
+      "onlinePrice": 162,
+      "expectedPackRawValue": 130.2352,
+      "expectedFixedRawValue": 29.0495,
+      "expectedContentsRawValue": 159.2847,
+      "physicalRecoveryPercent": 93.6969,
+      "onlineRecoveryPercent": 98.3239
+    },
+    {
+      "productId": "ascended-heroes-booster",
+      "packCount": 1,
+      "physicalPrice": 9.5,
+      "onlinePrice": 9,
+      "expectedPackRawValue": 22.0741,
+      "expectedFixedRawValue": 0,
+      "expectedContentsRawValue": 22.0741,
+      "physicalRecoveryPercent": 232.3589,
+      "onlineRecoveryPercent": 245.2678
+    }
+  ],
+  "balance": {
+    "cardValues": {
+      "Common": 0.22,
+      "Uncommon": 0.41,
+      "Rare": 1.05,
+      "Double rare": 5.1,
+      "Ultra Rare": 12.1,
+      "Illustration rare": 18.1,
+      "Special illustration rare": 65,
+      "Hyper rare": 30,
+      "Mega attack rare": 25,
+      "Mega Hyper Rare": 100
+    },
+    "packRules": {
+      "sv03.5": {
+        "finalSlot": {
+          "rare": 0.76,
+          "double": 0.188,
+          "ultra": 0.048,
+          "hyper": 0.004
+        },
+        "reverseUpgrade": {
+          "illustration": 0.067,
+          "specialIllustration": 0.015
+        }
+      },
+      "me02.5": {
+        "finalSlot": {
+          "rare": 0.75,
+          "double": 0.185,
+          "ultra": 0.048,
+          "hyper": 0.002,
+          "megaAttack": 0.015
+        },
+        "reverseUpgrade": {
+          "illustration": 0.067,
+          "specialIllustration": 0.015
+        }
+      }
+    }
+  },
+  "rareEventsIncluded": true,
+  "counterfactualPriceSource": "artifacts/card-pricing-audit-before.json"
+}

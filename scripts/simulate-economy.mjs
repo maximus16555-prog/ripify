@@ -11,7 +11,19 @@ if (!Number.isInteger(count) || count < 1000 || count > 1000000 || !Number.isInt
 const server = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
 try {
   const { simulateEconomy, exploreProfiles } = await server.ssrLoadModule('/scripts/economy-simulation.ts');
-  const result = args.includes('--explore') ? { candidates: exploreProfiles(count, seed) } : simulateEconomy(count, seed);
+  const pricesPath = option('--baseline-prices');
+  if (pricesPath) {
+    // Counterfactual pricing in this isolated development process only. The real
+    // production generator/valuation still run, with no store or player save.
+    const before = JSON.parse(await readFile(pricesPath, 'utf8'));
+    const values = new Map(before.cards.map(c => [c.id, c.value]));
+    const { CARDS } = await server.ssrLoadModule('/src/data/cards.ts');
+    for (const c of CARDS) { if (!values.has(c.id)) throw Error(`Missing baseline price: ${c.id}`); c.value = values.get(c.id); }
+  }
+  const rareEventsIncluded = args.includes('--include-rare');
+  const result = args.includes('--explore') ? { candidates: exploreProfiles(count, seed) } : simulateEconomy(count, seed, rareEventsIncluded);
+  result.rareEventsIncluded = rareEventsIncluded;
+  if (pricesPath) result.counterfactualPriceSource = pricesPath;
   const baselinePath = option('--baseline');
   if (baselinePath) {
     const baseline = JSON.parse(await readFile(baselinePath, 'utf8'));

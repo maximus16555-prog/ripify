@@ -1,0 +1,253 @@
+{
+  "definitions": 513,
+  "individualPrices": 506,
+  "manualOverrides": 7,
+  "missingPrices": 0,
+  "samples": {
+    "Common": 20,
+    "Uncommon": 20,
+    "Rare": 20,
+    "Higher rarities": 20
+  },
+  "generationUnchanged": true,
+  "artworkUnchanged": true,
+  "ordinaryPackSimulation": [
+    {
+      "productId": "151-booster",
+      "averagePackCost": {
+        "before": 8,
+        "after": 8,
+        "delta": 0
+      },
+      "averageRawValue": {
+        "before": 7.5096,
+        "after": 7.7508,
+        "delta": 0.2412
+      },
+      "medianRawValue": {
+        "before": 4.28,
+        "after": 4.69,
+        "delta": 0.41
+      },
+      "rawRecoveryPercent": {
+        "before": 93.87,
+        "after": 96.8845,
+        "delta": 3.0145
+      },
+      "strictLossPercent": {
+        "before": 78.701,
+        "after": 79.247,
+        "delta": 0.546
+      },
+      "chasePackPercent": {
+        "before": 1.943,
+        "after": 1.943,
+        "delta": 0
+      },
+      "charizard199PackPercent": {
+        "before": 0.219,
+        "after": 0.219,
+        "delta": 0
+      },
+      "outcomes": {
+        "loss": {
+          "before": 70.939,
+          "after": 76.594,
+          "delta": 5.655
+        },
+        "breakEven": {
+          "before": 14.675,
+          "after": 5.048,
+          "delta": -9.627
+        },
+        "modestProfit": {
+          "before": 5.438,
+          "after": 9.782,
+          "delta": 4.344
+        },
+        "strongProfit": {
+          "before": 8.948,
+          "after": 8.576,
+          "delta": -0.372
+        }
+      },
+      "rarities": {
+        "Common": {
+          "before": 100,
+          "after": 100,
+          "delta": 0
+        },
+        "Uncommon": {
+          "before": 100,
+          "after": 100,
+          "delta": 0
+        },
+        "Rare": {
+          "before": 83.27,
+          "after": 83.27,
+          "delta": 0
+        },
+        "Ultra Rare": {
+          "before": 4.848,
+          "after": 4.848,
+          "delta": 0
+        },
+        "Double rare": {
+          "before": 18.74,
+          "after": 18.74,
+          "delta": 0
+        },
+        "Illustration rare": {
+          "before": 6.638,
+          "after": 6.638,
+          "delta": 0
+        },
+        "Hyper rare": {
+          "before": 0.408,
+          "after": 0.408,
+          "delta": 0
+        },
+        "Special illustration rare": {
+          "before": 1.539,
+          "after": 1.539,
+          "delta": 0
+        }
+      }
+    },
+    {
+      "productId": "ascended-heroes-booster",
+      "averagePackCost": {
+        "before": 9.5,
+        "after": 9.5,
+        "delta": 0
+      },
+      "averageRawValue": {
+        "before": 17.1046,
+        "after": 17.3711,
+        "delta": 0.2665
+      },
+      "medianRawValue": {
+        "before": 4.23,
+        "after": 4.6,
+        "delta": 0.37
+      },
+      "rawRecoveryPercent": {
+        "before": 180.0482,
+        "after": 182.8542,
+        "delta": 2.806
+      },
+      "strictLossPercent": {
+        "before": 85.737,
+        "after": 82.715,
+        "delta": -3.022
+      },
+      "chasePackPercent": {
+        "before": 1.539,
+        "after": 1.539,
+        "delta": 0
+      },
+      "charizard199PackPercent": {
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      "outcomes": {
+        "loss": {
+          "before": 83.743,
+          "after": 82.218,
+          "delta": -1.525
+        },
+        "breakEven": {
+          "before": 2.055,
+          "after": 0.731,
+          "delta": -1.324
+        },
+        "modestProfit": {
+          "before": 4.52,
+          "after": 9.74,
+          "delta": 5.22
+        },
+        "strongProfit": {
+          "before": 9.682,
+          "after": 7.311,
+          "delta": -2.371
+        }
+      },
+      "rarities": {
+        "Common": {
+          "before": 100,
+          "after": 100,
+          "delta": 0
+        },
+        "Uncommon": {
+          "before": 100,
+          "after": 100,
+          "delta": 0
+        },
+        "Rare": {
+          "before": 81.543,
+          "after": 81.543,
+          "delta": 0
+        },
+        "Ultra Rare": {
+          "before": 4.793,
+          "after": 4.793,
+          "delta": 0
+        },
+        "Double rare": {
+          "before": 18.419,
+          "after": 18.419,
+          "delta": 0
+        },
+        "Illustration rare": {
+          "before": 6.638,
+          "after": 6.638,
+          "delta": 0
+        },
+        "Mega attack rare": {
+          "before": 1.54,
+          "after": 1.54,
+          "delta": 0
+        },
+        "Special illustration rare": {
+          "before": 1.539,
+          "after": 1.539,
+          "delta": 0
+        },
+        "Mega Hyper Rare": {
+          "before": 0.196,
+          "after": 0.196,
+          "delta": 0
+        }
+      }
+    }
+  ],
+  "allEventsSimulation": null,
+  "unitTests": 149,
+  "unitTestsPassed": 149,
+  "localPricingBrowserTest": "passed",
+  "localGameplayBrowserTest": "passed",
+  "filesChanged": [
+    "src/data/balance.ts",
+    "src/data/card-prices.json",
+    "src/core/economy.ts",
+    "scripts/build-card-prices.mjs",
+    "scripts/audit-card-prices.mjs",
+    "scripts/economy-simulation.ts",
+    "scripts/simulate-economy.mjs",
+    "tests/card-prices.test.ts",
+    "tests/rare-events.test.ts",
+    "tests/balance.test.ts",
+    "tests/production/card-prices.spec.ts",
+    "package.json",
+    "docs/card-pricing.md"
+  ],
+  "publicURL": "https://ripify.freebuff.app/",
+  "deployment": "kn72v89f",
+  "bundle": "main-Dbkyqmdb.js",
+  "bundleSha256": "873ddf9ec159ddcdd4994bd9d301da7ae3a12f9590e494b2373a465983c89efb",
+  "hostedBundleMatchesLocal": true,
+  "hostedPricingBrowserTest": "passed",
+  "hostedGameplayBrowserTest": "passed",
+  "hostedPageErrors": 0
+}

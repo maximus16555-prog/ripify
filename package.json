@@ -14,6 +14,9 @@
     "simulate:rare-events": "node scripts/simulate-rare-events.mjs",
     "simulate:slab-cracks": "node scripts/simulate-slab-cracks.mjs",
     "simulate:economy": "node scripts/simulate-economy.mjs",
+    "prices:build": "node scripts/build-card-prices.mjs",
+    "prices:check": "node scripts/build-card-prices.mjs --check",
+    "prices:audit": "node scripts/audit-card-prices.mjs",
     "validate:151": "node scripts/validate-151.mjs"
   },
   "dependencies": {

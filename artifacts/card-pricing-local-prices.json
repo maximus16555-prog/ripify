@@ -1,0 +1,131 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\Maxim\\Downloads\\Ripify\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.production.config.ts",
+      "tests/production/card-prices.spec.ts",
+      "--output",
+      ".freebuff/card-pricing-local-prices",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\Maxim\\Downloads\\Ripify\\playwright.production.config.ts",
+    "rootDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/Maxim/Downloads/Ripify/.freebuff/card-pricing-local-prices",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://127.0.0.1:4173",
+      "reuseExistingServer": true
+    }
+  },
+  "suites": [
+    {
+      "title": "card-prices.spec.ts",
+      "file": "card-prices.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "individual prices propagate through binder, inspection, Collectr, eBay and reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12742,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T03:23:49.344Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "individual-pricing-gameplay",
+                      "contentType": "application/json",
+                      "body": "eyJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjQxNzMvIiwidmFsdWVzIjp7ImRmMzRjNDE5LTE2Y2UtNGE3Ny04ZWQ5LTk0MmFlMWQwNWVlMCI6IjAuMzMiLCI0YjU2NTg5Ni1mOWIyLTRjMzYtOGJkZi00ZWJlZDMyNjVkYmYiOiIwLjQ3IiwiNjJmMmYwYTAtN2I1NC00NzMwLWFlZTQtNTZmOTAyMTIxZGQ3IjoiMC4xMiIsIjJiODJmYzczLWExZDItNGNlYS1iNGExLWI2YmZlNGQ3NTU4MSI6IjExLjMyIiwiYzM0MmM1NmItNjEwNi00MDI5LTk1MGYtOThkOGE0YzBiNzA1IjoiMS43MiIsImU2MzU4NzhhLWRmYTAtNDM2MS04Mzg2LTg3OWUyMTc5MTU4ZiI6IjQsNTgyLjAwIiwibGVnYWN5LXByaWNlLW1pc3ByaW50IjoiOS45MCIsInByaWNlZC1zbGFiIjoiMjkuNDMifSwicG9ydGZvbGlvIjoiNCw2NDMuMjkiLCJjYXJkc1VuY2hhbmdlZCI6dHJ1ZSwiZXJyb3JzIjpbXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4f71a565defd22ecc3ad-061fbfadc36f09a23f89",
+          "file": "card-prices.spec.ts",
+          "line": 9,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-08T03:23:47.861Z",
+    "duration": 14723.135,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -25,8 +25,9 @@ export function gradeMultiplier(grade: number) { return grade >= 10 ? 4.8 : grad
 /** Only the raw base enters the misprint modifier; no stored graded price is used. */
 export function ownedRawMarketValue(owned: OwnedCard, seed: number, now?: number) {
   const definition = CARD_BY_ID.get(owned.cardId)!;
-  const card = owned.misprint ? { ...definition, value: owned.baseRawValue! } : definition;
-  const base = rawValue(card, seed, now);
+  // Pull-time snapshots remain provenance, not a competing price table. Normal
+  // and misprinted copies resolve the same current exact-printing base price.
+  const base = rawValue(definition, seed, now);
   // Each distinct failed crack halves the raw basis once; never a graded price.
   return Math.round(base * (owned.misprint ? MISPRINT_MODIFIER : 1) * crackDamageFactor(owned) * 100) / 100;
 }

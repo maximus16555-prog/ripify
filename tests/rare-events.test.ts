@@ -87,7 +87,7 @@ describe('independent deterministic rare events', () => {
 });
 
 describe('single raw modifier, grading and persistence', () => {
-  it('applies 30x once to the saved raw base, never to an existing graded valuation', () => {
+  it('applies 30x once to the authoritative raw base, never to an existing graded valuation', () => {
     const c = printed(), definition = CARD_BY_ID.get(c.cardId)!, before = structuredClone(c);
     const base = rawValue({ ...definition, value: c.baseRawValue! }, 0, 0);
     expect(ownedRawMarketValue(c, 0, 0)).toBe(Math.round(base * 30 * 100) / 100);
@@ -100,8 +100,8 @@ describe('single raw modifier, grading and persistence', () => {
     calculateGrade(c, 'BGS', () => .5); expect(c).toEqual(before);
     const pristine = { ...c, condition: { centering: 100, corners: 100, edges: 100, surface: 100, print: 100 } };
     expect(calculateGrade(pristine, 'BGS', () => .5).grade).toBeLessThan(calculateGrade({ ...pristine, misprint: undefined }, 'BGS', () => .5).grade);
-    // A future catalog rebalance doesn't rewrite this copy's saved raw base.
-    expect(ownedRawMarketValue({ ...c, baseRawValue: 2 }, 0, 0)).toBeCloseTo(rawValue({ ...definition, value: 2 }, 0, 0) * 30, 8);
+    // Older pull-time snapshots cannot fork the current exact-printing price.
+    expect(ownedRawMarketValue({ ...c, baseRawValue: 2 }, 0, 0)).toBe(ownedRawMarketValue(c, 0, 0));
   });
   it('rolls once, records provenance forever and keeps the exact card through grading/display/sale', () => {
     let saved: string | null = null; const storage = { read: () => saved, write: (s: string) => { saved = s; }, backup: () => {} };

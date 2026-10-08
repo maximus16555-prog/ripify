@@ -4,7 +4,7 @@ import { generatePack } from '../src/core/packs';
 import { rawValue, ownedValue } from '../src/core/economy';
 import { seeded, createCard } from '../src/core/inventory';
 import type { Pack } from '../src/core/types';
-import { PACK_BALANCE, CARD_VALUES, baseCardValue } from '../src/data/balance';
+import { PACK_BALANCE, CARD_VALUES, FIXED_RAW_CARD_VALUES } from '../src/data/balance';
 
 const TIME = Date.UTC(2026, 9, 5, 12);
 const percentile = (sorted: number[], quantile: number) => sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * quantile))];
@@ -60,28 +60,28 @@ export function marketEnvelope(productId: string) {
   const means: number[] = [];
   for (let phase = 0; phase < 256; phase++) {
     const marketSeed = phase * Math.PI * 2 / 256;
-    const cache = new Map<number, number>();
+    const cache = new Map<string, number>();
     const energies = CARDS.filter(c => c.setCode === 'sve');
     let total = energies.reduce((sum, card) => sum + expected(card.id, marketSeed), 0) / energies.length;
     for (const [rarity, count] of Object.entries(expectedCounts)) {
       const cards = pool.filter(c => c.rarity === rarity);
       total += count * cards.reduce((sum, card) => {
-        if (!cache.has(card.value)) cache.set(card.value, expected(card.id, marketSeed));
-        return sum + cache.get(card.value)!;
+        if (!cache.has(card.id)) cache.set(card.id, expected(card.id, marketSeed));
+        return sum + cache.get(card.id)!;
       }, 0) / cards.length;
     }
     means.push(total);
   }
   return { method: 'Exact condition-sum expectation, real ownedValue, configured slot weights, 256 market phases', minimumExpectedRaw: round(Math.min(...means)), maximumExpectedRaw: round(Math.max(...means)), meanExpectedRaw: round(means.reduce((a, b) => a + b, 0) / means.length), maximumPhysicalRecoveryPercent: round(Math.max(...means) / product.price * 100) };
 }
-export function simulateEconomy(count: number, seed: number) {
+export function simulateEconomy(count: number, seed: number, includeRareEvents = false) {
   const sets = PRODUCTS.filter(p => p.type === 'booster' && p.manifest.verified).map(product => {
     const random = seeded(seed), totals: number[] = [], referenceTotals: number[] = [];
     const rarityCards: Record<string, number> = {}, rarityPacks: Record<string, number> = {}, finalSlot: Record<string, number> = {}, conditions: Record<string, { sum: number; cards: number }> = {};
     const outcomes = { loss: 0, breakEven: 0, modestProfit: 0, strongProfit: 0 };
     let losing = 0, chasePacks = 0, majorHitPacks = 0, charizardPacks = 0, sum = 0, sumSquares = 0, referenceSum = 0;
     for (let i = 0; i < count; i++) {
-      const pack: Pack = { uid: `simulation-${i}`, setCode: product.setCode, productId: product.code, variant: 0, price: product.price, purchasedAt: TIME, seed: Math.floor(random() * 4294967296), owner: 'local-player', state: 'unopened', generationVersion: 1 };
+      const pack: Pack = { uid: `simulation-${i}`, setCode: product.setCode, productId: product.code, variant: 0, price: product.price, purchasedAt: TIME, seed: Math.floor(random() * 4294967296), owner: 'local-player', state: 'unopened', generationVersion: includeRareEvents ? 2 : 1 };
       const cards = generatePack(pack, undefined, TIME);
       // Stratify the market across phases rather than selecting a favorable market day.
       const marketSeed = i % 256 * Math.PI * 2 / 256;
@@ -140,6 +140,7 @@ export function simulateEconomy(count: number, seed: number) {
 // browser storage, inventory transaction or UI is constructed.
 export function exploreProfiles(count: number, seed: number) {
   const originalValues = { ...CARD_VALUES }, originalRules = structuredClone(PACK_BALANCE), originalPrices = PRODUCTS.map(p => p.price);
+  const originalCardValues = new Map(CARDS.map(c => [c.id, c.value]));
   const profiles = [
     { name: 'affordable-cautious', common: .22, uncommon: .41, rare: 1.05, doubleValue: 5.1, ultraValue: 12.1, irValue: 18.1, doubleRate: .188, ultraRate: .048, irRate: .067, price: 8 },
     { name: 'target-cautious', common: .22, uncommon: .41, rare: 1.05, doubleValue: 5.1, ultraValue: 12.1, irValue: 18.1, doubleRate: .188, ultraRate: .048, irRate: .067, price: 8.25 },
@@ -153,7 +154,7 @@ export function exploreProfiles(count: number, seed: number) {
   try {
     return profiles.map(profile => {
       Object.assign(CARD_VALUES, { Common: profile.common, Uncommon: profile.uncommon, Rare: profile.rare, 'Double rare': profile.doubleValue, 'Ultra Rare': profile.ultraValue, 'Illustration rare': profile.irValue });
-      for (const card of CARDS) card.value = baseCardValue(card.id, card.rarity);
+      for (const card of CARDS) card.value = FIXED_RAW_CARD_VALUES[card.id] ?? originalCardValues.get(card.id)! * ((CARD_VALUES[card.rarity] ?? .15) / (originalValues[card.rarity] ?? .15));
       const rules = PACK_BALANCE['sv03.5'];
       rules.finalSlot = { rare: 1 - profile.doubleRate - profile.ultraRate - .004, double: profile.doubleRate, ultra: profile.ultraRate, hyper: .004 };
       rules.reverseUpgrade.illustration = profile.irRate;
@@ -163,7 +164,7 @@ export function exploreProfiles(count: number, seed: number) {
     });
   } finally {
     Object.assign(CARD_VALUES, originalValues); Object.assign(PACK_BALANCE, originalRules);
-    for (const card of CARDS) card.value = baseCardValue(card.id, card.rarity);
+    for (const card of CARDS) card.value = originalCardValues.get(card.id)!;
     PRODUCTS.forEach((p, i) => { p.price = originalPrices[i]; });
   }
 }
