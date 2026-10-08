@@ -53,6 +53,19 @@ describe('transactional slab cracking', () => {
     const f = fixture(), e = f.store.crackSlab(f.card.uid, 0)!; delete e.improvement; e.conditionAfter = { ...e.conditionBefore }; f.card.condition = { ...e.conditionBefore };
     const loaded = parseSave(JSON.stringify(f.store.state)); expect(loaded.cards[0].condition).toEqual(e.conditionBefore); expect(loaded.cards[0].crackHistory![0].improvement).toBeUndefined();
   });
+  it('recovery respects permanent damage and rejects inconsistent saved improvements', () => {
+    const f = fixture(); f.store.crackSlab(f.card.uid, 1000); f.store.finishCrack(f.card.uid);
+    const damage = structuredClone(f.card.crackHistory![0].damage);
+    for (let i = 0; i < 16; i++) {
+      f.store.submit(f.card.uid, 'PSA', 'Standard'); const order = f.store.state.orders[0]; f.store.receive(order.uid, order.dueAt);
+      f.store.crackSlab(f.card.uid, 0); f.store.finishCrack(f.card.uid);
+    }
+    expect(f.card.condition.corners).toBeLessThan(98); expect(f.card.condition.edges).toBeLessThan(98);
+    expect(f.card.crackHistory![0].damage).toEqual(damage);
+    const state = structuredClone(f.store.state); state.cards[0].crackHistory!.at(-1)!.improvement!.corners++;
+    expect(() => parseSave(JSON.stringify(state))).toThrow();
+    expect(new GameStore(f.storage).state.cards[0]).toEqual(f.card);
+  });
   it('failed cracking permanently damages condition and halves raw basis, never the graded value', () => {
     const f = fixture(), before = structuredClone(f.card), oldGraded = ownedValue(f.card, 0);
     const event = f.store.crackSlab(f.card.uid, 1000)!;

@@ -1,0 +1,127 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\Maxim\\Downloads\\Ripify\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.production.config.ts",
+      "tests/production/computer.spec.ts",
+      "--grep",
+      "physical computer:",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\Maxim\\Downloads\\Ripify\\playwright.production.config.ts",
+    "rootDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/Maxim/Downloads/Ripify/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "computer.spec.ts",
+      "file": "computer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "physical computer: five connected apps, purchases, locks, grading, search, profile and reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 71086,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T02:38:16.709Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computer-report",
+                      "contentType": "application/json",
+                      "body": "ewogICJ1cmwiOiAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwLyIsCiAgImVycm9ycyI6IFtdLAogICJkZWxpdmVyZWRQYWNrVWlkIjogImVhODg5ODU5LTJjY2QtNGNmZS1hMmRlLWJkZjY2OGM0M2FkMyIsCiAgImNhcmRVaWRzIjogWwogICAgImViYjk3MjA4LWYwNWMtNDc3Yi05OWJmLTg0MzZjZDIzMmI3ZSIsCiAgICAiZjZlNDRiOTItY2Y3Mi00MDc0LWEyN2UtYTFjZDMzNmZkYWYzIgogIF0sCiAgImFwcHMiOiBbCiAgICAic3RvcmUiLAogICAgImViYXkiLAogICAgImdyYWRpbmciLAogICAgImNvbGxlY3RyIiwKICAgICJwcm9maWxlIgogIF0sCiAgInByb2ZpbGUiOiB7CiAgICAibmFtZSI6ICJNYXgiLAogICAgImF2YXRhciI6ICJtaW50IgogIH0KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "63b54f864c251470a409-4920920754da367da552",
+          "file": "computer.spec.ts",
+          "line": 15,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-08T02:38:16.202Z",
+    "duration": 71811.545,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

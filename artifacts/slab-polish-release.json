@@ -1,0 +1,59 @@
+{
+  "deployment": "kn778rs8",
+  "url": "https://ripify.freebuff.app/",
+  "runtimeCommit": "db7cf9a",
+  "bundle": "main-DI2MYzVZ.js",
+  "sha256": "1c6b0e6546aef9b0e9086da8a04880489613e2e77e44608cab9f6f7de75e8da3",
+  "cloudBuildMatches": true,
+  "unitTests": 145,
+  "localGameplayTests": 10,
+  "simulation": {
+    "count": 200000,
+    "safe": 99866,
+    "damaged": 100134,
+    "successRate": 0.49933,
+    "damageRate": 0.50067,
+    "standardDeviations": -0.5992662179699436,
+    "violations": 0,
+    "realPlayerItemsAwarded": 0
+  },
+  "protectedSystems": {
+    "src/core/inventory.ts": {
+      "unchanged": true,
+      "sha256": "4a5a31907a8a3f9d6c4a86c37c0a873a974761fb7fc6c57cf9c174183195ff5f"
+    },
+    "src/core/rare-events.ts": {
+      "unchanged": true,
+      "sha256": "3ffb34416d04e38ca75cb632eb613156faa49812f17ad49f01d6b962ab83f945"
+    },
+    "src/core/economy.ts": {
+      "unchanged": true,
+      "sha256": "f0a107265d3092dcd01c06e7d1bfbb59ea8c1f399f060d3a28ea0923d92d7be7"
+    },
+    "src/core/store.ts": {
+      "unchanged": true,
+      "sha256": "07748b7ca60cbfc9a3748894a3847e4ac4bc7dc3f2ad15985d81684191e8ace6"
+    },
+    "src/core/save.ts": {
+      "unchanged": true,
+      "sha256": "8c733fc03312082d667a15beac65120a434a05bed1f765103923203fc9eef804"
+    },
+    "src/core/population.ts": {
+      "unchanged": true,
+      "sha256": "ff22893ac23c731784d48f48466ae1de2445b997a41a2fc76ffa55bd455ba585"
+    },
+    "src/game/world.ts": {
+      "unchanged": true,
+      "sha256": "e435b4c0a9c6a7ee0e3e150fa3d571c452ae8f71f9477e4a990295525814abd1"
+    },
+    "src/game/player.ts": {
+      "unchanged": true,
+      "sha256": "d40ffd8e0b928114fc3ad71345d8ed02f9cc8912fd7a3c708767acd61bc0dbf6"
+    }
+  },
+  "hostedVerification": "passed",
+  "hostedBundleMatches": true,
+  "hostedGameplayTests": 10,
+  "hostedSlabScenarios": 5,
+  "computerTestSynchronizationCorrected": true
+}

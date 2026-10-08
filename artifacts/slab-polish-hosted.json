@@ -1,0 +1,220 @@
+{
+  "stats": {
+    "startTime": "2026-10-08T02:32:36.391Z",
+    "duration": 304965.84500000003,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "slabEvidence": [
+    {
+      "url": "https://ripify.freebuff.app/",
+      "outcome": "safe",
+      "persistedBeforeAnimation": true,
+      "uid": "34cd33e3-8212-4f69-a220-0ca2189400f3",
+      "conditionBefore": {
+        "centering": 90,
+        "corners": 91,
+        "edges": 87,
+        "surface": 93,
+        "print": 92
+      },
+      "conditionAfter": {
+        "centering": 90,
+        "corners": 93,
+        "edges": 91,
+        "surface": 97,
+        "print": 92
+      },
+      "fractureSounds": [
+        5158,
+        5554.5,
+        5888
+      ],
+      "regrading": true,
+      "errors": []
+    },
+    {
+      "url": "https://ripify.freebuff.app/",
+      "outcome": "damaged",
+      "persistedBeforeAnimation": true,
+      "uid": "b7eefdad-0288-42e6-88de-0b32a493f6b2",
+      "conditionBefore": {
+        "centering": 90,
+        "corners": 91,
+        "edges": 87,
+        "surface": 93,
+        "print": 92
+      },
+      "conditionAfter": {
+        "centering": 90,
+        "corners": 56,
+        "edges": 63,
+        "surface": 65,
+        "print": 92
+      },
+      "fractureSounds": [
+        5118.700000047684,
+        5516.200000047684,
+        5851.100000143051
+      ],
+      "regrading": true,
+      "errors": []
+    },
+    {
+      "evidence": [
+        {
+          "type": "missing-corner",
+          "seed": 685,
+          "damage": [
+            {
+              "type": "missing-corner",
+              "side": "both",
+              "x": 1,
+              "y": 0,
+              "severity": 0.8456451094476507,
+              "length": 0.09,
+              "angle": 0
+            },
+            {
+              "type": "dent",
+              "side": "back",
+              "x": 0.502046520402655,
+              "y": 0.3524072157451883,
+              "severity": 0.8456451094476507,
+              "length": 0.3266466737911105,
+              "angle": 2.934296634375669
+            },
+            {
+              "type": "edge-chip",
+              "side": "both",
+              "x": 1,
+              "y": 0.5592767658643425,
+              "severity": 0.6765160875581206,
+              "length": 0.08,
+              "angle": 0
+            }
+          ],
+          "reloadUnchanged": true
+        },
+        {
+          "type": "crease",
+          "seed": 683,
+          "damage": [
+            {
+              "type": "bent-corner",
+              "side": "both",
+              "x": 0,
+              "y": 0,
+              "severity": 0.7163493188098073,
+              "length": 0.09,
+              "angle": 0
+            },
+            {
+              "type": "crease",
+              "side": "front",
+              "x": 0.5710094881244003,
+              "y": 0.43625425396021456,
+              "severity": 0.7163493188098073,
+              "length": 0.32403213376645,
+              "angle": 2.5733371037852195
+            },
+            {
+              "type": "edge-chip",
+              "side": "both",
+              "x": 0,
+              "y": 0.6148059878498315,
+              "severity": 0.5730794550478459,
+              "length": 0.08,
+              "angle": 0
+            }
+          ],
+          "reloadUnchanged": true
+        },
+        {
+          "type": "dent",
+          "seed": 682,
+          "damage": [
+            {
+              "type": "bent-corner",
+              "side": "both",
+              "x": 0,
+              "y": 0,
+              "severity": 0.8267014234908856,
+              "length": 0.09,
+              "angle": 0
+            },
+            {
+              "type": "dent",
+              "side": "back",
+              "x": 0.3554909719852731,
+              "y": 0.4781777730677277,
+              "severity": 0.8267014234908856,
+              "length": 0.24772486375411973,
+              "angle": 2.392857338489995
+            },
+            {
+              "type": "edge-chip",
+              "side": "both",
+              "x": 0,
+              "y": 0.3425705988425761,
+              "severity": 0.6613611387927085,
+              "length": 0.08,
+              "angle": 0
+            }
+          ],
+          "reloadUnchanged": true
+        },
+        {
+          "type": "scratch",
+          "seed": 684,
+          "damage": [
+            {
+              "type": "bent-corner",
+              "side": "both",
+              "x": 1,
+              "y": 0,
+              "severity": 0.605997214128729,
+              "length": 0.09,
+              "angle": 0
+            },
+            {
+              "type": "scratch",
+              "side": "front",
+              "x": 0.2865280042635277,
+              "y": 0.3943307348527014,
+              "severity": 0.605997214128729,
+              "length": 0.2503394037787802,
+              "angle": 2.753816869080444
+            },
+            {
+              "type": "edge-chip",
+              "side": "both",
+              "x": 1,
+              "y": 0.287041376857087,
+              "severity": 0.4847977713029832,
+              "length": 0.08,
+              "angle": 0
+            }
+          ],
+          "reloadUnchanged": true
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "computerRecheck": {
+    "passed": true,
+    "stats": {
+      "startTime": "2026-10-08T02:38:16.202Z",
+      "duration": 71811.545,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "reason": "Wait for visible added item before editing replacement trade search input"
+  },
+  "finalGameplayScenariosPassed": 10
+}

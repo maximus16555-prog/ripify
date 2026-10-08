@@ -83,3 +83,7 @@ All 129 unit tests and seven production browser tests pass. The latter ran again
 The five connected computer applications are live on the existing public domain. Deployment `kn7cb5mc` serves `main-CotqgbvQ.js`, SHA256 `f50df690eb0febf656f9bf1b82bd00bbd6853830c656fe7785a4ca57b18a80ca`, matching the local production build. The cloud workspace received only the owned desktop release changes and final UI polish; the same project/domain/save origin is retained. No local server is required.
 
 The cloud type-check initially needed the existing production test fixture `tests/fixtures/progressed-game.ts`, which was absent from its older checkout. Transferring that unchanged fixture resolved the build; no gameplay compatibility patch was needed. See [computer implementation and release verification](computer.md) and [release audit](../artifacts/computer-release.json).
+
+## Slab fracture and condition polish
+
+Deployment `kn778rs8` serves the slab polish on the same domain/save origin. Hosted `main-DI2MYzVZ.js` SHA256 `1c6b0e6546aef9b0e9086da8a04880489613e2e77e44608cab9f6f7de75e8da3` matches the local tested build. Successful cracks now apply bounded repairable-condition improvement once; actual cutout/deformation geometry replaces white damage patches, and pre-fractured plastic breaks before separation. Five hosted slab scenarios pass, including front/back/angled views, exact saved defects, regrading, and refresh/Escape during animation. See [implementation and verification](slab-polish.md) and [release audit](../artifacts/slab-polish-release.json).

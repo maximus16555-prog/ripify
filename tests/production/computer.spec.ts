@@ -52,7 +52,10 @@ test('physical computer: five connected apps, purchases, locks, grading, search,
   await expect.poll(() => page.locator('.pc-card-page img.exact-card-image').evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
   expect((await page.locator('.pc-card-page .real-card').boundingBox())!.height).toBeGreaterThan(200);
   await page.screenshot({ path: 'artifacts/computer-card-page.png' });
-  await page.locator('[data-action="route"][data-value="trade"]').click(); await page.locator('[data-give]').selectOption(slab.uid); await page.locator('[data-action="give"]').click(); await page.locator('[data-trade-query]').fill('Pikachu ex'); await page.locator('[data-receive]').selectOption('me02.5-276'); await page.locator('[data-action="receiveTrade"]').click(); await expect(page.locator('.pc-trade')).toContainText('Pikachu ex');
+  await page.locator('[data-action="route"][data-value="trade"]').click(); await page.locator('[data-give]').selectOption(slab.uid); await page.locator('[data-action="give"]').click();
+  // Wait for the requested frame to finish before editing its replacement search input.
+  await expect(page.locator('.pc-trade section').first().locator('p')).toContainText('Snorlax');
+  await page.locator('[data-trade-query]').fill('Pikachu ex'); await page.locator('[data-receive]').selectOption('me02.5-276'); await page.locator('[data-action="receiveTrade"]').click(); await expect(page.locator('.pc-trade')).toContainText('Pikachu ex');
   await page.getByRole('button', { name: 'Minimize Collectr', exact: true }).click();
   await page.locator('[data-app="profile"]').click(); await expect(page.locator('.pc-profile-header')).toContainText('Collector'); await page.locator('[name="name"]').fill('Max'); await page.locator('[data-action="profile"]').click(); await expect(page.locator('.pc-profile-header')).toContainText('Max');
   await page.screenshot({ path: 'artifacts/computer-profile.png' });

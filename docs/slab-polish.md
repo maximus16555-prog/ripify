@@ -52,6 +52,14 @@ Failed attempts retain lower physical scores and the existing single 0.5 raw-bas
 
 The 200,000-attempt [simulation](../artifacts/slab-crack-simulation.json) returned 99,866 safe (49.933%), 100,134 damaged (50.067%), zero invariant violations and no real inventory awards.
 
+Production build and **145 unit tests** pass. All **10 local gameplay scenarios** passed. The **five slab-specific scenarios also passed on the public domain**, including both outcomes, interrupted animations, regrading, exact save persistence, and front/back/angled inspection of generated defects. The safe fixture changed corners/edges/surface from 91/87/93 to 93/91/97; centering 90 and print 92 were unchanged. Failure reduced those repairable attributes to 56/63/65. Both sequences played exactly three fracture sounds at separate phase thresholds. See [local evidence](../artifacts/slab-polish-local.json) and [hosted slab evidence](../artifacts/slab-polish-hosted.json).
+
+The hosted full-suite run found a pre-existing test race in the computer scenario: the test filled Trade Analyzer search before an earlier add-item action completed its requested animation-frame refresh. The test now waits for the added item to be visible before editing the new input. Computer application runtime code was not changed by this polish.
+
+The corrected computer scenario passed its hosted recheck. Together with the nine other successful hosted scenarios, all ten have now passed on the public build. The original failure is retained in the [first-run report](../artifacts/slab-polish-hosted-playwright.json); the [recheck report](../artifacts/slab-polish-hosted-computer-recheck.json) and [combined evidence](../artifacts/slab-polish-hosted.json) document resolution rather than hiding it.
+
+The update is served at [ripify.freebuff.app](https://ripify.freebuff.app/) by deployment `kn778rs8`. Hosted `main-DI2MYzVZ.js` has SHA256 `1c6b0e6546aef9b0e9086da8a04880489613e2e77e44608cab9f6f7de75e8da3`, identical to the tested local and cloud builds. Existing domain and save origin were retained. [Release audit](../artifacts/slab-polish-release.json) records unchanged protected systems.
+
 ## Changed files
 
 - Core: [types](../src/core/types.ts), [rules](../src/core/slab-cracking.ts), [validation](../src/core/slab-validation.ts).

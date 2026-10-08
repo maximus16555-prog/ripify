@@ -1,0 +1,525 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\Maxim\\Downloads\\Ripify\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.production.config.ts",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\Maxim\\Downloads\\Ripify\\playwright.production.config.ts",
+    "rootDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/Maxim/Downloads/Ripify/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/Maxim/Downloads/Ripify/tests/production",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "computer.spec.ts",
+      "file": "computer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "physical computer: five connected apps, purchases, locks, grading, search, profile and reload",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 180210,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\computer.spec.ts",
+                        "column": 284,
+                        "line": 55
+                      },
+                      "message": "Error: locator.selectOption: Test timeout of 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-receive]')\u001b[22m\n\u001b[2m    - locator resolved to <select data-receive=\"\"></select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m    - element was detached from the DOM, retrying\u001b[22m\n\u001b[2m      - locator resolved to <select data-receive=\"\"></select>\u001b[22m\n\u001b[2m    - attempting select option action\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 20ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m    19 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m       - did not find some options\u001b[22m\n\u001b[2m     - retrying select option action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and enabled\u001b[22m\n\u001b[2m  - element was detached from the DOM, retrying\u001b[22m\n\u001b[2m    - locator resolved to <select data-receive=\"\"></select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    232 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m        - did not find some options\u001b[22m\n\u001b[2m      - retrying select option action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\n\n  53 |   expect((await page.locator('.pc-card-page .real-card').boundingBox())!.height).toBeGreaterThan(200);\n  54 |   await page.screenshot({ path: 'artifacts/computer-card-page.png' });\n> 55 |   await page.locator('[data-action=\"route\"][data-value=\"trade\"]').click(); await page.locator('[data-give]').selectOption(slab.uid); await page.locator('[data-action=\"give\"]').click(); await page.locator('[data-trade-query]').fill('Pikachu ex'); await page.locator('[data-receive]').selectOption('me02.5-276'); await page.locator('[data-action=\"receiveTrade\"]').click(); await expect(page.locator('.pc-trade')).toContainText('Pikachu ex');\n     |                                                                                                                                                                                                                                                                                            ^\n  56 |   await page.getByRole('button', { name: 'Minimize Collectr', exact: true }).click();\n  57 |   await page.locator('[data-app=\"profile\"]').click(); await expect(page.locator('.pc-profile-header')).toContainText('Collector'); await page.locator('[name=\"name\"]').fill('Max'); await page.locator('[data-action=\"profile\"]').click(); await expect(page.locator('.pc-profile-header')).toContainText('Max');\n  58 |   await page.screenshot({ path: 'artifacts/computer-profile.png' });\n    at C:\\Users\\Maxim\\Downloads\\Ripify\\tests\\production\\computer.spec.ts:55:284"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T02:32:36.841Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\Maxim\\Downloads\\Ripify\\test-results\\computer-physical-computer-f6f4f-g-search-profile-and-reload\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\Maxim\\Downloads\\Ripify\\test-results\\computer-physical-computer-f6f4f-g-search-profile-and-reload\\error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "63b54f864c251470a409-4920920754da367da552",
+          "file": "computer.spec.ts",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "computer windows release hidden content and reuse the bounded physical preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12957,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T02:35:37.575Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computer-performance",
+                      "contentType": "application/json",
+                      "body": "eyJjeWNsZXMiOjgsImNvbnRleHRzQ3JlYXRlZCI6MiwiaWRsZVdvcmxkRHJhd3NQZXJTZWNvbmQiOjAsImhpZGRlbkltYWdlcyI6MCwiaGlkZGVuUHJldmlld3MiOjB9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "63b54f864c251470a409-5a7498b29577b0d914c9",
+          "file": "computer.spec.ts",
+          "line": 72,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "playable.spec.ts",
+      "file": "playable.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "production gameplay: room, shop, purchase, manual rip/swipes, collection and persistent refresh",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21995,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T02:35:50.623Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "production-report",
+                      "contentType": "application/json",
+                      "body": "ewogICJ1cmwiOiAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwLyIsCiAgImVycm9ycyI6IFtdLAogICJmYWlsZWQiOiBbXSwKICAidW5pcXVlUmVxdWVzdHMiOiBbCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwLyIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2Fzc2V0cy9pbmRleC1CR1VoZVRDXy5qcyIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2Fzc2V0cy9pbmRleC1xSkJ6UFI2Mi5jc3MiLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hc3NldHMvbWFucm9wZS1sYXRpbi13Z2h0LW5vcm1hbC1ESEljQUpSZy53b2ZmMiIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2Fzc2V0cy9kbS1zYW5zLWxhdGluLXdnaHQtbm9ybWFsLVh6MUlaWkEwLndvZmYyIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXNzZXRzL21haW4tREkyTVl6VlouanMiLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hc3NldHMvZW5naW5lLXRVTm16MTF4LmpzIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXNzZXRzL21haW4tQnlKdHppQmIuY3NzIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXJ0d29yay8xNTEtYm9vc3Rlci5qcGciLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hcnR3b3JrL2FzY2VuZGVkLWhlcm9lcy1ib29zdGVyLmpwZyIsCiAgICAiaHR0cHM6Ly9yaXBpZnkuZnJlZWJ1ZmYuYXBwL2FydHdvcmsvMTUxLWV0Yi5qcGciLAogICAgImh0dHBzOi8vcmlwaWZ5LmZyZWVidWZmLmFwcC9hcnR3b3JrLzE1MS11cGMuanBnIiwKICAgICJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvYXJ0d29yay9zdmUtMS5qcGciLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzA4OC9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzEwMC9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzAyOS9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzExMS9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzExMi9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzA3NS9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzE2NS9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzA0MS9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzAwNS9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzEzNC9oaWdoLndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzA4OC9sb3cud2VicCIsCiAgICAiaHR0cHM6Ly9hc3NldHMudGNnZGV4Lm5ldC9lbi9zdi9zdjAzLjUvMTAwL2xvdy53ZWJwIiwKICAgICJodHRwczovL2Fzc2V0cy50Y2dkZXgubmV0L2VuL3N2L3N2MDMuNS8wMjkvbG93LndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzExMS9sb3cud2VicCIsCiAgICAiaHR0cHM6Ly9hc3NldHMudGNnZGV4Lm5ldC9lbi9zdi9zdjAzLjUvMTEyL2xvdy53ZWJwIiwKICAgICJodHRwczovL2Fzc2V0cy50Y2dkZXgubmV0L2VuL3N2L3N2MDMuNS8wNzUvbG93LndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzE2NS9sb3cud2VicCIsCiAgICAiaHR0cHM6Ly9hc3NldHMudGNnZGV4Lm5ldC9lbi9zdi9zdjAzLjUvMDQxL2xvdy53ZWJwIiwKICAgICJodHRwczovL2Fzc2V0cy50Y2dkZXgubmV0L2VuL3N2L3N2MDMuNS8wMDUvbG93LndlYnAiLAogICAgImh0dHBzOi8vYXNzZXRzLnRjZ2RleC5uZXQvZW4vc3Yvc3YwMy41LzEzNC9sb3cud2VicCIKICBdLAogICJhdWRpbyI6IHsKICAgICJzdGFydHMiOiAxOCwKICAgICJzdGF0ZSI6ICJydW5uaW5nIgogIH0sCiAgInBhY2tVaWQiOiAiYWI3MzExMmQtNTIxNy00NmFjLTkzZWUtNzUyY2EyOWQyMDQ1IiwKICAiY2FyZENvdW50IjogMTEKfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7106448f066158a1526c-52085ac7b9a3737e226f",
+          "file": "playable.spec.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "reset-progress.spec.ts",
+      "file": "reset-progress.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "settings reset requires confirmation, handles failure, clears progress and stays reset after refresh",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3487,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T02:36:12.655Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reset-report",
+                      "contentType": "application/json",
+                      "body": "eyJ1cmwiOiJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvIiwiY2FuY2VsUHJlc2VydmVzU2F2ZSI6dHJ1ZSwiZmFpbHVyZVByZXNlcnZlc1NhdmUiOnRydWUsInJlc2V0UGVyc2lzdHMiOnRydWUsInByZWZlcmVuY2VzS2VwdCI6dHJ1ZSwicmVjb3ZlcnlDbGVhcmVkIjp0cnVlLCJlcnJvcnMiOltdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "644fc282fbb7e6018585-b3a6a00d779a8aa92ef9",
+          "file": "reset-progress.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "shortcuts.spec.ts",
+      "file": "shortcuts.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "production hidden shortcuts add one persistent special pack per press and open through normal gameplay",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23645,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T02:36:16.173Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "shortcut-report",
+                      "contentType": "application/json",
+                      "body": "eyJ1cmwiOiJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvIiwiZXJyb3JzIjpbXSwiaGVsZEtleVBhY2tDb3VudCI6MiwicmVwZWF0ZWRQcmVzc1BhY2tDb3VudCI6Mywic2F2ZVJlbG9hZCI6dHJ1ZSwiY2FyZHNDb2xsZWN0ZWQiOjIyLCJmaXJzdCI6eyJ0eXBlIjoiZW5nbGlzaC0xNTEtZGVtaWdvZCIsImxpbmUiOiJibGFzdG9pc2UifSwic2Vjb25kIjp7InR5cGUiOiJhc2NlbmRlZC1oZXJvZXMtZ29kIn19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6225fe1afc44b80fe34b-fefe2bb3eac62a5c3544",
+          "file": "shortcuts.spec.ts",
+          "line": 38,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "slab-cracking.spec.ts",
+      "file": "slab-cracking.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "physical safe crack preserves the same card and survives reloading",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12590,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T02:36:39.853Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "slab-crack-report",
+                      "contentType": "application/json",
+                      "body": "eyJ1cmwiOiJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvIiwib3V0Y29tZSI6InNhZmUiLCJwZXJzaXN0ZWRCZWZvcmVBbmltYXRpb24iOnRydWUsInVpZCI6IjM0Y2QzM2UzLTgyMTItNGY2OS1hMjIwLTBjYTIxODk0MDBmMyIsImNvbmRpdGlvbkJlZm9yZSI6eyJjZW50ZXJpbmciOjkwLCJjb3JuZXJzIjo5MSwiZWRnZXMiOjg3LCJzdXJmYWNlIjo5MywicHJpbnQiOjkyfSwiY29uZGl0aW9uQWZ0ZXIiOnsiY2VudGVyaW5nIjo5MCwiY29ybmVycyI6OTMsImVkZ2VzIjo5MSwic3VyZmFjZSI6OTcsInByaW50Ijo5Mn0sImZyYWN0dXJlU291bmRzIjpbNTE1OCw1NTU0LjUsNTg4OF0sInJlZ3JhZGluZyI6dHJ1ZSwiZXJyb3JzIjpbXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "604c70537aeddd984f58-7505889b8f2b314d0335",
+          "file": "slab-cracking.spec.ts",
+          "line": 33,
+          "column": 71
+        },
+        {
+          "title": "physical damaged crack preserves the same card and survives reloading",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12939,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T02:36:52.457Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "slab-crack-report",
+                      "contentType": "application/json",
+                      "body": "eyJ1cmwiOiJodHRwczovL3JpcGlmeS5mcmVlYnVmZi5hcHAvIiwib3V0Y29tZSI6ImRhbWFnZWQiLCJwZXJzaXN0ZWRCZWZvcmVBbmltYXRpb24iOnRydWUsInVpZCI6ImI3ZWVmZGFkLTAyODgtNDJlNi04OGRlLTBiMzJhNDkzZjZiMiIsImNvbmRpdGlvbkJlZm9yZSI6eyJjZW50ZXJpbmciOjkwLCJjb3JuZXJzIjo5MSwiZWRnZXMiOjg3LCJzdXJmYWNlIjo5MywicHJpbnQiOjkyfSwiY29uZGl0aW9uQWZ0ZXIiOnsiY2VudGVyaW5nIjo5MCwiY29ybmVycyI6NTYsImVkZ2VzIjo2Mywic3VyZmFjZSI6NjUsInByaW50Ijo5Mn0sImZyYWN0dXJlU291bmRzIjpbNTExOC43MDAwMDAwNDc2ODQsNTUxNi4yMDAwMDAwNDc2ODQsNTg1MS4xMDAwMDAxNDMwNTFdLCJyZWdyYWRpbmciOnRydWUsImVycm9ycyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "604c70537aeddd984f58-ae715636580197f23ca0",
+          "file": "slab-cracking.spec.ts",
+          "line": 33,
+          "column": 71
+        },
+        {
+          "title": "reload during slab animation cannot undo or reroll a failed crack",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7145,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T02:37:05.406Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "604c70537aeddd984f58-4c4f8fd2cb8ca785d4fa",
+          "file": "slab-cracking.spec.ts",
+          "line": 84,
+          "column": 58
+        },
+        {
+          "title": "close during slab animation cannot undo or reroll a failed crack",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7255,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T02:37:12.561Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "604c70537aeddd984f58-e5d49cb6a44a6c37b742",
+          "file": "slab-cracking.spec.ts",
+          "line": 84,
+          "column": 58
+        },
+        {
+          "title": "persistent missing stock, creases, dents and scratches render on the real two-sided card",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21358,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T02:37:19.828Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "physical-damage-report",
+                      "contentType": "application/json",
+                      "body": "eyJldmlkZW5jZSI6W3sidHlwZSI6Im1pc3NpbmctY29ybmVyIiwic2VlZCI6Njg1LCJkYW1hZ2UiOlt7InR5cGUiOiJtaXNzaW5nLWNvcm5lciIsInNpZGUiOiJib3RoIiwieCI6MSwieSI6MCwic2V2ZXJpdHkiOjAuODQ1NjQ1MTA5NDQ3NjUwNywibGVuZ3RoIjowLjA5LCJhbmdsZSI6MH0seyJ0eXBlIjoiZGVudCIsInNpZGUiOiJiYWNrIiwieCI6MC41MDIwNDY1MjA0MDI2NTUsInkiOjAuMzUyNDA3MjE1NzQ1MTg4Mywic2V2ZXJpdHkiOjAuODQ1NjQ1MTA5NDQ3NjUwNywibGVuZ3RoIjowLjMyNjY0NjY3Mzc5MTExMDUsImFuZ2xlIjoyLjkzNDI5NjYzNDM3NTY2OX0seyJ0eXBlIjoiZWRnZS1jaGlwIiwic2lkZSI6ImJvdGgiLCJ4IjoxLCJ5IjowLjU1OTI3Njc2NTg2NDM0MjUsInNldmVyaXR5IjowLjY3NjUxNjA4NzU1ODEyMDYsImxlbmd0aCI6MC4wOCwiYW5nbGUiOjB9XSwicmVsb2FkVW5jaGFuZ2VkIjp0cnVlfSx7InR5cGUiOiJjcmVhc2UiLCJzZWVkIjo2ODMsImRhbWFnZSI6W3sidHlwZSI6ImJlbnQtY29ybmVyIiwic2lkZSI6ImJvdGgiLCJ4IjowLCJ5IjowLCJzZXZlcml0eSI6MC43MTYzNDkzMTg4MDk4MDczLCJsZW5ndGgiOjAuMDksImFuZ2xlIjowfSx7InR5cGUiOiJjcmVhc2UiLCJzaWRlIjoiZnJvbnQiLCJ4IjowLjU3MTAwOTQ4ODEyNDQwMDMsInkiOjAuNDM2MjU0MjUzOTYwMjE0NTYsInNldmVyaXR5IjowLjcxNjM0OTMxODgwOTgwNzMsImxlbmd0aCI6MC4zMjQwMzIxMzM3NjY0NSwiYW5nbGUiOjIuNTczMzM3MTAzNzg1MjE5NX0seyJ0eXBlIjoiZWRnZS1jaGlwIiwic2lkZSI6ImJvdGgiLCJ4IjowLCJ5IjowLjYxNDgwNTk4Nzg0OTgzMTUsInNldmVyaXR5IjowLjU3MzA3OTQ1NTA0Nzg0NTksImxlbmd0aCI6MC4wOCwiYW5nbGUiOjB9XSwicmVsb2FkVW5jaGFuZ2VkIjp0cnVlfSx7InR5cGUiOiJkZW50Iiwic2VlZCI6NjgyLCJkYW1hZ2UiOlt7InR5cGUiOiJiZW50LWNvcm5lciIsInNpZGUiOiJib3RoIiwieCI6MCwieSI6MCwic2V2ZXJpdHkiOjAuODI2NzAxNDIzNDkwODg1NiwibGVuZ3RoIjowLjA5LCJhbmdsZSI6MH0seyJ0eXBlIjoiZGVudCIsInNpZGUiOiJiYWNrIiwieCI6MC4zNTU0OTA5NzE5ODUyNzMxLCJ5IjowLjQ3ODE3Nzc3MzA2NzcyNzcsInNldmVyaXR5IjowLjgyNjcwMTQyMzQ5MDg4NTYsImxlbmd0aCI6MC4yNDc3MjQ4NjM3NTQxMTk3MywiYW5nbGUiOjIuMzkyODU3MzM4NDg5OTk1fSx7InR5cGUiOiJlZGdlLWNoaXAiLCJzaWRlIjoiYm90aCIsIngiOjAsInkiOjAuMzQyNTcwNTk4ODQyNTc2MSwic2V2ZXJpdHkiOjAuNjYxMzYxMTM4NzkyNzA4NSwibGVuZ3RoIjowLjA4LCJhbmdsZSI6MH1dLCJyZWxvYWRVbmNoYW5nZWQiOnRydWV9LHsidHlwZSI6InNjcmF0Y2giLCJzZWVkIjo2ODQsImRhbWFnZSI6W3sidHlwZSI6ImJlbnQtY29ybmVyIiwic2lkZSI6ImJvdGgiLCJ4IjoxLCJ5IjowLCJzZXZlcml0eSI6MC42MDU5OTcyMTQxMjg3MjksImxlbmd0aCI6MC4wOSwiYW5nbGUiOjB9LHsidHlwZSI6InNjcmF0Y2giLCJzaWRlIjoiZnJvbnQiLCJ4IjowLjI4NjUyODAwNDI2MzUyNzcsInkiOjAuMzk0MzMwNzM0ODUyNzAxNCwic2V2ZXJpdHkiOjAuNjA1OTk3MjE0MTI4NzI5LCJsZW5ndGgiOjAuMjUwMzM5NDAzNzc4NzgwMiwiYW5nbGUiOjIuNzUzODE2ODY5MDgwNDQ0fSx7InR5cGUiOiJlZGdlLWNoaXAiLCJzaWRlIjoiYm90aCIsIngiOjEsInkiOjAuMjg3MDQxMzc2ODU3MDg3LCJzZXZlcml0eSI6MC40ODQ3OTc3NzEzMDI5ODMyLCJsZW5ndGgiOjAuMDgsImFuZ2xlIjowfV0sInJlbG9hZFVuY2hhbmdlZCI6dHJ1ZX1dLCJlcnJvcnMiOltdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "604c70537aeddd984f58-3efe05391ed3e3e47008",
+          "file": "slab-cracking.spec.ts",
+          "line": 95,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-08T02:32:36.391Z",
+    "duration": 304965.84500000003,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
