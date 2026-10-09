@@ -58,7 +58,7 @@ export function buildOutdoorWorld(config = OUTDOOR_CONFIG): World {
     const ctx = canvas.getContext('2d')!; ctx.fillStyle = '#345d55'; ctx.fillRect(0,0,1024,128); ctx.fillStyle = '#f5edd7'; ctx.font = '600 48px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('CORNER CARDS · POKÉMON TCG',512,83);
     signTexture = new THREE.CanvasTexture(canvas); signTexture.colorSpace = THREE.SRGBColorSpace;
     signMaterial = new THREE.MeshBasicMaterial({ map: signTexture }); const geo = new THREE.PlaneGeometry(7.9,.8); geometries.add(geo);
-    const sign = new THREE.Mesh(geo,signMaterial); sign.position.set(s.x,3.62,shopFront - .3); shop.add(sign);
+    const sign = new THREE.Mesh(geo,signMaterial); sign.rotation.y = Math.PI; sign.position.set(s.x,3.62,shopFront - .3); shop.add(sign);
   }
   box(group, 'shop-entry-apron', s.x, -.018, shopFront - 2.5, 4, .04, 5, '#b8b5a1').castShadow = false;
   const sun = new THREE.DirectionalLight('#fff0d4', 3.1); sun.position.set(x - 18, 32, z - 22); sun.target.position.set(x, 0, z);
