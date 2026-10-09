@@ -1,4 +1,5 @@
 import { cardBuyerDemand, EBAY_BUYERS, rollBuyer } from './ebay-buyers';
+import { shopCycle } from './local-shop';
 import { CARDS, CARD_BY_ID } from '../data/cards';
 import { PRODUCTS, PRODUCT_BY_ID } from '../data/products';
 import { createPack, createSealed, newSeed, seeded, uuid, canOpenProduct } from './inventory';
@@ -45,10 +46,10 @@ export class ComputerServices {
   tick(dt: number) {
     const s = this.store.state, c = s.computer ??= newComputerState();
     if (!Number.isFinite(dt) || dt <= 0) return;
-    const previousDrop = restockDay(c.minute);
+    const previousDrop = restockDay(c.minute), previousLocalDrop = shopCycle(s);
     // main.ts supplies real visible elapsed time; a slow frame must not delay a scheduled drop.
     c.minute += dt * c.speed / 60; this.seconds += dt; this.savedSeconds += dt;
-    if (restockDay(c.minute) !== previousDrop) { this.store.persist(); this.savedSeconds = 0; }
+    if (restockDay(c.minute) !== previousDrop || shopCycle(s) !== previousLocalDrop) { this.store.persist(); this.savedSeconds = 0; }
     if (this.seconds < 1) return; this.seconds %= 1;
     if (deliveryDue(s) || c.listings.some(l => ['LISTED', 'WATCHING', 'OFFER'].includes(l.status) && (c.minute >= l.due || (l.status === 'LISTED' && c.minute >= (l.watchAt ?? l.started + 15)) || (l.status === 'WATCHING' && l.outcome === 'offer' && c.minute >= (l.offerAt ?? l.started + 60))))) this.advance();
     if (this.savedSeconds >= 15) { samplePortfolio(this.store.state); this.store.persist(); this.savedSeconds = 0; }

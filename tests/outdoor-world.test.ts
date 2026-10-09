@@ -13,8 +13,8 @@ describe('outdoor foundation', () => {
       expect(w.colliders.some(c => c.height > 0 && w.spawn.x >= c.minX - .28 && w.spawn.x <= c.maxX + .28 && w.spawn.z >= c.minZ - .28 && w.spawn.z <= c.maxZ + .28)).toBe(false);
       expect(w.spawnYaw).toBe(0); expect(w.spawn.z).toBeLessThan(w.interactions[0].position.z);
       expect(new InteractionSystem().find(w.interactions[0].position, true, w)?.destination).toBe('home');
-      expect(w.group.getObjectByName('world-objects')?.children.map(c => c.name)).toEqual(['player-house']);
-      expect(w.cameraMeshes).toHaveLength(2);
+      expect(w.group.getObjectByName('world-objects')?.children.map(c => c.name)).toEqual(['player-house', 'corner-card-shop']);
+      expect(w.cameraMeshes).toHaveLength(4);
     } finally { w.dispose(); }
   });
   it('resizes the baseplate and bounds together without changing the entrance contract', () => {

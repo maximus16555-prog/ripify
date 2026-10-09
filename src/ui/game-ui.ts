@@ -1,3 +1,4 @@
+import { LocalShop } from './local-shop';
 import { CardCleanup } from './card-cleanup';
 import { ShippingOpening } from './shipping-opening';
 import { ComputerDesktop } from './computer-desktop';
@@ -22,6 +23,7 @@ export class GameUI {
   isOpen = false;
   get openingActive() { return this.isOpen && !!(this.opener || this.containerOpener); }
   get computerActive() { return this.isOpen && !!this.desktop; }
+  private localShop?: LocalShop;
   private cleanup?: CardCleanup;
   private desktop?: ComputerDesktop;
   private computerServices: ComputerServices;
@@ -85,7 +87,7 @@ export class GameUI {
   toast(text: string) { clearTimeout(this.toastTimer); this.toastEl.innerHTML = `<span>✓</span>${escapeHtml(text)}`; this.toastEl.hidden = false; this.toastTimer = window.setTimeout(() => { this.toastEl.hidden = true; }, 3800); }
   private open(html: string, wide = false, title = 'Game menu') {
     this.finishCrack(); this.desktop?.dispose(); this.desktop = undefined;
-    this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; this.shippingOpener?.dispose(); this.shippingOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = true; this.pause(); this.hud.classList.add('menu-open');
+    this.localShop?.dispose(); this.localShop = undefined; this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; this.shippingOpener?.dispose(); this.shippingOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = true; this.pause(); this.hud.classList.add('menu-open');
     this.modal.hidden = false; this.modal.className = `modal-root ${wide ? 'wide' : ''}`;
     this.modal.innerHTML = `<section class="game-panel" role="dialog" aria-modal="true" aria-label="${title}">${html}</section>`;
     this.modal.querySelector<HTMLButtonElement>('[data-close]')?.addEventListener('click', () => this.close());
@@ -96,7 +98,7 @@ export class GameUI {
     const trap = (e: KeyboardEvent) => { if (e.key !== 'Tab' || !this.isOpen) return; const focusable = Array.from(this.modal.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([hidden]), select, [tabindex="0"]')); if (!focusable.length) return; const a = focusable[0]; const b = focusable[focusable.length - 1]; if (e.shiftKey && (document.activeElement === a || !this.modal.contains(document.activeElement))) { e.preventDefault(); b.focus(); } else if (!e.shiftKey && document.activeElement === b) { e.preventDefault(); a.focus(); } };
     document.addEventListener('keydown', trap); this.focusCleanup = () => document.removeEventListener('keydown', trap);
   }
-  close() { if (!this.isOpen) return; this.desktop?.dispose(); this.desktop = undefined; this.finishCrack(); this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; this.shippingOpener?.dispose(); this.shippingOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = false; this.modal.hidden = true; this.modal.replaceChildren(); this.hud.classList.remove('menu-open'); this.resume(); }
+  close() { if (!this.isOpen) return; this.desktop?.dispose(); this.desktop = undefined; this.finishCrack(); this.localShop?.dispose(); this.localShop = undefined; this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.opener?.dispose(); this.opener = undefined; this.containerOpener?.dispose(); this.containerOpener = undefined; this.shippingOpener?.dispose(); this.shippingOpener = undefined; clearInterval(this.orderTimer); this.focusCleanup?.(); this.isOpen = false; this.modal.hidden = true; this.modal.replaceChildren(); this.hud.classList.remove('menu-open'); this.resume(); }
   private header(eyebrow: string, title: string, suffix = '') { return `<header class="panel-header"><div><span class="eyebrow">${eyebrow}</span><h1>${title}${suffix}</h1></div><button class="close-button" data-close aria-label="Close">✕</button></header>`; }
   packs() {
     const s = this.store.state;
@@ -120,10 +122,9 @@ export class GameUI {
     this.close(); this.isOpen = true; this.pause(); this.hud.classList.add('menu-open'); this.modal.hidden = false;
     this.shippingOpener = new ShippingOpening(this.modal, this.store, this.audio, uid, () => this.close(), text => this.toast(text)); this.trapFocus();
   }
-  buy(productCode?: string) {
-    const products = productCode ? PRODUCTS.filter(p => p.code === productCode) : PRODUCTS;
-    this.open(`${this.header('CORNER CARD SHOP', 'Products')}<div class="shop-products">${products.map(p => `<article class="shop-product">${packMarkup(p)}<div><span class="eyebrow">${p.year} EDITION</span><h2>${p.name}</h2><span class="muted">${p.subtitle}</span><div class="product-price">${money(p.price)}<small> coins</small></div><button class="primary-button" data-buy="${p.code}" ${this.store.state.currency < p.price ? 'disabled' : ''}>Buy sealed ${icon('arrow')}</button></div></article>`).join('')}</div><footer class="panel-footer"><span>Wallet <b>${money(this.store.state.currency)}</b></span><span>Keep sealed or open at your desk.</span></footer>`, products.length > 1, 'Buy packs');
-    this.modal.querySelectorAll<HTMLButtonElement>('[data-buy]').forEach(b => { b.onclick = () => { const p = PRODUCTS.find(p => p.code === b.dataset.buy)!; if (this.store.buy(p.code)) { this.audio.unlock(); this.audio.play('buy'); this.toast(`${p.name} added to sealed inventory`); this.buy(productCode); } }; });
+  buy(_productCode?: string) {
+    this.open(`${this.header('THE CORNER CARD SHOP', 'Talk / Shop')}<div data-local-shop></div>`, true, 'Local Card Shop');
+    this.localShop = new LocalShop(this.modal.querySelector('[data-local-shop]')!, this.store, text => { this.audio.unlock(); this.audio.play('buy'); this.toast(text); });
   }
   binder() {
     this.open(`${this.header('YOUR COLLECTION', 'The binder', `<span class="small-count">${this.store.state.cards.length} cards</span>`)}<div class="binder-toolbar"><button class="secondary-button" data-bulk-manage>Select / Bulk manage</button><input type="search" placeholder="Find a card…" aria-label="Search cards" data-search value="${escapeHtml(this.binderQuery)}"/><select aria-label="Filter collection" data-filter>${[['all', 'All cards'], ['raw', 'Raw'], ['graded', 'Graded'], ['grading', 'Away grading'], ['favorite', 'Favorites'], ...RARITIES.map(r => [r, r])].map(([v, t]) => `<option value="${v}" ${v === this.binderFilter ? 'selected' : ''}>${t}</option>`).join('')}</select><select aria-label="Sort collection" data-sort>${[['newest', 'Newest first'], ['value', 'Highest value'], ['name', 'Name A–Z'], ['set', 'Set']].map(([v, t]) => `<option value="${v}" ${v === this.binderSort ? 'selected' : ''}>${t}</option>`).join('')}</select></div><div class="binder-pages" data-grid></div><footer class="panel-footer"><span>Raw & graded cards</span><span data-binder-count></span></footer>`, true, 'Binder');

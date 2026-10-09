@@ -1,3 +1,4 @@
+import { purchaseLocalProduct } from './local-shop';
 import { activeListing } from './computer-state';
 import { CARD_BY_ID, PRODUCTS } from '../data/cards';
 import { calculateGrade, GRADERS } from './economy';
@@ -83,14 +84,7 @@ export class GameStore {
     this.state.packs.push(pack); this.changed(); return true;
   }
   private log(type: Save['history'][number]['type'], amount: number, label: string) { if (type === 'sale') this.state.stats.totalSales = Math.round(((this.state.stats.totalSales ?? this.state.history.filter(h => h.type === 'sale').reduce((n, h) => n + h.amount, 0)) + amount) * 100) / 100; this.state.history.push({ uid: uuid(), type, amount, label, at: Date.now() }); this.state.history = this.state.history.slice(-100); }
-  buy(code: string) {
-    const p = PRODUCTS.find(p => p.code === code);
-    if (!p || !canOpenProduct(p) || this.state.currency < p.price) return false;
-    this.state.currency = Math.round((this.state.currency - p.price) * 100) / 100;
-    if (p.type === 'booster') this.state.packs.push(createPack(p.code, p.price));
-    else this.state.sealedProducts.push(createSealed(p, p.price));
-    this.state.stats.spent += p.price; this.log('purchase', -p.price, p.name); this.changed(); return true;
-  }
+  buy(code: string) { return purchaseLocalProduct(this, code); }
   startOpening(uid: string) {
     if (this.state.opening || this.state.containerOpening || activeListing(this.state, uid)) return false;
     const pack = this.state.packs.find(p => p.uid === uid); if (!pack) return false;

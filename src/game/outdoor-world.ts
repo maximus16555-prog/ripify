@@ -7,6 +7,8 @@ export const OUTDOOR_CONFIG = {
   width: 120, depth: 120,
   house: { x: 0, z: 8, width: 8, depth: 6, height: 4.4 },
 };
+export const SHOP_EXTERIOR = { x: 14, z: 2, width: 10, depth: 7, height: 4.4 };
+export const SHOP_RETURN_SPAWN = new THREE.Vector3(SHOP_EXTERIOR.x, 0, SHOP_EXTERIOR.z - SHOP_EXTERIOR.depth / 2 - 3.4);
 
 export function buildOutdoorWorld(config = OUTDOOR_CONFIG): World {
   const group = new THREE.Group(); group.name = 'outdoor-world';
@@ -38,6 +40,27 @@ export function buildOutdoorWorld(config = OUTDOOR_CONFIG): World {
   }
   // Ground-level entry apron: no step or collider that can trap the spawn.
   const apron = box(group, 'entry-apron', x, -.018, front - 2.5, 3, .04, 5, '#b8b5a1'); apron.castShadow = false;
+  const shop = new THREE.Group(); shop.name = 'corner-card-shop'; objects.add(shop);
+  const s = SHOP_EXTERIOR, shopFront = s.z - s.depth / 2;
+  const shopShell = box(shop, 'shop-shell', s.x, s.height / 2, s.z, s.width, s.height, s.depth, '#c5bb9f');
+  const shopRoof = box(shop, 'shop-roof', s.x, s.height + .12, s.z, s.width + .35, .24, s.depth + .35, '#526e65');
+  box(shop, 'shop-door', s.x, 1.4, shopFront - .08, 1.65, 2.8, .14, '#547e74');
+  for (const dx of [-.93, .93]) box(shop, 'shop-door-frame', s.x + dx, 1.47, shopFront - .15, .13, 2.94, .2, '#eee8d7');
+  for (const dx of [-3.1, 3.1]) {
+    box(shop, 'storefront-frame', s.x + dx, 1.65, shopFront - .07, 2.6, 2.3, .12, '#eee8d7');
+    box(shop, 'storefront-glass', s.x + dx, 1.65, shopFront - .14, 2.35, 2.05, .035, '#789894');
+    box(shop, 'window-sill', s.x + dx, .46, shopFront - .2, 2.7, .12, .28, '#526e65');
+  }
+  box(shop, 'shop-sign-board', s.x, 3.62, shopFront - .19, 8.2, .9, .2, '#345d55');
+  let signTexture: THREE.Texture | undefined, signMaterial: THREE.Material | undefined;
+  if (typeof document !== 'undefined') {
+    const canvas = document.createElement('canvas'); canvas.width = 1024; canvas.height = 128;
+    const ctx = canvas.getContext('2d')!; ctx.fillStyle = '#345d55'; ctx.fillRect(0,0,1024,128); ctx.fillStyle = '#f5edd7'; ctx.font = '600 48px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('CORNER CARDS · POKÉMON TCG',512,83);
+    signTexture = new THREE.CanvasTexture(canvas); signTexture.colorSpace = THREE.SRGBColorSpace;
+    signMaterial = new THREE.MeshBasicMaterial({ map: signTexture }); const geo = new THREE.PlaneGeometry(7.9,.8); geometries.add(geo);
+    const sign = new THREE.Mesh(geo,signMaterial); sign.position.set(s.x,3.62,shopFront - .3); shop.add(sign);
+  }
+  box(group, 'shop-entry-apron', s.x, -.018, shopFront - 2.5, 4, .04, 5, '#b8b5a1').castShadow = false;
   const sun = new THREE.DirectionalLight('#fff0d4', 3.1); sun.position.set(x - 18, 32, z - 22); sun.target.position.set(x, 0, z);
   sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
   Object.assign(sun.shadow.camera, { left: -16, right: 16, top: 16, bottom: -16, near: 1, far: 75 });
@@ -52,10 +75,13 @@ export function buildOutdoorWorld(config = OUTDOOR_CONFIG): World {
     colliders: [
       { minX: -config.width / 2, maxX: config.width / 2, minZ: -config.depth / 2, maxZ: config.depth / 2, height: 0 },
       { minX: x - width / 2, maxX: x + width / 2, minZ: front, maxZ: z + depth / 2, height: height + .36 },
+      { minX: s.x - s.width / 2, maxX: s.x + s.width / 2, minZ: shopFront, maxZ: s.z + s.depth / 2, height: s.height + .24 },
     ],
-    cameraMeshes: [shell, roof],
+    cameraMeshes: [shell, roof, shopShell, shopRoof],
     interactions: [{ id: 'house-entrance', label: 'Go Inside', action: 'door', destination: 'home', radius: 1.9,
-      position: new THREE.Vector3(x, 0, front - 1.35), anchor: new THREE.Vector3(x, 1.6, front - .2) }],
-    dispose() { geometries.forEach(g => g.dispose()); materials.forEach(m => m.dispose()); sun.dispose(); group.clear(); },
+      position: new THREE.Vector3(x, 0, front - 1.35), anchor: new THREE.Vector3(x, 1.6, front - .2) },
+      { id: 'shop-entrance', label: 'Enter Card Shop', action: 'door', destination: 'shop', radius: 1.9,
+        position: new THREE.Vector3(s.x, 0, shopFront - 1.35), anchor: new THREE.Vector3(s.x, 1.6, shopFront - .2) }],
+    dispose() { geometries.forEach(g => g.dispose()); materials.forEach(m => m.dispose()); signTexture?.dispose(); signMaterial?.dispose(); sun.dispose(); group.clear(); },
   };
 }

@@ -15,8 +15,8 @@ axis-aligned X/Z bounds and a top height. Interior destinations can use the same
 
 Keep each interior in its own builder. `World` also supports spawn/entry positions,
 facing angles and atmosphere. Inactive scenes are detached, so they do not render
-or participate in movement or interaction checks. The current shop builder and
-shop backend remain available for a future building; no shop is placed outside yet.
+or participate in movement or interaction checks. The Corner Cards storefront now links to the existing shop interior. Its entrance
+and safe return spawn are configured by `SHOP_EXTERIOR` alongside the baseplate.
 
 The outdoor scene uses solid-color materials, one sunlight/shadow source and
 hemisphere fill. There are no outdoor asset downloads, physics simulations,

@@ -1,3 +1,4 @@
+import type { LocalShopState } from './local-shop';
 import type { ComputerState } from './computer-state';
 export type Rarity = string;
 export interface CardDefinition {
@@ -46,5 +47,5 @@ export interface ShippingPackage {
   dimensions: { width: number; height: number; depth: number };
   arrivedAt: number; stackOrder: number; stage: 'sealed' | 'untaped' | 'open' | 'claimed'; claimedAt?: number;
 }
-export interface Save { version: 2; shippingPackages?: ShippingPackage[]; cardDisposals?: CardDisposal[]; computer?: ComputerState; gradingPopulation?: GradingPopulationEntry[]; rareEventStats?: RareEventStats; packReceipts?: PackReceipt[]; currency: number; packs: Pack[]; sealedProducts: SealedProduct[]; containerOpening: ContainerOpening | null; productReceipts: ProductReceipt[]; legacyArchive?: unknown; cards: OwnedCard[]; orders: GradeOrder[]; opening: Opening | null; displays: (string | null)[]; settings: Settings; stats: { opened: number; sold: number; spent: number; totalSales?: number }; history: Transaction[]; marketSeed: number }
+export interface Save { version: 2; localShop?: LocalShopState; shippingPackages?: ShippingPackage[]; cardDisposals?: CardDisposal[]; computer?: ComputerState; gradingPopulation?: GradingPopulationEntry[]; rareEventStats?: RareEventStats; packReceipts?: PackReceipt[]; currency: number; packs: Pack[]; sealedProducts: SealedProduct[]; containerOpening: ContainerOpening | null; productReceipts: ProductReceipt[]; legacyArchive?: unknown; cards: OwnedCard[]; orders: GradeOrder[]; opening: Opening | null; displays: (string | null)[]; settings: Settings; stats: { opened: number; sold: number; spent: number; totalSales?: number }; history: Transaction[]; marketSeed: number }
 export interface Product { code: string; name: string; subtitle: string; year: number; price: number; onlineDropPrice: number; physicalStorePrice: number; color: string; accent: string; type: 'booster' | 'etb' | 'upc' | 'bundle'; setCode: string; variant: string; releaseDate: string; artwork?: string; artworkStatus: 'unavailable' | 'verified'; manifest: { verified: boolean; revision: 1; sources: string[]; packs: { productId: string; quantity: number }[]; cards: { cardId: string; quantity: number; finish: OwnedCard['finish'] }[] } }

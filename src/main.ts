@@ -10,7 +10,7 @@ import { FollowCamera } from './game/camera';
 import { InteractionSystem } from './game/interaction';
 import { softShadowTexture } from './game/materials';
 import { buildWorld, type World, type Interactable, type WorldLocation } from './game/world';
-import { buildOutdoorWorld } from './game/outdoor-world';
+import { buildOutdoorWorld, SHOP_RETURN_SPAWN } from './game/outdoor-world';
 import { GameUI } from './ui/game-ui';
 import { createTestPack } from './dev/test-packs';
 import { DeliveryPile } from './game/delivery-pile';
@@ -68,12 +68,12 @@ async function start() {
     if (switching) return; switching = true; input.pause(); ui.setPrompt(); ui.pointAt();
     app.classList.add('world-transition');
     await new Promise(resolve => setTimeout(resolve, 180));
-    clearDisplays(); scene.remove(world.group); location = destination;
+    const previous = location; clearDisplays(); scene.remove(world.group); location = destination;
     world = worlds.get(location) ?? (location === 'outside' ? buildOutdoorWorld() : buildWorld(location, renderer.invalidate)); worlds.set(location, world);
     const atmosphere = world.atmosphere ?? { sky: '#e5dfd0', fogNear: 24, fogFar: 48, viewDistance: 60 };
     scene.background = new THREE.Color(atmosphere.sky); scene.fog = new THREE.Fog(atmosphere.sky, atmosphere.fogNear, atmosphere.fogFar);
     camera.camera.far = atmosphere.viewDistance; camera.camera.updateProjectionMatrix();
-    scene.add(world.group); world.group.updateMatrixWorld(true); player.reset(world.entrySpawn ?? world.spawn, world.entryYaw ?? world.spawnYaw ?? 0); camera.yaw = world.entryYaw ?? world.spawnYaw ?? 0; camera.pitch = .46; interactions.clear();
+    scene.add(world.group); world.group.updateMatrixWorld(true); const returningFromShop = location === 'outside' && previous === 'shop'; const yaw = returningFromShop ? 0 : world.entryYaw ?? world.spawnYaw ?? 0; player.reset(returningFromShop ? SHOP_RETURN_SPAWN : world.entrySpawn ?? world.spawn, yaw); camera.yaw = yaw; camera.pitch = .46; interactions.clear();
     camera.update(0, player.group.position, input, store.state.settings.sensitivity, world.cameraMeshes, true);
     renderer.worldChanged(); renderer.apply(store.state.settings, scene); updateDisplays(); nearest = undefined; ui.setPrompt();
     // Link the destination's shaders asynchronously during the existing fade,

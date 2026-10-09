@@ -1,3 +1,4 @@
+import { validateLocalShop } from './local-shop';
 import { validateComputer } from './computer-state';
 import { CARD_BY_ID, PRODUCTS } from '../data/cards';
 import { createPack } from './inventory';
@@ -94,6 +95,7 @@ export function parseSave(raw: string): Save {
   if (Array.isArray(v.history)) result.history = v.history.filter(h => record(h) && typeof h.uid === 'string' && ['purchase', 'sale', 'grading'].includes(String(h.type)) && finite(h.amount) && typeof h.label === 'string' && finite(h.at)).slice(-100) as Save['history'];
   if (v.computer !== undefined) result.computer = validateComputer(v.computer, result, validPack, validSealed);
   if (v.shippingPackages !== undefined) result.shippingPackages = validatePackages(v.shippingPackages, result);
+  if (v.localShop !== undefined) result.localShop = validateLocalShop(v.localShop, result, validCard);
   return result;
 }
 export interface SaveStorage { read(): string | null; write(data: string): void; backup(data: string): void; clearRecovery?(): void }

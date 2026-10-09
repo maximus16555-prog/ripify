@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { RoomMaterials, softShadowTexture, windowArtwork } from './materials';
-import { PRODUCTS } from '../data/cards';
+import { CARD_BY_ID, PRODUCTS } from '../data/cards';
 import type { Product } from '../core/types';
 import { batchStaticColors } from './static-batching';
 export interface Collider { minX: number; maxX: number; minZ: number; maxZ: number; height: number }
@@ -42,7 +42,7 @@ export function buildWorld(kind: 'home' | 'shop', invalidate: () => void = () =>
   };
   const interact = (id: string, text: string, x: number, z: number, action: string, radius = 2.2, product?: Product) => {
     const anchor = action === 'door' ? new THREE.Vector3(-5.65, 1.6, .8) : new THREE.Vector3(x, action === 'buy' ? 2.4 : 1.6, z - .65);
-    interactions.push({ id, label: text, position: new THREE.Vector3(x, 0, z), anchor, action, radius, product, ...(action === 'door' ? { destination: kind === 'home' ? 'outside' as const : 'home' as const } : {}) });
+    interactions.push({ id, label: text, position: new THREE.Vector3(x, 0, z), anchor, action, radius, product, ...(action === 'door' ? { destination: 'outside' as const } : {}) });
   };
   const table = (x: number, z: number, w: number, d: number, color = '#af7950') => {
     box(x, 1.15, z, w, .14, d, color, group, true);
@@ -92,13 +92,13 @@ export function buildWorld(kind: 'home' | 'shop', invalidate: () => void = () =>
   box(0, .14, -4.88, 12, .26, .09, '#eee8da'); box(5.89, .14, 0, .09, .26, 10, '#eee8da'); box(-5.89, .14, -2.6, .09, .26, 4.8, '#eee8da');
   // Door on the west wall. The room swap is a deliberate small-world transition.
   const door = box(-5.88, 1.4, .8, .12, 2.8, 1.8, '#728875'); cameraMeshes.push(door); cylinder(-5.76, 1.4, 1.36, .05, .08, '#c8ad71').rotation.z = Math.PI / 2;
-  const doorSign = label(kind === 'home' ? 'OUTSIDE →' : '← HOME', -5.76, 2.4, .8, 1.35); doorSign.rotation.y = Math.PI / 2;
+  const doorSign = label(kind === 'home' ? 'OUTSIDE →' : '← OUTSIDE', -5.76, 2.4, .8, 1.35); doorSign.rotation.y = Math.PI / 2;
   // Inset panels, brass latch and trim turn the exit into an actual door.
   for (const z of [.31, 1.24]) box(-5.795, 1.39, z, .03, 1.6, .69, '#647966');
   box(-5.75, 1.25, 1.37, .05, .23, .10, '#c8ad71');
   for (const z of [-.17, 1.77]) box(-5.82, 1.49, z, .22, 3.02, .10, '#eee8da');
   box(-5.82, 2.97, .8, .22, .12, 2.04, '#eee8da');
-  interact('door', kind === 'home' ? 'Go Outside' : 'Return Home', -4.9, .8, 'door', 1.8);
+  interact('door', 'Go Outside', -4.9, .8, 'door', 1.8);
   // A soft rectangular daylight window, with layered mullions and curtains.
   const view = windowArtwork(); textures.add(view); const viewGeometry = new THREE.PlaneGeometry(2.48, 1.78); geometries.add(viewGeometry);
   const landscape = new THREE.Mesh(viewGeometry, new THREE.MeshBasicMaterial({ map: view })); landscape.position.set(0, 2.75, -5.025); group.add(landscape);
@@ -209,10 +209,25 @@ export function buildWorld(kind: 'home' | 'shop', invalidate: () => void = () =>
     box(4.4, 1.79, 1.5, .48, .42, .4, '#697366'); label('CORNER CARDS', 3.3, 1.02, 2.112, 2.3, '#f2ead7', '#9a7451');
     // Simple shopkeeper; intentionally stationary, no unnecessary AI.
     cylinder(3.2, 1.24, .1, .24, .75, '#77816c'); sphere(3.2, 1.94, .1, .22, '#c89372'); sphere(3.2, 2.08, .1, .23, '#605447').scale.y = .45;
-    interact('counter', 'Browse Products', 3.7, 2.5, 'shop', 2);
-    table(-1.1, 1.3, 2.2, 1.4); box(-1.1, 1.23, 1.3, 1.8, .035, 1.0, '#6e8c7e');
-    for (let i = 0; i < 5; i++) box(-1.7 + i * .29, 1.285, 1.3, .24, .07, .37, PRODUCTS[i % PRODUCTS.length].color).rotation.y = .1;
-    label('NEW ARRIVALS', -1.1, 1.46, 1.02, 1.25, '#eee5d0', '#6e8c7e');
+    interact('counter', 'Talk / Shop', 3.7, 2.5, 'shop', 2);
+    // Dealer inventory is display-only: exact printings, never player-owned copies.
+    table(-1.1, 1.3, 2.4, 1.4); box(-1.1, 1.23, 1.3, 2.15, .035, 1.12, '#6e8c7e');
+    const glass = new THREE.MeshStandardMaterial({ color: '#dce8e4', transparent: true, opacity: .12, roughness: .12, depthWrite: false }); batchedMaterials.add(glass);
+    for (const dx of [-1.22, 1.22]) box(-1.1 + dx, 1.43, 1.3, .045, .42, 1.45, '#aa8d54');
+    const glassTop = box(-1.1, 1.65, 1.3, 2.45, .025, 1.45, '#dce8e4'); glassTop.material = glass; glassTop.castShadow = false;
+    for (const dz of [-.7, .7]) { const pane = box(-1.1, 1.44, 1.3 + dz, 2.45, .4, .012, '#dce8e4'); pane.material = glass; pane.castShadow = false; }
+    ['sv03.5-004', 'sv03.5-025', 'sv03.5-198', 'me02.5-276'].forEach((id, i) => {
+      const card = CARD_BY_ID.get(id)!; const image = card.imageSmall ?? card.image; if (!image) return;
+      box(-1.85 + i * .5, 1.262, 1.3, .34, .006, .474, '#cbc4a5');
+      const texture = new THREE.TextureLoader().load(image, loaded => { if (disposed) loaded.dispose(); else invalidate(); }); texture.colorSpace = THREE.SRGBColorSpace; textures.add(texture);
+      const material = new THREE.MeshStandardMaterial({ map: texture, roughness: .55 }); batchedMaterials.add(material);
+      const geo = new THREE.PlaneGeometry(.34, .474); geometries.add(geo); const face = new THREE.Mesh(geo, material); face.rotation.x = -Math.PI / 2; face.position.set(-1.85 + i * .5, 1.267, 1.3); group.add(face);
+    });
+    label('SINGLES / ASK AT THE COUNTER', -1.1, 1.06, 2.01, 1.8, '#eee5d0', '#6e8c7e');
+    for (const x of [3.08, 3.32]) { cylinder(x, .48, .1, .08, .95, '#3f4942'); box(x, .08, .19, .16, .14, .3, '#343e38'); }
+    for (const x of [2.91, 3.49]) cylinder(x, 1.22, .1, .075, .7, '#77816c');
+    for (const x of [3.12, 3.28]) sphere(x, 1.98, .292, .025, '#363b32');
+    label('BUY SEALED / SELL YOUR CARDS', 3.4, 2.85, -.9, 2.6, '#f3ebda', '#5e7565');
     box(-4.4, .4, 3.45, 1.3, .6, 1, '#ba9873', group, true); plant(-4.8, -4, 1.2);
   
   }
