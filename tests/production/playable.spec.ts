@@ -7,7 +7,7 @@ async function walk(page: Page, key: string, prompt: string) {
   finally { await page.keyboard.up(key); }
   await expect(page.locator('.interaction-prompt')).toBeVisible();
 }
-test('production gameplay: room, shop, purchase, manual rip/swipes, collection and persistent refresh', async ({ page }, info) => {
+test('production gameplay: outdoors, bedroom, manual rip/swipes, collection and persistent refresh', async ({ page }, info) => {
   const errors: string[] = [], requests: string[] = [], failed: string[] = [];
   page.on('pageerror', e => errors.push(e.message));
   page.on('request', r => requests.push(r.url())); page.on('requestfailed', r => failed.push(r.url()));
@@ -22,23 +22,20 @@ test('production gameplay: room, shop, purchase, manual rip/swipes, collection a
   await page.goto('/'); await expect(page.locator('.game-canvas')).toBeVisible(); await expect(page.locator('.loading')).toHaveCount(0);
   expect(await page.evaluate(() => '__ripifyDebug' in window)).toBe(false);
   await page.screenshot({ path: 'artifacts/production-room.png' });
-  await walk(page, 'a', 'Enter Card Shop'); await page.keyboard.press('e');
-  await expect(page.locator('[data-location]')).toHaveText('Corner Card Shop');
-  await walk(page, 'd', 'Browse Products'); await page.keyboard.press('e');
-  for (const id of ['151-booster', 'ascended-heroes-booster']) await expect(page.locator(`[data-buy="${id}"]`)).toBeEnabled();
-  await page.locator('[data-buy="151-booster"]').click();
-  const purchase = await saved(page); expect(purchase.packs).toHaveLength(2); expect(purchase.cards).toHaveLength(0);
-  expect(purchase.currency).toBeLessThan(120); expect(purchase.opening).toBeNull();
-  const purchasedUid = purchase.packs.at(-1).uid;
-  const art = page.locator('[data-product="151-booster"] .product-art-image');
-  await expect.poll(() => art.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
-  await page.keyboard.press('Escape');
-  // Walk along the clear southern aisle, then approach the west exit.
-  await page.keyboard.down('a'); await page.waitForTimeout(2400); await page.keyboard.up('a');
-  await walk(page, 'w', 'Return Home'); await page.keyboard.press('e');
+  await walk(page, 'a', 'Go Outside'); await page.keyboard.press('e');
+  await expect(page.locator('[data-location]')).toHaveText('Outside');
+  await walk(page, 's', 'Go Inside'); await page.keyboard.press('e');
   await expect(page.locator('[data-location]')).toHaveText('Your room');
+  const purchasedUid = (await saved(page)).packs[0].uid;
+  // Purchases are covered through the computer storefront; the bedroom exit
+  // now leads outdoors. Reload returns to the original desk approach position.
+  await page.reload(); await expect(page.locator('.loading')).toHaveCount(0);
   await walk(page, 'w', 'Open Pack'); await page.keyboard.press('e');
-  await page.locator(`[data-pack="${purchasedUid}"]`).click();
+  // A single unopened pack enters the existing opener directly; multiple
+  // packs show the selection screen.
+  const choice = page.locator(`[data-pack="${purchasedUid}"]`);
+  if (await choice.count()) await choice.click();
+  expect((await saved(page)).opening.pack.uid).toBe(purchasedUid);
   const seam = (await page.locator('[data-tear]').boundingBox())!;
   await page.mouse.move(seam.x + 10, seam.y + 20); await page.mouse.down();
   await page.mouse.move(seam.x + seam.width + 3, seam.y + 20, { steps: 20 }); await page.mouse.up();
@@ -64,7 +61,7 @@ test('production gameplay: room, shop, purchase, manual rip/swipes, collection a
   for (let i = 2; i < generated.length; i++) { await page.locator('[data-next]').click(); await expect(page.locator('[data-card]')).toHaveAttribute('data-index', String(i)); await expect(page.locator('[data-next]')).toBeEnabled(); }
   await page.locator('[data-next]').click(); await page.locator('[data-collect]').click();
   expect((await saved(page)).cards).toHaveLength(generated.length);
-  await page.reload(); expect((await saved(page)).cards).toHaveLength(generated.length); expect((await saved(page)).packs).toHaveLength(1);
+  await page.reload(); expect((await saved(page)).cards).toHaveLength(generated.length); expect((await saved(page)).packs).toHaveLength(0);
   expect(errors).toEqual([]);
   if (new URL(page.url()).protocol === 'https:') expect(requests.filter(url => /^https?:\/\/(localhost|127\.0\.0\.1)/.test(url))).toEqual([]);
   await info.attach('production-report', { body: JSON.stringify({ url: page.url(), errors, failed, uniqueRequests: [...new Set(requests)], audio, packUid: purchasedUid, cardCount: generated.length }, null, 2), contentType: 'application/json' });

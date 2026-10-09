@@ -6,8 +6,11 @@ import { PRODUCTS } from '../data/cards';
 import type { Product } from '../core/types';
 import { batchStaticColors } from './static-batching';
 export interface Collider { minX: number; maxX: number; minZ: number; maxZ: number; height: number }
-export interface Interactable { id: string; label: string; position: THREE.Vector3; anchor: THREE.Vector3; radius: number; action: string; product?: Product }
-export interface World { group: THREE.Group; colliders: Collider[]; cameraMeshes: THREE.Mesh[]; interactions: Interactable[]; displaySlots: THREE.Group[]; spawn: THREE.Vector3; name: string; dispose(): void }
+export type WorldLocation = 'home' | 'shop' | 'outside';
+export interface WorldBounds { minX: number; maxX: number; minZ: number; maxZ: number }
+export const ROOM_BOUNDS: WorldBounds = { minX: -5.65, maxX: 5.65, minZ: -4.65, maxZ: 4.65 };
+export interface Interactable { id: string; label: string; position: THREE.Vector3; anchor: THREE.Vector3; radius: number; action: string; product?: Product; destination?: WorldLocation }
+export interface World { group: THREE.Group; colliders: Collider[]; cameraMeshes: THREE.Mesh[]; interactions: Interactable[]; displaySlots: THREE.Group[]; spawn: THREE.Vector3; name: string; bounds?: WorldBounds; entrySpawn?: THREE.Vector3; spawnYaw?: number; entryYaw?: number; atmosphere?: { sky: string; fogNear: number; fogFar: number; viewDistance: number }; dispose(): void }
 export function buildWorld(kind: 'home' | 'shop', invalidate: () => void = () => {}) : World {
   const group = new THREE.Group(); const colliders: Collider[] = []; const cameraMeshes: THREE.Mesh[] = []; const interactions: Interactable[] = []; const displaySlots: THREE.Group[] = [];
   const palette = new RoomMaterials(); const geometries = new Set<THREE.BufferGeometry>(); const textures = new Set<THREE.Texture>();
@@ -39,7 +42,7 @@ export function buildWorld(kind: 'home' | 'shop', invalidate: () => void = () =>
   };
   const interact = (id: string, text: string, x: number, z: number, action: string, radius = 2.2, product?: Product) => {
     const anchor = action === 'door' ? new THREE.Vector3(-5.65, 1.6, .8) : new THREE.Vector3(x, action === 'buy' ? 2.4 : 1.6, z - .65);
-    interactions.push({ id, label: text, position: new THREE.Vector3(x, 0, z), anchor, action, radius, product });
+    interactions.push({ id, label: text, position: new THREE.Vector3(x, 0, z), anchor, action, radius, product, ...(action === 'door' ? { destination: kind === 'home' ? 'outside' as const : 'home' as const } : {}) });
   };
   const table = (x: number, z: number, w: number, d: number, color = '#af7950') => {
     box(x, 1.15, z, w, .14, d, color, group, true);
@@ -89,13 +92,13 @@ export function buildWorld(kind: 'home' | 'shop', invalidate: () => void = () =>
   box(0, .14, -4.88, 12, .26, .09, '#eee8da'); box(5.89, .14, 0, .09, .26, 10, '#eee8da'); box(-5.89, .14, -2.6, .09, .26, 4.8, '#eee8da');
   // Door on the west wall. The room swap is a deliberate small-world transition.
   const door = box(-5.88, 1.4, .8, .12, 2.8, 1.8, '#728875'); cameraMeshes.push(door); cylinder(-5.76, 1.4, 1.36, .05, .08, '#c8ad71').rotation.z = Math.PI / 2;
-  const doorSign = label(kind === 'home' ? 'CARD SHOP →' : '← HOME', -5.76, 2.4, .8, 1.35); doorSign.rotation.y = Math.PI / 2;
+  const doorSign = label(kind === 'home' ? 'OUTSIDE →' : '← HOME', -5.76, 2.4, .8, 1.35); doorSign.rotation.y = Math.PI / 2;
   // Inset panels, brass latch and trim turn the exit into an actual door.
   for (const z of [.31, 1.24]) box(-5.795, 1.39, z, .03, 1.6, .69, '#647966');
   box(-5.75, 1.25, 1.37, .05, .23, .10, '#c8ad71');
   for (const z of [-.17, 1.77]) box(-5.82, 1.49, z, .22, 3.02, .10, '#eee8da');
   box(-5.82, 2.97, .8, .22, .12, 2.04, '#eee8da');
-  interact('door', kind === 'home' ? 'Enter Card Shop' : 'Return Home', -4.9, .8, 'door', 1.8);
+  interact('door', kind === 'home' ? 'Go Outside' : 'Return Home', -4.9, .8, 'door', 1.8);
   // A soft rectangular daylight window, with layered mullions and curtains.
   const view = windowArtwork(); textures.add(view); const viewGeometry = new THREE.PlaneGeometry(2.48, 1.78); geometries.add(viewGeometry);
   const landscape = new THREE.Mesh(viewGeometry, new THREE.MeshBasicMaterial({ map: view })); landscape.position.set(0, 2.75, -5.025); group.add(landscape);
@@ -227,5 +230,5 @@ export function buildWorld(kind: 'home' | 'shop', invalidate: () => void = () =>
   const unbatched = new Set(cameraMeshes), mutableMaterials = new Set(productMaterials.values());
   group.traverse(o => { if (o instanceof THREE.Mesh && mutableMaterials.has(o.material as THREE.MeshStandardMaterial)) unbatched.add(o); });
   batchStaticColors(group, unbatched, geometries, batchedMaterials);
-  return { group, colliders, cameraMeshes, interactions, displaySlots, spawn: kind === 'home' ? new THREE.Vector3(0, 0, 1.8) : new THREE.Vector3(.9, 0, 3.1), name: kind === 'home' ? 'Your room' : 'Corner Card Shop', dispose() { disposed = true; geometries.forEach(g => g.dispose()); palette.dispose(); productMaterials.forEach(m => m.dispose()); batchedMaterials.forEach(m => m.dispose()); textures.forEach(t => t.dispose()); group.traverse(o => { if (o instanceof THREE.Mesh && o.material instanceof THREE.MeshBasicMaterial) o.material.dispose(); if (o instanceof THREE.DirectionalLight || o instanceof THREE.PointLight || o instanceof THREE.SpotLight) o.dispose(); }); group.clear(); } };
+  return { group, colliders, cameraMeshes, interactions, displaySlots, spawn: kind === 'home' ? new THREE.Vector3(0, 0, 1.8) : new THREE.Vector3(.9, 0, 3.1), name: kind === 'home' ? 'Your room' : 'Corner Card Shop', bounds: ROOM_BOUNDS, ...(kind === 'home' ? { entrySpawn: new THREE.Vector3(-3.4, 0, .8), entryYaw: -Math.PI / 2 } : {}), dispose() { disposed = true; geometries.forEach(g => g.dispose()); palette.dispose(); productMaterials.forEach(m => m.dispose()); batchedMaterials.forEach(m => m.dispose()); textures.forEach(t => t.dispose()); group.traverse(o => { if (o instanceof THREE.Mesh && o.material instanceof THREE.MeshBasicMaterial) o.material.dispose(); if (o instanceof THREE.DirectionalLight || o instanceof THREE.PointLight || o instanceof THREE.SpotLight) o.dispose(); }); group.clear(); } };
 }

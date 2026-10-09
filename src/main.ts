@@ -9,7 +9,8 @@ import { Player } from './game/player';
 import { FollowCamera } from './game/camera';
 import { InteractionSystem } from './game/interaction';
 import { softShadowTexture } from './game/materials';
-import { buildWorld, type World, type Interactable } from './game/world';
+import { buildWorld, type World, type Interactable, type WorldLocation } from './game/world';
+import { buildOutdoorWorld } from './game/outdoor-world';
 import { GameUI } from './ui/game-ui';
 import { createTestPack } from './dev/test-packs';
 import { DeliveryPile } from './game/delivery-pile';
@@ -22,10 +23,10 @@ async function start() {
   const contactTexture = softShadowTexture();
   const contactShadow = new THREE.Mesh(new THREE.PlaneGeometry(.88, .88), new THREE.MeshBasicMaterial({ map: contactTexture, transparent: true, depthWrite: false, opacity: .8 }));
   contactShadow.rotation.x = -Math.PI / 2; scene.add(contactShadow);
-  let world: World = buildWorld('home', renderer.invalidate); let location: 'home' | 'shop' = 'home'; let nearest: Interactable | undefined; let switching = false;
-  // Two small locations, loaded on first visit. Inactive groups are detached:
+  let world: World = buildWorld('home', renderer.invalidate); let location: WorldLocation = 'home'; let nearest: Interactable | undefined; let switching = false;
+  // Locations are loaded on first visit. Inactive groups are detached:
   // no rendering, interaction queries, physics or animation work continues.
-  const worlds = new Map<'home' | 'shop', World>([['home', world]]);
+  const worlds = new Map<WorldLocation, World>([['home', world]]);
   const deliveries = new DeliveryPile(world, renderer.invalidate); store.arriveDeliveries(); deliveries.sync(store.state.shippingPackages ?? []);
   scene.add(world.group, player.group); player.reset(world.spawn); world.group.updateMatrixWorld(true);
   app.querySelector('.loading')?.remove(); const overlay = document.createElement('div'); overlay.className = 'game-overlay'; app.append(overlay);
@@ -33,7 +34,7 @@ async function start() {
   const input = new Input(renderer.renderer.domElement, () => {
     if (switching || ui.isOpen || !nearest) return;
     audio.unlock(); audio.play('click'); ui.learnControls(); const i = nearest;
-    if (i.action === 'door') void switchWorld();
+    if (i.action === 'door' && i.destination) void switchWorld(i.destination);
     else if (i.action === 'desk') ui.packs();
     else if (i.action === 'binder') ui.binder();
     else if (i.action === 'computer') ui.computer();
@@ -63,13 +64,16 @@ async function start() {
   };
   updateDisplays();
   const unsubscribe = store.subscribe(() => { renderer.apply(store.state.settings, scene); audio.update(); updateDisplays(); deliveries.sync(store.state.shippingPackages ?? []); if (store.warning) ui.toast(store.warning); });
-  async function switchWorld() {
+  async function switchWorld(destination: WorldLocation) {
     if (switching) return; switching = true; input.pause(); ui.setPrompt(); ui.pointAt();
     app.classList.add('world-transition');
     await new Promise(resolve => setTimeout(resolve, 180));
-    clearDisplays(); scene.remove(world.group); location = location === 'home' ? 'shop' : 'home';
-    world = worlds.get(location) ?? buildWorld(location, renderer.invalidate); worlds.set(location, world);
-    scene.add(world.group); world.group.updateMatrixWorld(true); player.reset(world.spawn); camera.yaw = 0; camera.pitch = .46; interactions.clear();
+    clearDisplays(); scene.remove(world.group); location = destination;
+    world = worlds.get(location) ?? (location === 'outside' ? buildOutdoorWorld() : buildWorld(location, renderer.invalidate)); worlds.set(location, world);
+    const atmosphere = world.atmosphere ?? { sky: '#e5dfd0', fogNear: 24, fogFar: 48, viewDistance: 60 };
+    scene.background = new THREE.Color(atmosphere.sky); scene.fog = new THREE.Fog(atmosphere.sky, atmosphere.fogNear, atmosphere.fogFar);
+    camera.camera.far = atmosphere.viewDistance; camera.camera.updateProjectionMatrix();
+    scene.add(world.group); world.group.updateMatrixWorld(true); player.reset(world.entrySpawn ?? world.spawn, world.entryYaw ?? world.spawnYaw ?? 0); camera.yaw = world.entryYaw ?? world.spawnYaw ?? 0; camera.pitch = .46; interactions.clear();
     camera.update(0, player.group.position, input, store.state.settings.sensitivity, world.cameraMeshes, true);
     renderer.worldChanged(); renderer.apply(store.state.settings, scene); updateDisplays(); nearest = undefined; ui.setPrompt();
     // Link the destination's shaders asynchronously during the existing fade,
@@ -92,7 +96,7 @@ async function start() {
     if (!ui.isOpen && !switching) {
       // Small collision substeps keep movement consistent without tunnelling on slow frames.
       let remaining = dt;
-      while (remaining > 0) { const step = Math.min(1 / 60, remaining); player.update(step, input, camera.yaw, world.colliders, () => audio.play('step')); remaining -= step; }
+      while (remaining > 0) { const step = Math.min(1 / 60, remaining); player.update(step, input, camera.yaw, world.colliders, () => audio.play('step'), world.bounds); remaining -= step; }
 
       ui.noteMovement(dt, Math.hypot(player.velocity.x, player.velocity.z));
       renderer.sampleFrame(elapsed, store.state.settings, scene);

@@ -20,6 +20,16 @@ function item(id: string, x: number, z: number): Interactable { return { id, lab
 function world(interactions: Interactable[], cameraMeshes: THREE.Mesh[] = []) { return { interactions, cameraMeshes } as World; }
 
 describe('grounded movement', () => {
+  it('uses scene bounds outdoors while retaining room bounds by default', () => {
+    const p = player(); const i = input(); i.keys.add('KeyD');
+    const bounds = { minX: -20, maxX: 20, minZ: -20, maxZ: 20 };
+    for (let n = 0; n < 600; n++) p.update(1 / 60, i, 0, [], () => {}, bounds);
+    expect(p.group.position.x).toBeGreaterThan(19.9); expect(p.group.position.x).toBeLessThanOrEqual(20);
+    expect(p.velocity.x).toBe(0); expect(p.group.position.y).toBe(0);
+    p.reset(new THREE.Vector3(), -Math.PI / 2); move(p, i, 300);
+    expect(p.group.position.x).toBeLessThanOrEqual(5.65);
+    expect(p.group.rotation.y).toBeCloseTo(-Math.PI / 2); expect(p.groundHeight).toBe(0);
+  });
   it('accelerates, stops promptly, and normalizes diagonal speed', () => {
     const p = player(); const i = input(); i.keys.add('KeyW'); move(p, i, 60);
     expect(-p.velocity.z).toBeCloseTo(2.65, 3);

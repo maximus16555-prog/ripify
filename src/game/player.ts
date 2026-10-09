@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { Input } from './input';
-import type { Collider } from './world';
+import { ROOM_BOUNDS, type Collider, type WorldBounds } from './world';
 import { CharacterRig } from './character';
 export class Player {
   group = new THREE.Group();
@@ -14,11 +14,11 @@ export class Player {
   constructor() {
     this.group.add(this.rig.group);
   }
-  private blocked(x: number, z: number, colliders: Collider[]) {
+  private blocked(x: number, z: number, colliders: Collider[], bounds: WorldBounds) {
     const r = .28;
-    return x < -5.65 || x > 5.65 || z < -4.65 || z > 4.65 || colliders.some(c => this.group.position.y < c.height && x + r > c.minX && x - r < c.maxX && z + r > c.minZ && z - r < c.maxZ);
+    return x < bounds.minX || x > bounds.maxX || z < bounds.minZ || z > bounds.maxZ || colliders.some(c => this.group.position.y < c.height && x + r > c.minX && x - r < c.maxX && z + r > c.minZ && z - r < c.maxZ);
   }
-  update(dt: number, input: Input, yaw: number, colliders: Collider[], footstep: () => void) {
+  update(dt: number, input: Input, yaw: number, colliders: Collider[], footstep: () => void, bounds: WorldBounds = ROOM_BOUNDS) {
     const k = input.keys; const x = Number(k.has('KeyD')) - Number(k.has('KeyA')); const z = Number(k.has('KeyS')) - Number(k.has('KeyW'));
     const length = Math.hypot(x, z) || 1; const speed = k.has('ShiftLeft') || k.has('ShiftRight') ? 4.5 : 2.65;
     const dx = (x * Math.cos(yaw) + z * Math.sin(yaw)) / length * speed;
@@ -30,8 +30,8 @@ export class Player {
     if (this.jumpBuffer > 0 && this.coyoteTime > 0) { this.velocity.y = 5.4; this.grounded = false; this.coyoteTime = 0; this.jumpBuffer = 0; }
     this.velocity.y -= 16 * dt;
     const p = this.group.position;
-    const nx = p.x + this.velocity.x * dt; if (!this.blocked(nx, p.z, colliders)) p.x = nx; else this.velocity.x = 0;
-    const nz = p.z + this.velocity.z * dt; if (!this.blocked(p.x, nz, colliders)) p.z = nz; else this.velocity.z = 0;
+    const nx = p.x + this.velocity.x * dt; if (!this.blocked(nx, p.z, colliders, bounds)) p.x = nx; else this.velocity.x = 0;
+    const nz = p.z + this.velocity.z * dt; if (!this.blocked(p.x, nz, colliders, bounds)) p.z = nz; else this.velocity.z = 0;
     const prevY = p.y; p.y += this.velocity.y * dt;
     let floor = 0;
     for (const c of colliders) if (p.x > c.minX - .2 && p.x < c.maxX + .2 && p.z > c.minZ - .2 && p.z < c.maxZ + .2 && prevY >= c.height - .02) floor = Math.max(floor, c.height);
@@ -43,6 +43,6 @@ export class Player {
     this.rig.update(dt, moving, this.grounded, this.velocity.y, turn);
     if (moving > .3 && this.grounded) { this.stepTime += dt; if (this.stepTime > (speed > 3 ? .28 : .43)) { this.stepTime = 0; footstep(); } } else this.stepTime = 0;
   }
-  reset(position: THREE.Vector3) { this.group.position.copy(position); this.velocity.set(0, 0, 0); this.group.rotation.y = 0; this.grounded = true; this.jumpBuffer = this.coyoteTime = 0; }
+  reset(position: THREE.Vector3, yaw = 0) { this.group.position.copy(position); this.velocity.set(0, 0, 0); this.group.rotation.y = yaw; this.groundHeight = position.y; this.grounded = true; this.jumpBuffer = this.coyoteTime = 0; }
   dispose() { this.rig.dispose(); }
 }
