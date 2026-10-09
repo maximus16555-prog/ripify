@@ -18,25 +18,32 @@ export class ComputerApp {
   route = 'home'; selected = ''; query = ''; filter = 'all'; sort = 'value'; page = 0; range = '1M';
   cart: Record<string, number> = {}; grader: Grader = 'PSA'; service: 'Standard' | 'Express' = 'Standard';
   give: string[] = []; receive: string[] = []; notice = '';
+  private ebayKind: 'cards' | 'sealed' = 'cards';
+  private ebaySet = ''; private ebayCondition = ''; private ebayCompany = ''; private ebayGrade = '';
+  private ebayFiltersOpen = false;
   private cleanup?: CardCleanup;
   private inspector?: CardInspector;
-  private gradingMarkup = '';
+  private previewMarkup = '';
   // Weak caches retain only mounted previews, never an entire collection of scans.
-  private gradingTiles = new WeakMap<HTMLElement, string>();
-  private gradingImages = new WeakSet<HTMLImageElement>();
+  private previewTiles = new WeakMap<HTMLElement, string>();
+  private previewImages = new WeakSet<HTMLImageElement>();
   constructor(public id: AppId, private store: GameStore, private services: ComputerServices, private refresh: () => void) {}
-  suspend() { this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.gradingMarkup = ''; }
+  suspend() { this.cleanup?.dispose(); this.cleanup = undefined; this.inspector?.dispose(); this.inspector = undefined; this.previewMarkup = ''; }
   private nav(entries: [string, string][]) { return `<nav class="pc-app-nav">${entries.map(([id, label]) => button('route', label, id)).join('')}</nav>`; }
   private tile(i: ReturnType<typeof collectionItems>[number]) {
     const c = this.store.state.cards.find(c => c.uid === i.uid);
     return `<button class="pc-item" data-action="item" data-value="${i.uid}">${c ? ownedMarkup(c, true) : `<img src="${esc(i.image ?? '')}" alt="${esc(i.name)}" loading="lazy"/>`}<b>${esc(i.name)}</b><small>${esc(i.set)} ${esc(i.number)}</small><span>${c?.grade ? `${c.grader} ${c.grade}` : i.status === 'sealed' ? 'Sealed' : 'Raw'} ${i.misprint ? '<em>MISPRINT</em>' : ''} ${activeListing(this.store.state, i.uid) ? '<em>LISTED</em>' : ''}</span><strong>${price(i.value)}</strong></button>`;
   }
   render(root: HTMLElement) {
+    // Read the live details state synchronously: native toggle events can arrive
+    // after a filter change, which would otherwise collapse the controls mid-use.
+    const advanced = root.querySelector<HTMLDetailsElement>('[data-ebay-filters]');
+    if (advanced) this.ebayFiltersOpen = advanced.open;
     const markup = `${this.notice ? `<p class="pc-notice" role="status">${esc(this.notice)}</p>` : ''}${this.id === 'store' ? this.storeView() : this.id === 'ebay' ? this.ebayView() : this.id === 'grading' ? this.gradingView() : this.collectrView()}`;
-    if (this.id === 'grading' && this.gradingMarkup === markup && root.firstElementChild) return;
+    if ((this.id === 'grading' || this.id === 'ebay') && this.previewMarkup === markup && root.firstElementChild) return;
     this.suspend();
     root.className = `pc-app-content pc-${this.id}`;
-    if (this.id === 'grading') {
+    if (this.id === 'grading' || this.id === 'ebay') {
       const mounted = new Map([...root.querySelectorAll<HTMLElement>('.pc-card-grid > .pc-item')].map(el => [el.dataset.value, el]));
       // The template is inert. Keep the live grid connected: even moving an
       // existing lazy image through a fragment can restart its load/decode.
@@ -45,8 +52,8 @@ export class ComputerApp {
       const tiles: HTMLElement[] = [];
       for (const tile of template.content.querySelectorAll<HTMLElement>('.pc-card-grid > .pc-item')) {
         const previous = mounted.get(tile.dataset.value), html = tile.outerHTML;
-        if (previous && this.gradingTiles.get(previous) === html) tiles.push(previous);
-        else { this.gradingTiles.set(tile, html); tiles.push(tile); }
+        if (previous && this.previewTiles.get(previous) === html) tiles.push(previous);
+        else { this.previewTiles.set(tile, html); tiles.push(tile); }
       }
       if (grid && nextGrid) {
         const siblings = [...template.content.childNodes], index = siblings.indexOf(nextGrid);
@@ -65,14 +72,25 @@ export class ComputerApp {
           }
         } else grid.replaceChildren(...nextGrid.childNodes);
       } else root.replaceChildren(template.content);
-      this.gradingMarkup = markup;
+      this.previewMarkup = markup;
       for (const img of root.querySelectorAll<HTMLImageElement>('img[data-exact-image]')) {
-        if (this.gradingImages.has(img)) continue;
-        this.gradingImages.add(img); installImageFallback(img.parentElement!);
+        if (this.previewImages.has(img)) continue;
+        this.previewImages.add(img); installImageFallback(img.parentElement!);
       }
     } else { root.innerHTML = markup; installImageFallback(root); }
     root.onclick = e => { const b = (e.target as Element).closest<HTMLButtonElement>('button[data-action]'); if (b && !b.disabled) this.action(b.dataset.action!, b.dataset.value ?? '', root); };
-    root.onchange = e => { const el = e.target as HTMLInputElement; if (el.dataset.field === 'filter') { this.filter = el.value; this.page = 0; this.refresh(); } else if (el.dataset.field === 'sort') { this.sort = el.value; this.page = 0; this.refresh(); } else if (el.dataset.field === 'service') { this.service = el.value as 'Standard' | 'Express'; this.refresh(); } };
+    root.onchange = e => {
+      const el = e.target as HTMLInputElement;
+      if (el.dataset.field === 'filter') this.filter = el.value;
+      else if (el.dataset.field === 'sort') this.sort = el.value;
+      else if (el.dataset.field === 'ebaySet') this.ebaySet = el.value;
+      else if (el.dataset.field === 'ebayCondition') this.ebayCondition = el.value;
+      else if (el.dataset.field === 'ebayCompany') this.ebayCompany = el.value;
+      else if (el.dataset.field === 'ebayGrade') this.ebayGrade = el.value;
+      else if (el.dataset.field === 'service') { this.service = el.value as 'Standard' | 'Express'; this.refresh(); return; }
+      else return;
+      this.page = 0; this.refresh();
+    };
     const search = root.querySelector<HTMLInputElement>('[data-search]');
     if (search) search.oninput = () => { this.query = search.value; this.page = 0; this.refresh(); const next = root.querySelector<HTMLInputElement>('[data-search]'); next?.focus(); next?.setSelectionRange(this.query.length, this.query.length); };
     const physical = root.querySelector<HTMLElement>('[data-physical]'), owned = this.store.state.cards.find(c => c.uid === this.selected);
@@ -134,7 +152,26 @@ export class ComputerApp {
       const card = s.cards.find(c => c.uid === item.uid), locked = !!activeListing(s, item.uid) || (card && (this.store.isCardLocked(card.uid) || s.displays.includes(card.uid)));
       return header + `<h2>Create your listing</h2><div class="pc-product-page"><div>${card ? ownedMarkup(card) : `<img src="${esc(item.image ?? '')}" alt="${esc(item.name)}"/>`}</div><div><h3>${esc(item.name)}</h3><p>${esc(item.set)} · ${esc(item.number)}</p><dl><dt>Condition</dt><dd>${card ? card.status === 'graded' ? 'Graded' : card.crackHistory?.some(e => e.outcome === 'damaged') ? 'Damaged · slab removal damage' : 'Ungraded · inspect physical copy' : 'Sealed'}</dd>${card?.grader ? `<dt>Professional grader</dt><dd>${card.grader}-inspired</dd><dt>Grade</dt><dd>${card.grade}</dd>` : ''}${card?.misprint ? '<dt>Manufacturing error</dt><dd>MISPRINT · persistent physical defect</dd>' : ''}<dt>RIPIFY market value</dt><dd>${price(item.value)}</dd></dl><label>Asking price <input data-asking type="number" min="0.01" max="1000000000" step="0.01" value="${item.value}"/></label>${button('list', 'Create listing', item.uid, !!locked)}${locked ? '<p>Remove from display or resolve its existing ownership lock first.</p>' : '<p>Listed items are locked until sold or the listing ends.</p>'}</div></div>`;
     }
-    return header + `<h2>What would you like to sell?</h2><p>Raw cards, slabs, misprints and sealed products from your collection.</p><div class="pc-card-grid">${collectionItems(s).slice(this.page * 36, (this.page + 1) * 36).map(i => this.tile(i)).join('') || empty('Open a pack or buy a product first.')}</div>${this.pagination(collectionItems(s).length)}`;
+    const items = collectionItems(s), owned = new Map(s.cards.map(c => [c.uid, c]));
+    const filtered = items.filter(i => {
+      if (this.ebayKind === 'sealed') return i.kind !== 'card';
+      const c = owned.get(i.uid); if (!c) return false;
+      const condition = Object.values(c.condition).reduce((sum, v) => sum + v, 0) / 5;
+      const band = condition >= 94 ? 'excellent' : condition >= 83 ? 'good' : condition >= 70 ? 'fair' : 'worn';
+      return (this.filter === 'all' || this.filter === 'raw' && c.status === 'raw' || this.filter === 'graded' && c.status === 'graded' || this.filter === 'misprints' && !!c.misprint)
+        && (!this.ebaySet || CARD_BY_ID.get(c.cardId)!.setCode === this.ebaySet)
+        && (!this.ebayCondition || band === this.ebayCondition)
+        && (!this.ebayCompany || c.status === 'graded' && c.grader === this.ebayCompany)
+        && (!this.ebayGrade || c.status === 'graded' && c.grade === Number(this.ebayGrade));
+    });
+    filtered.sort((a, b) => this.sort === 'value' ? b.value - a.value : this.sort === 'value-low' ? a.value - b.value : this.sort === 'newest' ? b.at - a.at : this.sort === 'oldest' ? a.at - b.at : this.sort === 'rarity' ? a.rarity.localeCompare(b.rarity) : a.name.localeCompare(b.name));
+    const select = (label: string, field: string, value: string, options: string[][]) => `<label>${label} <select data-field="${field}" aria-label="${label}">${options.map(([id, name]) => `<option value="${esc(id)}" ${value === id ? 'selected' : ''}>${esc(name)}</option>`).join('')}</select></label>`;
+    const sets = [...new Map(s.cards.map(c => { const d = CARD_BY_ID.get(c.cardId)!; return [d.setCode, d.set] as const; })).entries()].sort((a, b) => a[1].localeCompare(b[1]));
+    const grades = [...new Set(s.cards.filter(c => c.status === 'graded' && c.grade !== undefined).map(c => c.grade!))].sort((a, b) => b - a).map(g => [String(g), String(g)]);
+    const activeFilters = [this.ebaySet, this.ebayCondition, this.ebayCompany, this.ebayGrade].filter(Boolean).length;
+    const controls = `<div class="pc-filters">${select('Sort By', 'sort', this.sort, [['value', 'Highest Market Value'], ['value-low', 'Lowest Market Value'], ['newest', 'Newest Acquired'], ['oldest', 'Oldest Acquired'], ['name', 'Name (A–Z)'], ['rarity', 'Rarity']])}${this.ebayKind === 'cards' ? select('Filter By', 'filter', this.filter, [['all', 'All Cards'], ['raw', 'Ungraded'], ['graded', 'Graded'], ['misprints', 'Misprints']]) : ''}<span>${filtered.length} ${this.ebayKind === 'cards' ? 'cards' : 'sealed products'}</span></div>`;
+    const advanced = this.ebayKind === 'cards' ? `<details data-ebay-filters ${this.ebayFiltersOpen ? 'open' : ''}><summary>More filters${activeFilters ? ` (${activeFilters})` : ''}</summary><div class="pc-filters">${select('Set', 'ebaySet', this.ebaySet, [['', 'All sets'], ...sets])}${select('Condition', 'ebayCondition', this.ebayCondition, [['', 'All conditions'], ['excellent', 'Excellent'], ['good', 'Good'], ['fair', 'Fair'], ['worn', 'Worn']])}${select('Grading Company', 'ebayCompany', this.ebayCompany, [['', 'All companies'], ...Object.keys(GRADERS).map(g => [g, `${g}-inspired`])])}${select('Grade', 'ebayGrade', this.ebayGrade, [['', 'All grades'], ...grades])}${button('clearEbayFilters', 'Clear filters')}</div></details>` : '';
+    return header + `<h2>What would you like to sell?</h2><p>Raw cards, slabs, misprints and sealed products from your collection.</p><nav class="pc-app-nav">${button('ebayKind', 'Cards', 'cards', this.ebayKind === 'cards')}${button('ebayKind', 'Sealed products', 'sealed', this.ebayKind === 'sealed')}</nav>${controls}${advanced}<div class="pc-card-grid">${filtered.slice(this.page * 36, (this.page + 1) * 36).map(i => this.tile(i)).join('') || empty('No items match these filters.')}</div>${this.pagination(filtered.length)}`;
   }
   private gradingView() {
     const s = this.store.state, g = GRADERS[this.grader];
@@ -142,8 +179,11 @@ export class ComputerApp {
     if (this.route === 'orders') return header + `<h2>Submissions</h2>${s.orders.map(o => `<article class="pc-order"><b>${esc(CARD_BY_ID.get(s.cards.find(c => c.uid === o.cardUid)!.cardId)!.name)}</b><span>${o.grader} · ${o.service} · ${orderStatus(o.sentAt, o.dueAt)}</span><small>${Math.max(0, Math.ceil((o.dueAt - Date.now()) / 1000))} seconds remaining</small>${o.dueAt <= Date.now() ? '<small>Shipping box waiting by the bedroom door</small>' : ''}</article>`).join('') || empty('No submissions in progress.')}`;
     if (this.route === 'returns' || this.route === 'physical') return header + (this.route === 'physical' ? `<div data-physical class="pc-physical"></div><p>${price(ownedValue(s.cards.find(c => c.uid === this.selected)!, s.marketSeed))} · same owned copy, in its physical slab</p>` : `<h2>Returned cards</h2><div class="pc-card-grid">${collectionItems(s).filter(i => i.status === 'graded').map(i => this.tile(i)).join('') || empty('Your returned slabs will appear here.')}</div>`);
     const eligible = collectionItems(s).filter(i => i.status === 'raw' && !this.store.isCardLocked(i.uid) && s.cards.find(c => c.uid === i.uid)!.finish !== 'metal');
+    // Values already use the authoritative owned-copy condition/damage/misprint adjustments.
+    // Native stable sort retains inventory order for equal keys; inventory itself is never reordered.
+    eligible.sort((a, b) => this.sort === 'value' ? b.value - a.value : this.sort === 'value-low' ? a.value - b.value : this.sort === 'newest' ? b.at - a.at : this.sort === 'oldest' ? a.at - b.at : this.sort === 'rarity' ? a.rarity.localeCompare(b.rarity) : this.sort === 'set' ? a.set.localeCompare(b.set) : a.name.localeCompare(b.name));
     const card = s.cards.find(c => c.uid === this.selected && c.status === 'raw');
-    return header + `<h2>Choose a grading service</h2><div class="pc-graders">${(Object.keys(GRADERS) as Grader[]).map(id => `<button type="button" data-action="grader" data-value="${id}" class="${id === this.grader ? 'selected' : ''}"><b>${id}-inspired</b><span>${price(GRADERS[id].cost)} · ~${GRADERS[id].seconds}s</span><small>${id === 'BGS' ? 'Subgrades · half-point scale' : id === 'CGC' ? 'Half-point scale' : id === 'TAG' ? 'Consistent condition analysis' : 'Whole-point scale'}</small></button>`).join('')}</div><label>Service <select data-field="service"><option ${this.service === 'Standard' ? 'selected' : ''}>Standard</option><option ${this.service === 'Express' ? 'selected' : ''}>Express</option></select></label>${card ? `<section class="pc-review"><h3>Review submission</h3><b>${esc(CARD_BY_ID.get(card.cardId)!.name)}</b><p>${this.grader}-inspired · ${this.service} · ${price(g.cost * (this.service === 'Express' ? 1.8 : 1))} · ~${Math.ceil(g.seconds * (this.service === 'Express' ? .4 : 1))}s</p><p>The same physical card is graded. Hidden condition scores are not disclosed.</p>${button('submit', 'Pay & submit', card.uid, this.store.isCardLocked(card.uid) || card.finish === 'metal' || s.currency < g.cost * (this.service === 'Express' ? 1.8 : 1))}</section>` : ''}<h3>Eligible owned cards</h3><div class="pc-card-grid">${eligible.slice(this.page * 36, (this.page + 1) * 36).map(i => this.tile(i)).join('') || empty('No eligible raw cards.')}</div>${this.pagination(eligible.length)}`;
+    return header + `<h2>Choose a grading service</h2><div class="pc-graders">${(Object.keys(GRADERS) as Grader[]).map(id => `<button type="button" data-action="grader" data-value="${id}" class="${id === this.grader ? 'selected' : ''}"><b>${id}-inspired</b><span>${price(GRADERS[id].cost)} · ~${GRADERS[id].seconds}s</span><small>${id === 'BGS' ? 'Subgrades · half-point scale' : id === 'CGC' ? 'Half-point scale' : id === 'TAG' ? 'Consistent condition analysis' : 'Whole-point scale'}</small></button>`).join('')}</div><label>Service <select data-field="service"><option ${this.service === 'Standard' ? 'selected' : ''}>Standard</option><option ${this.service === 'Express' ? 'selected' : ''}>Express</option></select></label>${card ? `<section class="pc-review"><h3>Review submission</h3><b>${esc(CARD_BY_ID.get(card.cardId)!.name)}</b><p>${this.grader}-inspired · ${this.service} · ${price(g.cost * (this.service === 'Express' ? 1.8 : 1))} · ~${Math.ceil(g.seconds * (this.service === 'Express' ? .4 : 1))}s</p><p>The same physical card is graded. Hidden condition scores are not disclosed.</p>${button('submit', 'Pay & submit', card.uid, this.store.isCardLocked(card.uid) || card.finish === 'metal' || s.currency < g.cost * (this.service === 'Express' ? 1.8 : 1))}</section>` : ''}<h3>Eligible owned cards</h3><div class="pc-filters"><label>Sort By <select data-field="sort" aria-label="Sort By">${[['value', 'Highest Market Value'], ['value-low', 'Lowest Market Value'], ['newest', 'Newest Acquired'], ['oldest', 'Oldest Acquired'], ['name', 'Name (A–Z)'], ['rarity', 'Rarity'], ['set', 'Set']].map(([id, label]) => `<option value="${id}" ${this.sort === id ? 'selected' : ''}>${label}</option>`).join('')}</select></label></div><div class="pc-card-grid">${eligible.slice(this.page * 36, (this.page + 1) * 36).map(i => this.tile(i)).join('') || empty('No eligible raw cards.')}</div>${this.pagination(eligible.length)}`;
   }
   private chart(points: { at: number; value: number }[], calendar = false) {
     if (points.length < 2) return empty('History starts with your collection. More points appear as you play.');
@@ -187,6 +227,8 @@ export class ComputerApp {
   private action(action: string, value: string, root: HTMLElement) {
     this.notice = '';
     if (action === 'route') { this.route = value; this.page = 0; }
+    else if (action === 'ebayKind') { this.ebayKind = value as 'cards' | 'sealed'; this.page = 0; }
+    else if (action === 'clearEbayFilters') { this.filter = 'all'; this.ebaySet = this.ebayCondition = this.ebayCompany = this.ebayGrade = ''; this.page = 0; }
     else if (action === 'deleteCard') { this.selected = value; this.route = 'deleteCard'; }
     else if (action === 'product') { this.selected = value; this.route = 'product'; }
     else if (action === 'plus') { if (this.canAddToCart(value)) this.cart[value] = (this.cart[value] ?? 0) + 1; this.notice = 'Added to cart'; }

@@ -61,8 +61,9 @@ test('grading previews survive timers, scrolling, selection and unrelated save u
   expect(idle.scrollTop).toBe(200);
   // A store notification unrelated to grading must leave the decoded nodes alone.
   await page.keyboard.press('Control+Shift+x'); await page.waitForTimeout(300);
-  await page.locator(`[data-action="item"][data-value="${store.state.cards[5].uid}"]`).click();
-  await expect(page.locator('[data-action="submit"]')).toHaveAttribute('data-value', store.state.cards[5].uid);
+  const selectedUid = (await page.locator('.pc-card-grid .pc-item').nth(5).getAttribute('data-value'))!;
+  await page.locator(`[data-action="item"][data-value="${selectedUid}"]`).click();
+  await expect(page.locator('[data-action="submit"]')).toHaveAttribute('data-value', selectedUid);
   await page.locator('[data-action="grader"][data-value="BGS"]').click();
   await page.locator('[data-field="service"]').selectOption('Express');
   const retained = await page.evaluate(() => (window as any).gradingImages.originals.every((img: HTMLImageElement) => img.isConnected && document.querySelector('.pc-card-grid')!.contains(img)));
